@@ -308,7 +308,7 @@ export default function App() {
           </p>
 
           <p>
-            My work is amazing in-game capture, composition, lighting, and visual storytelling to create
+            My work blends in-game in-game capture, composition, lighting, and visual storytelling to create
             images that feel closer to movie posters than traditional screenshots. I build visuals
             designed to stop the scroll, connect with gaming audiences, and help games feel larger
             than the screen.
