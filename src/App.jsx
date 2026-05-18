@@ -1,53 +1,119 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import "./styles.css";
 
-const stock1 =
-  "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1800&q=90";
-const stock2 =
-  "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1800&q=90";
-const stock3 =
-  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=90";
-const stock4 =
-  "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?auto=format&fit=crop&w=1800&q=90";
+const img =
+  "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1600&q=90";
+const img2 =
+  "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1600&q=90";
+const img3 =
+  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=90";
+const img4 =
+  "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?auto=format&fit=crop&w=1600&q=90";
 
 const aboutImg = "/images/about/about-danny.webp";
-
-const heroImages = [stock1, stock2, stock3, stock4];
 
 const folders = [
   {
     title: "Resident Evil",
     type: "Cinematic Key Art",
-    category: "Key Art",
-    cover: stock4,
-    images: [stock4, stock1, stock2, stock3],
+    cat: "Key Art",
+    cover: img4,
+    images: [img4, img, img2, img3],
   },
   {
     title: "Pragmata",
     type: "Social Coverage",
-    category: "Social Coverage",
-    cover: stock1,
-    images: [stock1, stock2, stock3, stock4],
+    cat: "Social Coverage",
+    cover: img,
+    images: [img, img2, img3, img4],
   },
   {
     title: "Clair Obscur: Expedition 33",
     type: "Virtual Photography",
-    category: "Virtual Photography",
-    cover: stock2,
-    images: [stock2, stock3, stock4, stock1],
+    cat: "Virtual Photography",
+    cover: img2,
+    images: [img2, img3, img4, img],
   },
   {
     title: "Devil May Cry",
     type: "Editorial Visuals",
-    category: "Key Art",
-    cover: stock3,
-    images: [stock3, stock4, stock1, stock2],
+    cat: "Key Art",
+    cover: img3,
+    images: [img3, img4, img, img2],
   },
   {
     title: "Tomb Raider",
     type: "Cinematic Coverage",
-    category: "Social Coverage",
-    cover: stock2,
-    images: [stock2, stock1, stock3, stock4],
+    cat: "Social Coverage",
+    cover: img2,
+    images: [img2, img, img3, img4],
+  },
+];
+
+const nav = [
+  ["Work", "#work"],
+  ["About", "#about"],
+  ["Collaborations", "#collabs"],
+  ["Media Kit", "#media-kit"],
+  ["Contact", "#contact"],
+];
+
+const collabs = [
+  ["Game Studios", ["Rogue Factor", "Myrkur Games", "Nekki", "One More Level"]],
+  ["Publishers", ["Deep Silver", "Focus Entertainment", "PLAION", "Nekki", "One More Level"]],
+  ["Hardware Brands", ["Razer", "GameSir"]],
+  ["Creator Programs", ["Deep Silver", "Keymailer"]],
+];
+
+const stats = [
+  [
+    "55K+",
+    "Followers",
+    "M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2 M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M21 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75",
+  ],
+  [
+    "Millions",
+    "Monthly Reach",
+    "M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z",
+  ],
+  ["High", "Engagement", "M3 12h4l2.5-7 5 14 2.5-7h4"],
+  [
+    "Studio + Brand",
+    "Collabs",
+    "M4 7h16v12H4V7Z M9 7V5h6v2 M8 12h8 M8 15h5 M17 15l1 1 2-3",
+  ],
+];
+
+const wins = [
+  {
+    label: "Platform Feature",
+    title: "PlayStation Deutschland",
+    text: "Reposted a full carousel with credit.",
+  },
+  {
+    label: "Brand Campaign",
+    title: "Razer",
+    text: "Gifted campaign content and gaming gear coverage.",
+  },
+  {
+    label: "Contest Win",
+    title: "Myrkur Games",
+    text: "Photomode contest winner and creator recognition.",
+  },
+  {
+    label: "Partner Program",
+    title: "IO Interactive",
+    text: "Partner Program member for game coverage.",
+  },
+  {
+    label: "Creator Access",
+    title: "Deep Silver",
+    text: "Creator Collective access and publisher-side opportunities.",
+  },
+  {
+    label: "Audience Proof",
+    title: "55K+ Community",
+    text: "Gaming audience with monthly reach in the millions.",
   },
 ];
 
@@ -93,21 +159,6 @@ const IconYouTube = () => (
   </svg>
 );
 
-const IconPerson = () => (
-  <svg
-    viewBox="0 0 24 24"
-    className="stat-svg"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="7" r="4" />
-    <path d="M4.5 21c1.4-4.5 4.1-6.8 7.5-6.8s6.1 2.3 7.5 6.8" />
-  </svg>
-);
-
 const socials = [
   ["Instagram", "https://www.instagram.com/dannysimas/", <IconInstagram />],
   ["TikTok", "https://www.tiktok.com/@dannysimass", <IconTikTok />],
@@ -116,190 +167,152 @@ const socials = [
   ["YouTube", "https://www.youtube.com/@dannysimass", <IconYouTube />],
 ];
 
-const nav = [
-  ["About", "#about"],
-  ["Collaborations", "#collabs"],
-  ["Game Galleries", "#work"],
-  ["Media Kit", "#media-kit"],
-  ["Contact", "#contact"],
-];
-
-const collabs = [
-  ["Game Studios", ["Rogue Factor", "Myrkur Games", "Nekki", "One More Level"]],
-  ["Publishers", ["Deep Silver", "Focus Entertainment", "PLAION", "Nekki", "One More Level"]],
-  ["Hardware Brands", ["Razer", "GameSir"]],
-  ["Creator Programs", ["Deep Silver", "Keymailer"]],
-];
-
-const stats = [
-  [<IconPerson />, "55K+", "Followers"],
-  ["◉", "Millions", "Monthly Reach"],
-  ["⌁", "High", "Engagement"],
-  ["◇", "Studio + Brand", "Collabs"],
-];
-
-const wins = [
-  "PlayStation Deutschland reposted a full carousel",
-  "Razer gifted campaign content and gear coverage",
-  "Myrkur Games photomode contest winner",
-  "IO Interactive Partner Program member",
-  "Deep Silver Creator Collective access",
-  "55K+ gaming audience with monthly reach in the millions",
-];
-
 export default function App() {
-  const [openFolder, setOpenFolder] = useState("Resident Evil");
+  const [open, setOpen] = useState("Resident Evil");
   const [filter, setFilter] = useState("All");
   const [lightbox, setLightbox] = useState(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hideMenu, setHideMenu] = useState(false);
+  const [cursor, setCursor] = useState({ x: -100, y: -100 });
+  const lastScrollY = useRef(0);
 
-  const shownFolders =
-    filter === "All" ? folders : folders.filter((folder) => folder.category === filter);
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > lastScrollY.current;
 
-  function changeFilter(nextFilter) {
-    setFilter(nextFilter);
-    const firstFolder =
-      nextFilter === "All"
-        ? folders[0]
-        : folders.find((folder) => folder.category === nextFilter);
+      setHideMenu(scrollingDown && currentScrollY > 80);
+      lastScrollY.current = currentScrollY;
+    };
 
-    setOpenFolder(firstFolder?.title || "");
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setCursor({ x: event.clientX, y: event.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    const items = document.querySelectorAll(".reveal, .slide-up, .fade-in");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          } else {
+            entry.target.classList.remove("is-visible");
+          }
+        });
+      },
+      { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
+    );
+
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, [filter, open]);
+
+  const shown = filter === "All" ? folders : folders.filter((folder) => folder.cat === filter);
+
+  function changeFilter(next) {
+    setFilter(next);
+    const first = next === "All" ? folders[0] : folders.find((folder) => folder.cat === next);
+    setOpen(first?.title || "");
   }
 
   function openInstagram() {
     window.open("https://www.instagram.com/dannysimas/", "_blank", "noopener,noreferrer");
   }
 
-  function closeMobileMenu() {
-    setMobileMenuOpen(false);
+  function previousImage() {
+    setLightbox((value) => ({
+      ...value,
+      index: value.index === 0 ? value.folder.images.length - 1 : value.index - 1,
+    }));
   }
 
   function nextImage() {
-    setLightbox((current) => {
-      if (!current) return current;
-
-      const nextIndex =
-        current.index === current.folder.images.length - 1 ? 0 : current.index + 1;
-
-      return { ...current, index: nextIndex };
-    });
-  }
-
-  function prevImage() {
-    setLightbox((current) => {
-      if (!current) return current;
-
-      const prevIndex =
-        current.index === 0 ? current.folder.images.length - 1 : current.index - 1;
-
-      return { ...current, index: prevIndex };
-    });
+    setLightbox((value) => ({
+      ...value,
+      index: value.index === value.folder.images.length - 1 ? 0 : value.index + 1,
+    }));
   }
 
   return (
-    <main className="site">
-      <div className="background-grid" />
+    <main className="site-bg">
+      <div
+        className="cursor-dot"
+        style={{ "--cursor-x": `${cursor.x}px`, "--cursor-y": `${cursor.y}px` }}
+      />
 
-      <header className="header">
-        <a href="#home" className="brand" onClick={closeMobileMenu}>
-          Danny Simas
-        </a>
+      <header className={`top-menu ${hideMenu ? "top-menu-hidden" : ""}`}>
+        <div className="edge header-inner">
+          <a href="#home" className="brand">
+            Danny Simas
+          </a>
 
-        <div className="header-right">
-          <nav className="desktop-nav">
+          <nav className="main-nav">
             {nav.map(([label, href]) => (
-              <a key={label} href={href}>
+              <a key={label} href={href} className="nav-link">
                 {label}
               </a>
             ))}
           </nav>
 
-          <div className="social-row header-socials">
+          <div className="header-socials">
             {socials.map(([label, url, icon]) => (
               <a key={label} href={url} target="_blank" rel="noreferrer" aria-label={label}>
                 {icon}
               </a>
             ))}
           </div>
-
-          <button
-            type="button"
-            className="menu-toggle"
-            onClick={() => setMobileMenuOpen((value) => !value)}
-            aria-label="Toggle menu"
-          >
-            <span />
-            <span />
-            <span />
-          </button>
         </div>
-
-        {mobileMenuOpen && (
-          <div className="mobile-menu">
-            {nav.map(([label, href]) => (
-              <a key={label} href={href} onClick={closeMobileMenu}>
-                {label}
-              </a>
-            ))}
-
-            <div className="mobile-socials">
-              {socials.map(([label, url, icon]) => (
-                <a key={label} href={url} target="_blank" rel="noreferrer" aria-label={label}>
-                  {icon}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
       </header>
 
-      <section id="home" className="hero">
+      <section id="home" className="hero-section">
         <div className="hero-panels">
-          {heroImages.map((image, index) => (
+          {[img, img2, img3, img4].map((image, index) => (
             <div
               key={image}
               className="hero-panel"
               style={{
-                backgroundImage: `url(${image})`,
                 clipPath:
                   index === 0
                     ? "polygon(0 0,100% 0,86% 100%,0 100%)"
                     : "polygon(14% 0,100% 0,86% 100%,0 100%)",
               }}
-            />
+            >
+              <div
+                className="hero-panel-image"
+                style={{ backgroundImage: `url(${image})` }}
+              />
+            </div>
           ))}
         </div>
 
-        <div className="hero-overlay" />
+        <div className="hero-mask" />
 
-        <div className="hero-content">
-          <h1 className="hero-title">
-            <span>
-              Cinematic <strong>Gaming</strong>
-            </span>
-            <span className="outline">Visuals</span>
-          </h1>
-
-          <p>Creating cinematic game visuals for audiences, studios, and brands.</p>
-
-          <div className="hero-buttons">
-            <a href="#work" className="primary-btn">
-              View Galleries →
-            </a>
-            <a href="#contact" className="ghost-btn">
-              Get in Touch
-            </a>
+        <div className="edge hero-content">
+          <div className="hero-left">
+            <p>Cinematic game visuals with a movie-poster mindset.</p>
+            <div className="hero-line" />
+            <a href="#work">Explore Work →</a>
           </div>
         </div>
       </section>
 
-      <section id="about" className="section about">
-        <div className="about-image">
-          <img src={aboutImg} alt="Danny Simas profile portrait" />
+      <section id="about" className="edge reveal about-section">
+        <div className="about-image-wrap">
+          <img src={aboutImg} alt="Danny Simas" className="about-image" />
         </div>
 
-        <div className="about-copy">
-          <p className="eyebrow">About Danny Simas</p>
+        <div className="fade-in about-copy">
+          <p className="section-kicker">About Danny Simas</p>
           <h2>Visual Storytelling for Games</h2>
 
           <p>
@@ -308,46 +321,54 @@ export default function App() {
           </p>
 
           <p>
-            My work blends in-game in-game capture, composition, lighting, and visual storytelling to create
+            My work blends in-game capture, composition, lighting, and visual storytelling to create
             images that feel closer to movie posters than traditional screenshots. I build visuals
             designed to stop the scroll, connect with gaming audiences, and help games feel larger
             than the screen.
           </p>
 
-          <div className="tags">
-            <span>Virtual Photography</span>
-            <span>Key Art</span>
-            <span>Social Coverage</span>
+          <div className="tag-row">
+            {["Virtual Photography", "Key Art", "Social Coverage"].map((tag) => (
+              <span key={tag}>{tag}</span>
+            ))}
           </div>
 
-          <a href="#media-kit" className="ghost-btn small">
+          <a href="#media-kit" className="outline-btn">
             View Media Kit →
           </a>
         </div>
       </section>
 
-      <section className="section stats">
-        {stats.map(([icon, value, label]) => (
-          <div className="stat-card lift" key={label}>
-            <span className="stat-icon">{icon}</span>
+      <section className="edge reveal stats-section">
+        <div className="stats-grid">
+          {stats.map(([number, label, icon]) => (
+            <div key={label} className="slide-up stat-item">
+              <span className="stat-logo">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path className="stroke-icon" d={icon} />
+                </svg>
+              </span>
 
-            <div>
-              <strong>{value}</strong>
-              <small>{label}</small>
+              <div>
+                <p>{number}</p>
+                <span>{label}</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
 
-      <section id="collabs" className="section">
-        <p className="section-label">Collaborations</p>
+      <section id="collabs" className="edge reveal collab-section">
+        <div className="section-title-row">
+          <div className="line-accent" />
+          <p>Collaborations</p>
+        </div>
 
         <div className="collab-grid">
           {collabs.map(([title, items]) => (
-            <div className="panel lift" key={title}>
-              <h3>{title}</h3>
-
-              <div className="chips">
+            <div key={title} className="slide-up collab-card">
+              <p>{title}</p>
+              <div>
                 {items.map((item) => (
                   <span key={item}>{item}</span>
                 ))}
@@ -357,23 +378,43 @@ export default function App() {
         </div>
       </section>
 
-      <section className="section">
-        <p className="section-label">Creator Highlights</p>
-
-        <div className="wins-grid">
-          {wins.map((win) => (
-            <div className="panel lift" key={win}>
-              {win}
+      <section className="edge reveal highlights-section">
+        <div className="highlights-head">
+          <div>
+            <div className="section-title-row">
+              <div className="line-accent" />
+              <p>Creator Highlights</p>
             </div>
+            <h2>Proof of Work</h2>
+          </div>
+
+          <p>
+            A quick snapshot of creator wins, platform recognition, brand trust, and audience proof.
+          </p>
+        </div>
+
+        <div className="highlights-grid">
+          {wins.map((win, index) => (
+            <article key={win.title} className="highlight-card slide-up">
+              <div>
+                <span className="highlight-index">0{index + 1}</span>
+                <span className="highlight-label">{win.label}</span>
+              </div>
+
+              <div>
+                <h3>{win.title}</h3>
+                <p>{win.text}</p>
+              </div>
+            </article>
           ))}
         </div>
       </section>
 
-      <section id="work" className="section">
-        <div className="section-head">
-          <div>
-            <p className="eyebrow">Visual Archive</p>
-            <h2>Game Galleries</h2>
+      <section id="work" className="edge reveal archive-section">
+        <div className="archive-head">
+          <div className="fade-in">
+            <p className="section-kicker">Visual Archive</p>
+            <h2>Featured Work</h2>
           </div>
 
           <div className="filters">
@@ -391,37 +432,45 @@ export default function App() {
         </div>
 
         <div className="folder-list">
-          {shownFolders.map((folder) => {
-            const isOpen = openFolder === folder.title;
+          {shown.map((folder) => {
+            const isOpen = open === folder.title;
 
             return (
-              <div className="folder lift" key={folder.title}>
+              <div key={folder.title} className="slide-up folder">
                 <button
                   type="button"
+                  onClick={() => setOpen(isOpen ? "" : folder.title)}
                   className="folder-cover"
-                  onClick={() => setOpenFolder(isOpen ? "" : folder.title)}
-                  style={{ backgroundImage: `url(${folder.cover})` }}
                 >
-                  <span>
-                    <strong>{folder.title}</strong>
-                    <small>
-                      {folder.type} • {folder.images.length} pieces
-                    </small>
-                  </span>
+                  <img src={folder.cover} alt="" />
 
-                  <i className={isOpen ? "minus" : "plus"} />
+                  <div className="folder-overlay" />
+
+                  <div className="folder-content">
+                    <div>
+                      <h3>{folder.title}</h3>
+                      <p>
+                        {folder.type} • {folder.images.length} pieces
+                      </p>
+                    </div>
+
+                    <span className="folder-icon">
+                      <span />
+                      {!isOpen && <span />}
+                    </span>
+                  </div>
                 </button>
 
                 {isOpen && (
                   <div className="gallery-grid">
                     {folder.images.map((image, index) => (
                       <button
-                        type="button"
                         key={`${folder.title}-${index}`}
-                        className="gallery-item"
+                        type="button"
                         onClick={() => setLightbox({ folder, index })}
+                        className="gallery-item"
                       >
-                        <img src={image} alt={`${folder.title} gallery ${index + 1}`} />
+                        <div style={{ backgroundImage: `url(${image})` }} />
                       </button>
                     ))}
                   </div>
@@ -431,102 +480,95 @@ export default function App() {
           })}
         </div>
 
-        <p className="disclaimer">
+        <p className="archive-disclaimer">
           Selected visual work inspired by official game worlds and social coverage. All trademarks
           belong to their respective owners.
         </p>
       </section>
 
-      <section id="social-feed" className="section social-feed">
-        <div>
-          <div className="social-head">
-            <div>
-              <p className="eyebrow">Social Feed</p>
-              <h2>Latest on Instagram</h2>
-              <p>Follow the live work, reels, process shots, and new cinematic game visuals.</p>
-            </div>
-
-            <button type="button" onClick={openInstagram} className="ghost-btn">
+      <section id="social-feed" className="edge reveal social-section">
+        <div className="social-content">
+          <div className="fade-in">
+            <p className="section-kicker">Social Feed</p>
+            <h2>Latest on Instagram</h2>
+            <p>Follow the live work, reels, process shots, and new cinematic game visuals.</p>
+            <button type="button" onClick={openInstagram} className="outline-btn">
               Visit @dannysimas →
             </button>
           </div>
 
           <div className="feed-grid">
-            {[stock1, stock2, stock3, stock4, stock1, stock2].map((post, index) => (
+            {[img, img2, img3, img4, img, img2].map((post, index) => (
               <a
                 key={index}
                 href="https://www.instagram.com/dannysimas/"
                 target="_blank"
                 rel="noreferrer"
-              >
-                <img src={post} alt={`Instagram preview ${index + 1}`} />
-              </a>
+                className="slide-up feed-item"
+                style={{ backgroundImage: `url(${post})` }}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      <section id="media-kit" className="section media-kit">
-        <p className="eyebrow">Media Kit</p>
-        <h2>Creator Snapshot</h2>
-
-        <p>
-          Available for game coverage, creator programs, asset-based campaigns, and hardware
-          partnerships built around cinematic visual storytelling.
-        </p>
-
-        <div className="media-grid">
-          <div className="panel">
-            <h3>Audience</h3>
-            <p>◆ 55K+ Instagram followers</p>
-            <p>◆ Millions in monthly reach</p>
-            <p>◆ Gaming-focused community</p>
+      <section id="media-kit" className="edge reveal media-section">
+        <div>
+          <div className="media-cta">
+            <div className="fade-in">
+              <p className="section-kicker">Media Kit</p>
+              <h2>Interested in Working Together?</h2>
+              <p>
+                Let’s create something unforgettable for game coverage, creator programs, press
+                access, or brand collaborations.
+              </p>
+            </div>
           </div>
 
-          <div className="panel">
-            <h3>Coverage</h3>
-            <p>◆ Cinematic key art</p>
-            <p>◆ Virtual photography</p>
-            <p>◆ Reels and carousels</p>
+          <div className="media-grid">
+            {[
+              ["Audience", ["55K+ Instagram followers", "Millions in monthly reach", "Gaming-focused community"]],
+              ["Coverage", ["Cinematic key art", "Virtual photography", "Reels and carousels"]],
+              ["Available For", ["Game coverage", "Creator programs", "Hardware partnerships"]],
+            ].map(([title, items]) => (
+              <div key={title} className="slide-up media-card">
+                <p>{title}</p>
+                {items.map((item) => (
+                  <span key={item}>◆ {item}</span>
+                ))}
+              </div>
+            ))}
           </div>
 
-          <div className="panel">
-            <h3>Available For</h3>
-            <p>◆ Game coverage</p>
-            <p>◆ Creator programs</p>
-            <p>◆ Hardware partnerships</p>
-          </div>
-        </div>
+          <div id="contact" className="contact-section">
+            <div className="fade-in">
+              <h2>Let’s Talk</h2>
+              <p>For game coverage, brand collaborations, press access, or licensing inquiries.</p>
+            </div>
 
-        <div id="contact" className="contact">
-          <div>
-            <h2>Let’s Talk</h2>
-            <p>For game coverage, brand collaborations, press access, or licensing inquiries.</p>
-            <a href="mailto:dannysimas@gmail.com">dannysimas@gmail.com</a>
+            <form action="mailto:dannysimas@gmail.com" method="post" encType="text/plain">
+              <input name="name" placeholder="Your name" />
+              <input name="email" placeholder="your@email.com" />
+              <textarea name="message" rows="5" placeholder="Tell me what you’re working on..." />
+              <button type="submit" className="primary-btn">
+                Send Message →
+              </button>
+            </form>
           </div>
-
-          <form action="mailto:dannysimas@gmail.com" method="post" encType="text/plain">
-            <input name="name" placeholder="Your name" />
-            <input name="email" placeholder="your@email.com" />
-            <textarea name="message" rows="5" placeholder="Tell me what you’re working on..." />
-            <button type="submit" className="primary-btn">
-              Send Message →
-            </button>
-          </form>
         </div>
       </section>
 
       {lightbox && (
         <div className="lightbox">
           <button
-            type="button"
             className="lightbox-bg"
+            type="button"
             onClick={() => setLightbox(null)}
             aria-label="Close"
           />
 
           <div className="lightbox-card">
-            <button type="button" className="close" onClick={() => setLightbox(null)}>
+            <button type="button" className="close-lightbox" onClick={() => setLightbox(null)}>
               ×
             </button>
 
@@ -534,14 +576,14 @@ export default function App() {
 
             <div className="lightbox-info">
               <div>
-                <strong>{lightbox.folder.title}</strong>
-                <small>
+                <p>{lightbox.folder.title}</p>
+                <span>
                   {lightbox.index + 1} / {lightbox.folder.images.length}
-                </small>
+                </span>
               </div>
 
-              <div className="lightbox-controls">
-                <button type="button" onClick={prevImage}>
+              <div>
+                <button type="button" onClick={previousImage}>
                   ‹
                 </button>
                 <button type="button" onClick={nextImage}>
@@ -553,11 +595,10 @@ export default function App() {
         </div>
       )}
 
-      <footer>
-        <strong>Danny Simas</strong>
-        <span>▽</span>
+      <footer className="edge footer">
+        <p className="footer-brand">Danny Simas</p>
 
-        <div className="social-row">
+        <div>
           {socials.map(([label, url, icon]) => (
             <a key={label} href={url} target="_blank" rel="noreferrer" aria-label={label}>
               {icon}
