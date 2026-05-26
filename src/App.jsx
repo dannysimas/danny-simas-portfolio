@@ -1,52 +1,62 @@
 import { useEffect, useRef, useState } from "react";
 import "./styles.css";
 
-const img =
-  "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1600&q=90";
-const img2 =
-  "https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1600&q=90";
-const img3 =
-  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=90";
-const img4 =
-  "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?auto=format&fit=crop&w=1600&q=90";
+const heroCollage = "/images/hero/hero-collage.webp";
+
+const img = "/images/hero/hero-01.webp";
+const img2 = "/images/hero/hero-02.webp";
+const img3 = "/images/hero/hero-03.webp";
+const img4 = "/images/hero/hero-04.webp";
 
 const aboutImg = "/images/about/about-danny.webp";
+
+function makeGalleryImages(folderName, count) {
+  return Array.from({ length: count }, (_, index) => {
+    const number = String(index + 1).padStart(2, "0");
+
+    return {
+      thumb: `/images/gallery/${folderName}/thumbs/${number}.webp`,
+      full: `/images/gallery/${folderName}/full/${number}.webp`,
+    };
+  });
+}
 
 const folders = [
   {
     title: "Resident Evil",
-    type: "Cinematic Key Art",
-    cat: "Key Art",
-    cover: img4,
-    images: [img4, img, img2, img3],
+    type: "Cinematic Key Art + Virtual Photography",
+    cover: "/images/gallery/resident-evil/cover.webp",
+    images: makeGalleryImages("resident-evil", 20),
   },
   {
     title: "Pragmata",
-    type: "Social Coverage",
-    cat: "Social Coverage",
-    cover: img,
-    images: [img, img2, img3, img4],
+    type: "Cinematic Coverage + Social Visuals",
+    cover: "/images/gallery/pragmata/cover.webp",
+    images: makeGalleryImages("pragmata", 9),
   },
   {
     title: "Clair Obscur: Expedition 33",
-    type: "Virtual Photography",
-    cat: "Virtual Photography",
-    cover: img2,
-    images: [img2, img3, img4, img],
+    type: "Virtual Photography + Key Art",
+    cover: "/images/gallery/expedition-33/cover.webp",
+    images: makeGalleryImages("expedition-33", 14),
   },
   {
     title: "Devil May Cry",
-    type: "Editorial Visuals",
-    cat: "Key Art",
-    cover: img3,
-    images: [img3, img4, img, img2],
+    type: "Cinematic Key Art",
+    cover: "/images/gallery/dmc/cover.webp",
+    images: makeGalleryImages("dmc", 13),
   },
   {
     title: "Tomb Raider",
-    type: "Cinematic Coverage",
-    cat: "Social Coverage",
-    cover: img2,
-    images: [img2, img, img3, img4],
+    type: "Cinematic Key Art + Visual Concepts",
+    cover: "/images/gallery/tomb-raider/cover.webp",
+    images: makeGalleryImages("tomb-raider", 21),
+  },
+  {
+    title: "God of War",
+    type: "Cinematic Key Art + Virtual Photography",
+    cover: "/images/gallery/god-of-war/cover.webp",
+    images: makeGalleryImages("god-of-war", 10),
   },
 ];
 
@@ -117,8 +127,6 @@ const wins = [
   },
 ];
 
-const filters = ["All", "Key Art", "Virtual Photography", "Social Coverage"];
-
 const IconInstagram = () => (
   <svg
     viewBox="0 0 24 24"
@@ -168,8 +176,7 @@ const socials = [
 ];
 
 export default function App() {
-  const [open, setOpen] = useState("Resident Evil");
-  const [filter, setFilter] = useState("All");
+  const [openFolders, setOpenFolders] = useState(["Resident Evil"]);
   const [lightbox, setLightbox] = useState(null);
   const [hideMenu, setHideMenu] = useState(false);
   const [cursor, setCursor] = useState({ x: -100, y: -100 });
@@ -185,7 +192,10 @@ export default function App() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -194,35 +204,44 @@ export default function App() {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
   useEffect(() => {
-    const items = document.querySelectorAll(".reveal, .slide-up, .fade-in");
+  const items = document.querySelectorAll(".reveal, .slide-up, .fade-in");
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-          } else {
-            entry.target.classList.remove("is-visible");
-          }
-        });
-      },
-      { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: "0px 0px -10% 0px" }
+  );
+
+  items.forEach((item) => {
+    if (!item.classList.contains("is-visible")) {
+      observer.observe(item);
+    }
+  });
+
+  return () => {
+    observer.disconnect();
+  };
+}, [openFolders]);
+
+  function toggleFolder(folderTitle) {
+    setOpenFolders((current) =>
+      current.includes(folderTitle)
+        ? current.filter((title) => title !== folderTitle)
+        : [...current, folderTitle]
     );
-
-    items.forEach((item) => observer.observe(item));
-    return () => observer.disconnect();
-  }, [filter, open]);
-
-  const shown = filter === "All" ? folders : folders.filter((folder) => folder.cat === filter);
-
-  function changeFilter(next) {
-    setFilter(next);
-    const first = next === "All" ? folders[0] : folders.find((folder) => folder.cat === next);
-    setOpen(first?.title || "");
   }
 
   function openInstagram() {
@@ -247,7 +266,10 @@ export default function App() {
     <main className="site-bg">
       <div
         className="cursor-dot"
-        style={{ "--cursor-x": `${cursor.x}px`, "--cursor-y": `${cursor.y}px` }}
+        style={{
+          "--cursor-x": `${cursor.x}px`,
+          "--cursor-y": `${cursor.y}px`,
+        }}
       />
 
       <header className={`top-menu ${hideMenu ? "top-menu-hidden" : ""}`}>
@@ -275,24 +297,8 @@ export default function App() {
       </header>
 
       <section id="home" className="hero-section">
-        <div className="hero-panels">
-          {[img, img2, img3, img4].map((image, index) => (
-            <div
-              key={image}
-              className="hero-panel"
-              style={{
-                clipPath:
-                  index === 0
-                    ? "polygon(0 0,100% 0,86% 100%,0 100%)"
-                    : "polygon(14% 0,100% 0,86% 100%,0 100%)",
-              }}
-            >
-              <div
-                className="hero-panel-image"
-                style={{ backgroundImage: `url(${image})` }}
-              />
-            </div>
-          ))}
+        <div className="hero-single">
+          <img src={heroCollage} alt="Danny Simas cinematic gaming collage" />
         </div>
 
         <div className="hero-mask" />
@@ -316,8 +322,8 @@ export default function App() {
           <h2>Visual Storytelling for Games</h2>
 
           <p>
-            I’m Danny Simas, a cinematic gaming visual artist and content creator focused on
-            virtual photography, key art, and social-first game coverage.
+            I’m Danny Simas, a cinematic gaming visual artist and content creator focused on virtual
+            photography, key art, and social-first game coverage.
           </p>
 
           <p>
@@ -368,6 +374,7 @@ export default function App() {
           {collabs.map(([title, items]) => (
             <div key={title} className="slide-up collab-card">
               <p>{title}</p>
+
               <div>
                 {items.map((item) => (
                   <span key={item}>{item}</span>
@@ -385,12 +392,11 @@ export default function App() {
               <div className="line-accent" />
               <p>Creator Highlights</p>
             </div>
+
             <h2>Proof of Work</h2>
           </div>
 
-          <p>
-            A quick snapshot of creator wins, platform recognition, brand trust, and audience proof.
-          </p>
+          <p>A quick snapshot of creator wins, platform recognition, brand trust, and audience proof.</p>
         </div>
 
         <div className="highlights-grid">
@@ -416,30 +422,17 @@ export default function App() {
             <p className="section-kicker">Visual Archive</p>
             <h2>Featured Work</h2>
           </div>
-
-          <div className="filters">
-            {filters.map((item) => (
-              <button
-                key={item}
-                type="button"
-                onClick={() => changeFilter(item)}
-                className={filter === item ? "active" : ""}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
         </div>
 
         <div className="folder-list">
-          {shown.map((folder) => {
-            const isOpen = open === folder.title;
+          {folders.map((folder) => {
+            const isOpen = openFolders.includes(folder.title);
 
             return (
               <div key={folder.title} className="slide-up folder">
                 <button
                   type="button"
-                  onClick={() => setOpen(isOpen ? "" : folder.title)}
+                  onClick={() => toggleFolder(folder.title)}
                   className="folder-cover"
                 >
                   <img src={folder.cover} alt="" />
@@ -470,7 +463,7 @@ export default function App() {
                         onClick={() => setLightbox({ folder, index })}
                         className="gallery-item"
                       >
-                        <div style={{ backgroundImage: `url(${image})` }} />
+                        <div style={{ backgroundImage: `url(${image.thumb})` }} />
                       </button>
                     ))}
                   </div>
@@ -492,6 +485,7 @@ export default function App() {
             <p className="section-kicker">Social Feed</p>
             <h2>Latest on Instagram</h2>
             <p>Follow the live work, reels, process shots, and new cinematic game visuals.</p>
+
             <button type="button" onClick={openInstagram} className="outline-btn">
               Visit @dannysimas →
             </button>
@@ -527,12 +521,16 @@ export default function App() {
 
           <div className="media-grid">
             {[
-              ["Audience", ["55K+ Instagram followers", "Millions in monthly reach", "Gaming-focused community"]],
+              [
+                "Audience",
+                ["55K+ Instagram followers", "Millions in monthly reach", "Gaming-focused community"],
+              ],
               ["Coverage", ["Cinematic key art", "Virtual photography", "Reels and carousels"]],
               ["Available For", ["Game coverage", "Creator programs", "Hardware partnerships"]],
             ].map(([title, items]) => (
               <div key={title} className="slide-up media-card">
                 <p>{title}</p>
+
                 {items.map((item) => (
                   <span key={item}>◆ {item}</span>
                 ))}
@@ -550,6 +548,7 @@ export default function App() {
               <input name="name" placeholder="Your name" />
               <input name="email" placeholder="your@email.com" />
               <textarea name="message" rows="5" placeholder="Tell me what you’re working on..." />
+
               <button type="submit" className="primary-btn">
                 Send Message →
               </button>
@@ -572,7 +571,7 @@ export default function App() {
               ×
             </button>
 
-            <img src={lightbox.folder.images[lightbox.index]} alt="Gallery preview" />
+            <img src={lightbox.folder.images[lightbox.index].full} alt="Gallery preview" />
 
             <div className="lightbox-info">
               <div>
