@@ -2067,3 +2067,10 @@ textarea:focus {
   overflow: hidden;
   display: block;
 }
+
+@media (max-width: 768px) {
+  .lightwidget-widget {
+    height: 760px;
+    min-height: 760px;
+  }
+}
