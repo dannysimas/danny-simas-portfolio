@@ -2,12 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import "./styles.css";
 
 const heroCollage = "/images/hero/hero-collage.webp";
-
-const img = "/images/hero/hero-01.webp";
-const img2 = "/images/hero/hero-02.webp";
-const img3 = "/images/hero/hero-03.webp";
-const img4 = "/images/hero/hero-04.webp";
-
 const aboutImg = "/images/about/about-danny.webp";
 
 function makeGalleryImages(folderName, count) {
@@ -179,6 +173,8 @@ export default function App() {
   const [openFolders, setOpenFolders] = useState(["Resident Evil"]);
   const [lightbox, setLightbox] = useState(null);
   const [hideMenu, setHideMenu] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [formStatus, setFormStatus] = useState("");
   const [cursor, setCursor] = useState({ x: -100, y: -100 });
   const lastScrollY = useRef(0);
 
@@ -211,30 +207,30 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-  const items = document.querySelectorAll(".reveal, .slide-up, .fade-in");
+    const items = document.querySelectorAll(".reveal, .slide-up, .fade-in");
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.08, rootMargin: "0px 0px -10% 0px" }
-  );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -10% 0px" }
+    );
 
-  items.forEach((item) => {
-    if (!item.classList.contains("is-visible")) {
-      observer.observe(item);
-    }
-  });
+    items.forEach((item) => {
+      if (!item.classList.contains("is-visible")) {
+        observer.observe(item);
+      }
+    });
 
-  return () => {
-    observer.disconnect();
-  };
-}, [openFolders]);
+    return () => {
+      observer.disconnect();
+    };
+  }, [openFolders]);
 
   function toggleFolder(folderTitle) {
     setOpenFolders((current) =>
@@ -246,6 +242,34 @@ export default function App() {
 
   function openInstagram() {
     window.open("https://www.instagram.com/dannysimas/", "_blank", "noopener,noreferrer");
+  }
+
+  async function handleContactSubmit(event) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const data = new FormData(form);
+
+    setFormStatus("sending");
+
+    try {
+      const response = await fetch("https://formspree.io/f/xnjrobky", {
+        method: "POST",
+        body: data,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        form.reset();
+        setFormStatus("success");
+      } else {
+        setFormStatus("error");
+      }
+    } catch {
+      setFormStatus("error");
+    }
   }
 
   function previousImage() {
@@ -287,6 +311,35 @@ export default function App() {
           </nav>
 
           <div className="header-socials">
+            {socials.map(([label, url, icon]) => (
+              <a key={label} href={url} target="_blank" rel="noreferrer" aria-label={label}>
+                {icon}
+              </a>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className={`mobile-menu-btn ${mobileMenuOpen ? "mobile-menu-btn-open" : ""}`}
+            onClick={() => setMobileMenuOpen((value) => !value)}
+            aria-label="Open menu"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+
+        <div className={`mobile-menu ${mobileMenuOpen ? "mobile-menu-open" : ""}`}>
+          <nav>
+            {nav.map(([label, href]) => (
+              <a key={label} href={href} onClick={() => setMobileMenuOpen(false)}>
+                {label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="mobile-socials">
             {socials.map(([label, url, icon]) => (
               <a key={label} href={url} target="_blank" rel="noreferrer" aria-label={label}>
                 {icon}
@@ -491,18 +544,16 @@ export default function App() {
             </button>
           </div>
 
-          <div className="feed-grid">
-            {[img, img2, img3, img4, img, img2].map((post, index) => (
-              <a
-                key={index}
-                href="https://www.instagram.com/dannysimas/"
-                target="_blank"
-                rel="noreferrer"
-                className="slide-up feed-item"
-                style={{ backgroundImage: `url(${post})` }}
-              />
-            ))}
-          </div>
+          <div className="instagram-widget-wrap slide-up">
+  <iframe
+    src="https://cdn.lightwidget.com/widgets/cb661afeaf2c5e878687d83e4292cd2e.html"
+    scrolling="no"
+    allowTransparency="true"
+    className="lightwidget-widget"
+    title="Danny Simas Instagram feed"
+    loading="lazy"
+  />
+</div>
         </div>
       </section>
 
@@ -544,14 +595,29 @@ export default function App() {
               <p>For game coverage, brand collaborations, press access, or licensing inquiries.</p>
             </div>
 
-            <form action="mailto:dannysimas@gmail.com" method="post" encType="text/plain">
-              <input name="name" placeholder="Your name" />
-              <input name="email" placeholder="your@email.com" />
-              <textarea name="message" rows="5" placeholder="Tell me what you’re working on..." />
+            <form onSubmit={handleContactSubmit} className="contact-form">
+              <input name="name" placeholder="Your name" required />
 
-              <button type="submit" className="primary-btn">
-                Send Message →
+              <input type="email" name="email" placeholder="your@email.com" required />
+
+              <textarea
+                name="message"
+                rows="5"
+                placeholder="Tell me what you’re working on..."
+                required
+              />
+
+              <button type="submit" className="primary-btn" disabled={formStatus === "sending"}>
+                {formStatus === "sending" ? "Sending..." : "Send Message →"}
               </button>
+
+              {formStatus === "success" && (
+                <p className="form-status success">Message sent. I’ll get back to you soon.</p>
+              )}
+
+              {formStatus === "error" && (
+                <p className="form-status error">Something went wrong. Please try again.</p>
+              )}
             </form>
           </div>
         </div>
