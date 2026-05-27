@@ -545,14 +545,17 @@ export default function App() {
           </div>
 
           <div className="instagram-widget-wrap slide-up">
+
+<div className="instagram-widget-wrap slide-up">
   <iframe
-    src="https://cdn.lightwidget.com/widgets/cb661afeaf2c5e878687d83e4292cd2e.html"
+    src="https://cdn.lightwidget.com/widgets/5818e13f7fbf56909e7334e30cdd04cb.html"
     scrolling="no"
     allowTransparency="true"
     className="lightwidget-widget"
-    title="Danny Simas Instagram feed"
-    loading="lazy"
+    title="Danny Simas Instagram Feed"
   />
+</div>
+
 </div>
         </div>
       </section>
