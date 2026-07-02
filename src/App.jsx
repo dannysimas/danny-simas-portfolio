@@ -488,7 +488,14 @@ export default function App() {
                   onClick={() => toggleFolder(folder.title)}
                   className="folder-cover"
                 >
-                  <img src={folder.cover} alt="" />
+                  <img
+                    src={folder.cover}
+                    alt=""
+                    onError={(event) => {
+                      event.currentTarget.onerror = null;
+                      event.currentTarget.src = folder.images[0].thumb;
+                    }}
+                  />
 
                   <div className="folder-overlay" />
 
