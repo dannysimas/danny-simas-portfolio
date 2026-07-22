@@ -17,6 +17,12 @@ function makeGalleryImages(folderName, count) {
 
 const folders = [
   {
+    title: "Clair Obscur: Expedition 33",
+    type: "Virtual Photography + Key Art",
+    cover: "/images/gallery/expedition-33/cover.webp",
+    images: makeGalleryImages("expedition-33", 14),
+  },
+  {
     title: "Resident Evil",
     type: "Cinematic Key Art + Virtual Photography",
     cover: "/images/gallery/resident-evil/cover.webp",
@@ -27,12 +33,6 @@ const folders = [
     type: "Cinematic Coverage + Social Visuals",
     cover: "/images/gallery/pragmata/cover.webp",
     images: makeGalleryImages("pragmata", 9),
-  },
-  {
-    title: "Clair Obscur: Expedition 33",
-    type: "Virtual Photography + Key Art",
-    cover: "/images/gallery/expedition-33/cover.webp",
-    images: makeGalleryImages("expedition-33", 14),
   },
   {
     title: "Devil May Cry",
@@ -59,6 +59,7 @@ const nav = [
   ["About", "#about"],
   ["Collaborations", "#collabs"],
   ["Media Kit", "#media-kit"],
+  ["FAQ", "#faq"],
   ["Contact", "#contact"],
 ];
 
@@ -121,6 +122,28 @@ const wins = [
   },
 ];
 
+const faqs = [
+  {
+    question: "What kind of projects are you available for?",
+    answer:
+      "Game coverage, creator programs, press access, hardware partnerships, cinematic key art, virtual photography, reels, and social-first campaigns.",
+  },
+  {
+    question: "Can studios or brands license the visuals?",
+    answer:
+      "Yes. Usage, licensing, reposting, and campaign rights can be discussed based on the project, platform, timeline, and deliverables.",
+  },
+  {
+    question: "Do you work with unreleased games or embargoed access?",
+    answer:
+      "Yes. I can work with preview builds, press access, capture guidelines, embargo dates, and approval workflows when needed.",
+  },
+  {
+    question: "Where is the audience strongest?",
+    answer:
+      "Instagram is the main platform, supported by a gaming-focused community across social channels and creator collaborations.",
+  },
+];
 const IconInstagram = () => (
   <svg
     viewBox="0 0 24 24"
@@ -170,7 +193,7 @@ const socials = [
 ];
 
 export default function App() {
-  const [openFolders, setOpenFolders] = useState(["Resident Evil"]);
+  const [openFolders, setOpenFolders] = useState(["Clair Obscur: Expedition 33"]);
   const [lightbox, setLightbox] = useState(null);
   const [hideMenu, setHideMenu] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -598,6 +621,22 @@ export default function App() {
               </div>
             ))}
           </div>
+
+          <section id="faq" className="faq-section">
+            <div className="faq-head fade-in">
+              <p className="section-kicker">FAQ</p>
+              <h2>Quick Answers</h2>
+            </div>
+
+            <div className="faq-grid">
+              {faqs.map(({ question, answer }) => (
+                <article key={question} className="faq-item slide-up">
+                  <h3>{question}</h3>
+                  <p>{answer}</p>
+                </article>
+              ))}
+            </div>
+          </section>
 
           <div id="contact" className="contact-section">
             <div className="fade-in">
