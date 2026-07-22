@@ -1061,13 +1061,20 @@ header a,
 }
 
 .social-content {
-  align-items: end;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
 }
 
 .social-content p:not(.section-kicker) {
-  margin-top: 20px;
+  margin: 20px auto 0;
   max-width: 576px;
   color: rgba(255, 255, 255, 0.58);
+}
+
+.social-content .outline-btn {
+  margin-inline: auto;
 }
 
 .feed-grid {
@@ -2123,7 +2130,8 @@ textarea:focus {
   }
 }
 .instagram-widget-wrap {
-  width: 100%;
+  width: min(100%, 980px);
+  margin-inline: auto;
   overflow: hidden;
 }
 
