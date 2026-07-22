@@ -757,6 +757,7 @@ export default function App() {
 
       <footer className="edge footer">
         <p className="footer-brand">Danny Simas</p>
+        <p className="footer-copyright">© 2026 Danny Simas. All rights reserved.</p>
 
         <div>
           {socials.map(([label, url, icon]) => (
