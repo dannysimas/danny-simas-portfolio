@@ -124,24 +124,63 @@ const wins = [
 
 const faqs = [
   {
-    question: "What kind of projects are you available for?",
+    question: "Can I download your images?",
     answer:
-      "Game coverage, creator programs, press access, hardware partnerships, cinematic key art, virtual photography, reels, and social-first campaigns.",
+      "Yes. Visitors may download images for personal use, such as phone, tablet, or desktop wallpapers. They may not sell, modify, redistribute, or claim the work as their own.",
   },
   {
-    question: "Can studios or brands license the visuals?",
-    answer:
-      "Yes. Usage, licensing, reposting, and campaign rights can be discussed based on the project, platform, timeline, and deliverables.",
+    question: "Can I repost your work on social media?",
+    answer: (
+      <>
+        Yes, provided they give proper credit by tagging <strong>@dannysimas</strong> and don’t
+        alter the artwork. Reposting without credit or claiming the work as their own isn’t
+        permitted.
+      </>
+    ),
   },
   {
-    question: "Do you work with unreleased games or embargoed access?",
+    question: "Can brands, media outlets, or game studios use your work?",
     answer:
-      "Yes. I can work with preview builds, press access, capture guidelines, embargo dates, and approval workflows when needed.",
+      "Yes, with permission. Commercial, editorial, promotional, campaign, or publication use requires contacting me to discuss licensing or collaboration.",
   },
   {
-    question: "Where is the audience strongest?",
+    question: "Are these official game assets?",
     answer:
-      "Instagram is the main platform, supported by a gaming-focused community across social channels and creator collaborations.",
+      "No. The work consists of original in-game photography and creative edits inspired by the games I play. Game titles, characters, logos, and trademarks belong to their respective owners.",
+  },
+  {
+    question: "Do you work with game studios and brands?",
+    answer:
+      "Yes. I’m open to collaborations with developers, publishers, hardware manufacturers, and gaming brands involving campaigns, coverage, social content, and creative partnerships.",
+  },
+  {
+    question: "Can I commission custom work?",
+    answer:
+      "Possibly, depending on availability. Visitors can submit project details through the contact form.",
+  },
+  {
+    question: "What games do you create content for?",
+    answer:
+      "I create cinematic virtual photography and gaming content across many titles, particularly story-driven games, upcoming releases, and visually rich worlds.",
+  },
+  {
+    question: "How can I contact you?",
+    answer: "Through the website’s contact form or Instagram for general inquiries.",
+  },
+  {
+    question: "Do you sell prints or digital downloads?",
+    answer:
+      "Not currently. Any future availability will be announced through the website and social channels.",
+  },
+  {
+    question: "Can I request a specific game or character?",
+    answer:
+      "Yes. Community suggestions are welcome, though I can’t guarantee every request will become a project.",
+  },
+  {
+    question: "Copyright notice",
+    answer:
+      "Personal downloads are welcome. Commercial use, resale, modification, claiming ownership, or redistribution without proper credit is prohibited without written permission. All game titles, characters, logos, and trademarks belong to their respective owners.",
   },
 ];
 const IconInstagram = () => (
