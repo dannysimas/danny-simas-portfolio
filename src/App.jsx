@@ -223,12 +223,19 @@ const IconYouTube = () => (
   </svg>
 );
 
+const IconBluesky = () => (
+  <svg viewBox="0 0 24 24" className="social-icon" fill="currentColor">
+    <path d="M12 10.8C10.9 8.7 8 4.8 5.2 2.8 2.6.9 1.6 1.3.9 1.6.1 1.9 0 3.1 0 3.8c0 .7.4 5.7.6 6.5.8 2.7 3.7 3.7 6.4 3.2-4.3.7-5.5 3.1-3.1 5.5 4.5 4.5 6.5-1.1 7-2.5.1-.3.1-.4.2-.3 0-.1.1 0 .2.3.5 1.4 2.5 7 7 2.5 2.4-2.4 1.3-4.8-3.1-5.5 2.7.4 5.6-.5 6.4-3.2.2-.8.6-5.8.6-6.5 0-.7-.1-1.9-.9-2.2-.7-.3-1.7-.6-4.3 1.2-2.8 2-5.7 5.9-6.8 8Z" />
+  </svg>
+);
+
 const socials = [
   ["Instagram", "https://www.instagram.com/dannysimas/", <IconInstagram />],
   ["TikTok", "https://www.tiktok.com/@dannysimass", <IconTikTok />],
   ["Facebook", "https://www.facebook.com/dannysimass", <IconFacebook />],
   ["X", "https://x.com/dannysimass", <IconX />],
   ["YouTube", "https://www.youtube.com/@dannysimass", <IconYouTube />],
+  ["Bluesky", "https://bsky.app/profile/dannysimas.com", <IconBluesky />],
 ];
 
 export default function App() {
