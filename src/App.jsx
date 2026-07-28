@@ -310,6 +310,7 @@ export default function App() {
 
     if (!section) return undefined;
 
+    const triggerTarget = section.querySelector(".stat-item") ?? section;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let hasAnimated = false;
 
@@ -342,10 +343,10 @@ export default function App() {
 
         statsAnimationFrame.current = requestAnimationFrame(animateCount);
       },
-      { threshold: 0.35 }
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
     );
 
-    observer.observe(section);
+    observer.observe(triggerTarget);
 
     return () => {
       observer.disconnect();
