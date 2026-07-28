@@ -531,7 +531,9 @@ export default function App() {
 
       <section
         ref={statsSectionRef}
-        className={`edge reveal stats-section ${statsAnimated ? "stats-animated" : ""}`}
+        className={`edge reveal stats-section ${
+          statsAnimated ? "stats-animated is-visible" : ""
+        }`}
       >
         <div className="stats-grid">
           {stats.map(([number, label, icon], index) => (
