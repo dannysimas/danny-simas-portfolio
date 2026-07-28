@@ -561,6 +561,15 @@ export default function App() {
             </div>
           ))}
         </div>
+
+        <a
+          className="stats-proof-link"
+          href="https://beacons.ai/dannysimas/mediakit"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View live media kit <span aria-hidden="true">&#8599;</span>
+        </a>
       </section>
 
       <section id="collabs" className="edge reveal collab-section">
