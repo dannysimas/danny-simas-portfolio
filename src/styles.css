@@ -229,7 +229,12 @@ header a,
   overflow: hidden;
 }
 
-.hero-single img {
+.hero-image-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-image-layer img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -551,11 +556,62 @@ header a,
 }
 
 .stat-item {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   align-items: center;
   gap: 20px;
   padding: 28px 32px;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-item::before,
+.stat-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.stat-item::before {
+  z-index: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.22;
+  filter: grayscale(0.28) saturate(0.72) contrast(1.08);
+  transform: scale(1.01);
+  transition:
+    opacity 0.55s ease,
+    filter 0.55s ease,
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stat-item::after {
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(5, 6, 7, 0.82), rgba(5, 6, 7, 0.5));
+}
+
+.stat-item:nth-child(1)::before {
+  background-image: url("/images/stats/stat-community.jpg");
+}
+
+.stat-item:nth-child(2)::before {
+  background-image: url("/images/stats/stat-reach.jpg");
+}
+
+.stat-item:nth-child(3)::before {
+  background-image: url("/images/stats/stat-engagement.jpg");
+}
+
+.stat-item:nth-child(4)::before {
+  background-image: url("/images/stats/stat-collaboration.jpg");
+}
+
+.stat-item > * {
+  position: relative;
+  z-index: 2;
 }
 
 .stat-item:last-child {
@@ -569,12 +625,18 @@ header a,
   place-items: center;
   color: #67e8f9;
   opacity: 0.95;
+  transform-origin: center;
+  transition:
+    color 0.38s ease,
+    transform 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.38s ease;
 }
 
 .stat-logo svg {
   width: 34px;
   height: 34px;
   filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.18));
+  transition: filter 0.38s ease;
 }
 
 .stroke-icon {
@@ -593,7 +655,25 @@ header a,
   letter-spacing: 0.15em;
 }
 
-.stat-item span {
+.stat-value {
+  min-width: 5ch;
+  opacity: 0;
+  transform: translateY(24px) scale(0.96);
+  filter: blur(9px);
+  font-variant-numeric: tabular-nums;
+}
+
+.stats-section.stats-animated .stat-item.is-visible .stat-value {
+  animation: stat-value-enter 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--stat-delay, 0s);
+}
+
+.stats-section.stats-animated .stat-item.is-visible .stat-logo {
+  animation: stat-icon-pulse 1.35s ease-out backwards;
+  animation-delay: var(--stat-delay, 0s);
+}
+
+.stat-label {
   display: block;
   margin-top: 12px;
   font-size: 10px;
@@ -601,6 +681,115 @@ header a,
   text-transform: uppercase;
   letter-spacing: 0.35em;
   color: rgba(255, 255, 255, 0.45);
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.stat-gradient-text {
+  display: inline-block;
+}
+
+.stats-section.stats-animated .stat-item.is-visible .stat-label {
+  animation: stat-label-enter 0.9s ease-out forwards;
+  animation-delay: calc(var(--stat-delay, 0s) + 0.35s);
+}
+
+@keyframes stat-value-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    filter: blur(9px);
+    color: #67e8f9;
+  }
+
+  55% {
+    color: #c4b5fd;
+    text-shadow: 0 0 22px rgba(34, 211, 238, 0.35);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    color: white;
+    text-shadow: none;
+  }
+}
+
+@keyframes stat-label-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stat-icon-pulse {
+  0% {
+    opacity: 0.25;
+    transform: scale(0.82);
+    filter: drop-shadow(0 0 0 rgba(34, 211, 238, 0));
+  }
+
+  55% {
+    opacity: 1;
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 14px rgba(34, 211, 238, 0.7));
+  }
+
+  100% {
+    opacity: 0.95;
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(34, 211, 238, 0));
+  }
+}
+
+@keyframes stat-gradient-flow {
+  from {
+    background-position: 0% 50%;
+  }
+
+  to {
+    background-position: 200% 50%;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stat-item:hover::before {
+    opacity: 0.34;
+    filter: grayscale(0.08) saturate(0.92) contrast(1.12);
+    transform: scale(1.035);
+  }
+
+  .stat-item:hover .stat-logo {
+    color: white;
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 16px rgba(34, 211, 238, 0.45));
+  }
+
+  .stat-item:hover .stat-logo svg {
+    filter: drop-shadow(0 0 14px rgba(34, 211, 238, 0.75));
+  }
+
+  .stat-item:hover .stat-gradient-text {
+    background: linear-gradient(
+      90deg,
+      #ffffff 0%,
+      #67e8f9 25%,
+      #c4b5fd 50%,
+      #ffffff 75%,
+      #67e8f9 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+    animation: stat-gradient-flow 2.4s linear infinite;
+  }
 }
 
 .section-title-row {
@@ -1394,8 +1583,26 @@ textarea:focus {
     transition: none !important;
   }
 
+  .stat-value,
+  .stat-logo,
+  .stat-label,
+  .stat-gradient-text {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .stat-item::before {
+    transform: none !important;
+    transition: none !important;
+  }
+
   .hero-single img {
     animation: none !important;
+  }
+
+  .hero-image-layer img {
+    filter: none !important;
   }
 }
 
@@ -2138,8 +2345,79 @@ textarea:focus {
 
 @media (min-width: 1201px) {
   .social-content > .instagram-widget-wrap {
-    position: relative;
-    top: 84px;
+    align-self: center;
+  }
+
+  .brand {
+    font-size: 16px;
+  }
+
+  .main-nav {
+    font-size: 14px;
+  }
+
+  .header-socials a {
+    width: 40px;
+    height: 40px;
+  }
+
+  .header-socials .social-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .section-kicker {
+    font-size: 14px;
+  }
+
+  .hero-left a {
+    font-size: 16px;
+  }
+
+  .outline-btn,
+  .primary-btn {
+    font-size: 14px;
+  }
+
+  .about-copy p,
+  .highlights-head > p,
+  .media-cta p:not(.section-kicker) {
+    font-size: 20px;
+  }
+
+  .social-content p:not(.section-kicker),
+  .contact-section p,
+  input,
+  textarea {
+    font-size: 18px;
+  }
+
+  .tag-row span,
+  .collab-card span,
+  .stat-label,
+  .highlight-label,
+  .folder-content p,
+  .archive-disclaimer,
+  .media-card p,
+  .lightbox-info span,
+  .footer-copyright {
+    font-size: 12px;
+  }
+
+  .section-title-row p,
+  .media-card span,
+  .highlight-card p {
+    font-size: 16px;
+  }
+
+  .collab-card p,
+  .highlight-index,
+  .lightbox-info p {
+    font-size: 14px;
+  }
+
+  .faq-item p {
+    font-size: 17px;
   }
 }
 

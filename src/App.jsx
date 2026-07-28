@@ -72,8 +72,8 @@ const collabs = [
 
 const stats = [
   [
-    "55K+",
-    "Followers",
+    "70K+",
+    "Followers Across Platforms",
     "M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2 M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M21 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75",
   ],
   [
@@ -117,7 +117,7 @@ const wins = [
   },
   {
     label: "Audience Proof",
-    title: "55K+ Community",
+    title: "70K+ Community",
     text: "Gaming audience with monthly reach in the millions.",
   },
 ];
@@ -245,7 +245,11 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [formStatus, setFormStatus] = useState("");
   const [cursor, setCursor] = useState({ x: -100, y: -100 });
+  const [audienceCount, setAudienceCount] = useState(0);
+  const [statsAnimated, setStatsAnimated] = useState(false);
   const lastScrollY = useRef(0);
+  const statsSectionRef = useRef(null);
+  const statsAnimationFrame = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -300,6 +304,57 @@ export default function App() {
       observer.disconnect();
     };
   }, [openFolders]);
+
+  useEffect(() => {
+    const section = statsSectionRef.current;
+
+    if (!section) return undefined;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let hasAnimated = false;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || hasAnimated) return;
+
+        hasAnimated = true;
+        observer.disconnect();
+        setStatsAnimated(true);
+
+        if (prefersReducedMotion) {
+          setAudienceCount(70);
+          return;
+        }
+
+        const duration = 2400;
+        const startTime = performance.now();
+
+        const animateCount = (currentTime) => {
+          const progress = Math.min((currentTime - startTime) / duration, 1);
+          const easedProgress = 1 - Math.pow(1 - progress, 3);
+
+          setAudienceCount(Math.round(70 * easedProgress));
+
+          if (progress < 1) {
+            statsAnimationFrame.current = requestAnimationFrame(animateCount);
+          }
+        };
+
+        statsAnimationFrame.current = requestAnimationFrame(animateCount);
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+
+      if (statsAnimationFrame.current) {
+        cancelAnimationFrame(statsAnimationFrame.current);
+      }
+    };
+  }, []);
 
   function toggleFolder(folderTitle) {
     setOpenFolders((current) =>
@@ -420,7 +475,13 @@ export default function App() {
 
       <section id="home" className="hero-section">
         <div className="hero-single">
-          <img src={heroCollage} alt="Danny Simas cinematic gaming collage" />
+          <div className="hero-image-layer">
+            <img
+              className="hero-base-image"
+              src={heroCollage}
+              alt="Danny Simas cinematic gaming collage"
+            />
+          </div>
         </div>
 
         <div className="hero-mask" />
@@ -467,10 +528,17 @@ export default function App() {
         </div>
       </section>
 
-      <section className="edge reveal stats-section">
+      <section
+        ref={statsSectionRef}
+        className={`edge reveal stats-section ${statsAnimated ? "stats-animated" : ""}`}
+      >
         <div className="stats-grid">
-          {stats.map(([number, label, icon]) => (
-            <div key={label} className="slide-up stat-item">
+          {stats.map(([number, label, icon], index) => (
+            <div
+              key={label}
+              className="slide-up stat-item"
+              style={{ "--stat-delay": `${index * 0.2}s` }}
+            >
               <span className="stat-logo">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path className="stroke-icon" d={icon} />
@@ -478,8 +546,14 @@ export default function App() {
               </span>
 
               <div>
-                <p>{number}</p>
-                <span>{label}</span>
+                <p className="stat-value" aria-label={index === 0 ? "70K+" : undefined}>
+                  <span className="stat-gradient-text">
+                    {index === 0 ? `${audienceCount}K+` : number}
+                  </span>
+                </p>
+                <span className="stat-label">
+                  <span className="stat-gradient-text">{label}</span>
+                </span>
               </div>
             </div>
           ))}
