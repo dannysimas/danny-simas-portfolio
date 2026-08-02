@@ -65,7 +65,10 @@ const nav = [
 
 const collabs = [
   ["Game Studios", ["Rogue Factor", "Myrkur Games", "Nekki", "One More Level"]],
-  ["Publishers", ["Deep Silver", "Focus Entertainment", "PLAION", "Nekki", "One More Level"]],
+  [
+    "Publishers",
+    ["Deep Silver", "Focus Entertainment", "PLAION", "Nekki", "One More Level", "Fictions, Inc."],
+  ],
   ["Hardware Brands", ["Razer", "GameSir"]],
   ["Creator Programs", ["Deep Silver", "Keymailer"]],
 ];
