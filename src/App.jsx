@@ -64,13 +64,16 @@ const nav = [
 ];
 
 const collabs = [
-  ["Game Studios", ["Rogue Factor", "Myrkur Games", "Nekki", "One More Level"]],
+  ["Studios", ["Rogue Factor", "Myrkur Games", "Nekki", "One More Level"]],
   [
     "Publishers",
-    ["Deep Silver", "Focus Entertainment", "PLAION", "Nekki", "One More Level", "Fictions, Inc."],
+    ["PLAION", "Deep Silver", "Focus Entertainment", "Fictions, Inc."],
   ],
-  ["Hardware Brands", ["Razer", "GameSir"]],
-  ["Creator Programs", ["Deep Silver", "Keymailer"]],
+  ["Gaming & Hardware", ["Razer", "GameSir"]],
+  [
+    "Creator Programs",
+    ["IO Interactive Partner Program", "Deep Silver Creator Collective", "Keymailer"],
+  ],
 ];
 
 const stats = [
@@ -96,32 +99,32 @@ const wins = [
   {
     label: "Platform Feature",
     title: "PlayStation Deutschland",
-    text: "Reposted a full carousel with credit.",
+    text: "Featured and shared my cinematic gaming work with credit across official PlayStation social channels.",
   },
   {
-    label: "Brand Campaign",
+    label: "Studio Recognition",
+    title: "Santa Monica Studio",
+    text: "Shared my God of War creative work through official studio channels.",
+  },
+  {
+    label: "Official Channel Recognition",
+    title: "Halo",
+    text: "My Halo imagery was reposted by the official Halo social account.",
+  },
+  {
+    label: "Selected Creative Work",
+    title: "CD PROJEKT RED",
+    text: "Selected my Witcher imagery for use in official community and event-related content.",
+  },
+  {
+    label: "Brand Partnership",
     title: "Razer",
-    text: "Gifted campaign content and gaming gear coverage.",
+    text: "Created gaming hardware content through a gifted creator partnership.",
   },
   {
-    label: "Contest Win",
-    title: "Myrkur Games",
-    text: "Photomode contest winner and creator recognition.",
-  },
-  {
-    label: "Partner Program",
-    title: "IO Interactive",
-    text: "Partner Program member for game coverage.",
-  },
-  {
-    label: "Creator Access",
-    title: "Deep Silver",
-    text: "Creator Collective access and publisher-side opportunities.",
-  },
-  {
-    label: "Audience Proof",
-    title: "70K+ Community",
-    text: "Gaming audience with monthly reach in the millions.",
+    label: "Publisher Access",
+    title: "PLAION / Deep Silver",
+    text: "Creator access, game coverage opportunities, and participation in the Deep Silver Creator Collective.",
   },
 ];
 
@@ -506,22 +509,22 @@ export default function App() {
 
         <div className="fade-in about-copy">
           <p className="section-kicker">About Danny Simas</p>
-          <h2>Visual Storytelling for Games</h2>
+          <h2>Cinematic Gaming Creator &amp; Visual Artist</h2>
 
           <p>
-            I’m Danny Simas, a cinematic gaming visual artist and content creator focused on virtual
-            photography, key art, and social-first game coverage.
+            I’m Danny Simas, a cinematic gaming creator and visual artist focused on turning game
+            worlds into images and social content that feel bigger than the screen.
           </p>
 
           <p>
-            My work blends in-game capture, composition, lighting, and visual storytelling to create
-            images that feel closer to movie posters than traditional screenshots. I build visuals
-            designed to stop the scroll, connect with gaming audiences, and help games feel larger
-            than the screen.
+            My work combines in-game capture, composition, lighting, and post-production with
+            social-first game coverage. From cinematic imagery and key art-inspired visuals to
+            reels, carousels, and launch coverage, everything is built around one goal: making games
+            impossible to ignore.
           </p>
 
           <div className="tag-row">
-            {["Virtual Photography", "Key Art", "Social Coverage"].map((tag) => (
+            {["Cinematic Visuals", "Game Coverage", "Creative Campaigns"].map((tag) => (
               <span key={tag}>{tag}</span>
             ))}
           </div>
@@ -604,10 +607,13 @@ export default function App() {
               <p>Creator Highlights</p>
             </div>
 
-            <h2>Proof of Work</h2>
+            <h2>Selected Recognition</h2>
           </div>
 
-          <p>A quick snapshot of creator wins, platform recognition, brand trust, and audience proof.</p>
+          <p>
+            A snapshot of studio recognition, platform features, brand partnerships, and creator
+            opportunities.
+          </p>
         </div>
 
         <div className="highlights-grid">
@@ -742,7 +748,11 @@ export default function App() {
             {[
               [
                 "Audience",
-                ["55K+ Instagram followers", "Millions in monthly reach", "Gaming-focused community"],
+                [
+                  "70K+ community across platforms",
+                  "Millions in monthly reach",
+                  "Highly engaged gaming audience",
+                ],
               ],
               ["Coverage", ["Cinematic key art", "Virtual photography", "Reels and carousels"]],
               ["Available For", ["Game coverage", "Creator programs", "Hardware partnerships"]],
