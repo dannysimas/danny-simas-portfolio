@@ -691,7 +691,37 @@ function GameVideo({ note }) {
 }
 
 function GameScreenshots({ note }) {
-  if (!note.screenshots?.length) return null;
+  const screenshots = note.screenshots || [];
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  useEffect(() => {
+    if (activeIndex === null) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setActiveIndex(null);
+      if (event.key === "ArrowLeft") {
+        setActiveIndex((current) => (current - 1 + screenshots.length) % screenshots.length);
+      }
+      if (event.key === "ArrowRight") {
+        setActiveIndex((current) => (current + 1) % screenshots.length);
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeIndex, screenshots.length]);
+
+  if (!screenshots.length) return null;
+
+  const activeScreenshot = activeIndex === null ? null : screenshots[activeIndex];
+  const showPrevious = () => setActiveIndex((current) => (current - 1 + screenshots.length) % screenshots.length);
+  const showNext = () => setActiveIndex((current) => (current + 1) % screenshots.length);
 
   return (
     <section className="play-screenshots" aria-label={`${note.title} screenshots`}>
@@ -703,17 +733,44 @@ function GameScreenshots({ note }) {
         <span>Click to view full size</span>
       </div>
       <div className="play-screenshots-grid">
-        {note.screenshots.map((screenshot, index) => (
-          <a
+        {screenshots.map((screenshot, index) => (
+          <button
             key={screenshot.src}
+            type="button"
             className="play-screenshot"
-            href={screenshot.src}
+            onClick={() => setActiveIndex(index)}
+            aria-label={`Open ${note.title} screenshot ${index + 1} of ${screenshots.length}`}
           >
             <img src={screenshot.src} alt={screenshot.alt} loading="lazy" />
             <span>Screenshot {String(index + 1).padStart(2, "0")}</span>
-          </a>
+          </button>
         ))}
       </div>
+      {activeScreenshot && (
+        <div
+          className="play-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${note.title} screenshot gallery`}
+          onClick={() => setActiveIndex(null)}
+        >
+          <div className="play-lightbox-panel" onClick={(event) => event.stopPropagation()}>
+            <div className="play-lightbox-heading">
+              <span>{note.title}</span>
+              <button type="button" className="play-lightbox-close" onClick={() => setActiveIndex(null)} aria-label="Close screenshot gallery">×</button>
+            </div>
+            <div className="play-lightbox-stage">
+              <button type="button" className="play-lightbox-arrow play-lightbox-arrow-prev" onClick={showPrevious} aria-label="Previous screenshot">‹</button>
+              <img className="play-lightbox-image" src={activeScreenshot.src} alt={activeScreenshot.alt} />
+              <button type="button" className="play-lightbox-arrow play-lightbox-arrow-next" onClick={showNext} aria-label="Next screenshot">›</button>
+            </div>
+            <div className="play-lightbox-caption">
+              <span>{activeScreenshot.alt}</span>
+              <strong>{String(activeIndex + 1).padStart(2, "0")} / {String(screenshots.length).padStart(2, "0")}</strong>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
