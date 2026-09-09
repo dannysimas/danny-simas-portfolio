@@ -39,7 +39,6 @@ export default function GameNotesPage() {
           <span className="play-wordmark"><span className="play-wordmark-the">THE</span><span className="play-wordmark-next">NEXT</span><span className="play-wordmark-play">PLAY</span></span>
           <small>BY DANNY SIMAS</small>
         </a>
-        <a className="play-portfolio-link" href="/">Visit portfolio ↗</a>
       </header>
       <GameNotes />
     </main>

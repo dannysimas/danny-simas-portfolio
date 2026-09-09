@@ -165,6 +165,17 @@ header a,
   transition: color 0.3s ease;
 }
 
+.nav-link-button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
 .nav-link::after {
   content: "";
   position: absolute;
@@ -2160,6 +2171,18 @@ textarea:focus {
     text-transform: uppercase;
     letter-spacing: 0.22em;
     color: white;
+  }
+
+  .mobile-menu-link-button {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: white;
+    font: 900 13px/1 Inter, sans-serif;
+    letter-spacing: 0.22em;
+    text-align: left;
+    text-transform: uppercase;
+    cursor: pointer;
   }
 
   .mobile-socials {

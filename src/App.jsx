@@ -453,9 +453,15 @@ export default function App() {
 
           <nav className="main-nav">
             {nav.map(([label, href]) => (
-              <a key={label} href={href} className="nav-link">
-                {label}
-              </a>
+              label === "The Next Play" ? (
+                <button key={label} type="button" className="nav-link nav-link-button" onClick={() => setNextPlayOpen(true)}>
+                  {label}
+                </button>
+              ) : (
+                <a key={label} href={href} className="nav-link">
+                  {label}
+                </a>
+              )
             ))}
           </nav>
 
@@ -482,9 +488,15 @@ export default function App() {
         <div className={`mobile-menu ${mobileMenuOpen ? "mobile-menu-open" : ""}`}>
           <nav>
             {nav.map(([label, href]) => (
-              <a key={label} href={href} onClick={() => setMobileMenuOpen(false)}>
-                {label}
-              </a>
+              label === "The Next Play" ? (
+                <button key={label} type="button" className="mobile-menu-link-button" onClick={() => { setNextPlayOpen(true); setMobileMenuOpen(false); }}>
+                  {label}
+                </button>
+              ) : (
+                <a key={label} href={href} onClick={() => setMobileMenuOpen(false)}>
+                  {label}
+                </a>
+              )
             ))}
           </nav>
 
