@@ -81,12 +81,13 @@ const gameNotes = [
     releaseDate: "September 29, 2026",
     platforms: ["PC", "PlayStation 5", "Xbox Series X|S", "Nintendo Switch 2", "Battle.net"],
     image: "/images/next-play/screenshots/witcher3-visuals.jpg",
+    storyImage: "/images/next-play/witcher3-remastered-cover.png",
     screenshots: [
       { src: "/images/next-play/screenshots/witcher3-visuals.jpg", alt: "Geralt overlooking a sunlit town in The Witcher 3: Wild Hunt — Remastered" },
       { src: "/images/next-play/screenshots/witcher3-combat.jpg", alt: "Geralt fighting a monster in The Witcher 3: Wild Hunt — Remastered" },
       { src: "/images/next-play/screenshots/witcher3-photo-mode.jpg", alt: "Geralt on horseback in a harbor at sunset in The Witcher 3: Wild Hunt — Remastered" },
     ],
-    video: { youtubeId: "IGk17XQ7IrQ", label: "Official announcement trailer", credit: "CD PROJEKT RED" },
+    video: { youtubeId: "IGk17XQ7IrQ", label: "Official announcement trailer", credit: "CD PROJEKT RED", poster: "/images/next-play/witcher3-remastered-cover.png" },
     verdict: "Must play",
     tone: "buy",
     take: "The Witcher 3 is a masterpiece: its characters, story, and world still feel incredible, and the Remastered upgrade makes this September’s must-play.",
@@ -730,7 +731,7 @@ function GameVideo({ note }) {
           )
         ) : (
           <button type="button" className="play-video-launch" onClick={() => setPlaying(true)} aria-label={`Play ${note.title} ${video.label}`}>
-            <img src={note.image} alt="" loading="lazy" />
+            <img src={video.poster || note.image} alt="" loading="lazy" />
             <span className="play-video-icon" aria-hidden="true">▶</span>
             <span className="play-video-caption">Watch trailer <span aria-hidden="true">↗</span></span>
           </button>
