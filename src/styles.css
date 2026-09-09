@@ -268,10 +268,10 @@ header a,
 }
 
 .hero-left p {
-  max-width: 380px;
+  max-width: 480px;
   margin: 0;
   font-family: "Space Grotesk", Inter, sans-serif;
-  font-size: clamp(2.1rem, 3vw, 3.6rem);
+  font-size: clamp(2.45rem, 3.6vw, 4.2rem);
   font-style: italic;
   font-weight: 800;
   line-height: 0.94;
@@ -289,7 +289,7 @@ header a,
 
 .hero-left a {
   display: inline-block;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -2608,7 +2608,7 @@ textarea:focus {
   }
 
   .hero-left a {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .hero-left p {
