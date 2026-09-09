@@ -59,9 +59,9 @@ const gameNotes = [
     platforms: ["PlayStation 5"],
     image: "/images/next-play/wolverine.jpg",
     screenshots: [
-      { src: "/images/next-play/screenshots/wolverine-gameplay.jpg", alt: "Marvel’s Wolverine extended gameplay trailer thumbnail" },
-      { src: "/images/next-play/screenshots/wolverine-story.jpg", alt: "Marvel’s Wolverine story trailer thumbnail" },
-      { src: "/images/next-play/screenshots/wolverine-release.jpg", alt: "Marvel’s Wolverine release date trailer thumbnail" },
+      { src: "/images/next-play/screenshots/wolverine-hero.webp", alt: "Close-up of Wolverine in his yellow mask with his claws raised" },
+      { src: "/images/next-play/screenshots/wolverine-alley.webp", alt: "Wolverine facing an armored enemy in a neon-lit alley" },
+      { src: "/images/next-play/screenshots/wolverine-princess-bar.webp", alt: "Logan walking toward the neon-lit Princess Bar" },
     ],
     video: { youtubeId: "_U56cQFx_Vw", label: "Official extended gameplay trailer", credit: "Marvel Entertainment / Insomniac Games" },
     verdict: "Day one",
