@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/game-notes", "destination": "/index.html" },
+    { "source": "/the-next-play", "destination": "/index.html" }
+  ]
+}

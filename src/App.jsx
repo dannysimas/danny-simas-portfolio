@@ -56,6 +56,7 @@ const folders = [
 
 const nav = [
   ["Work", "#work"],
+  ["The Next Play", "/the-next-play"],
   ["About", "#about"],
   ["Collaborations", "#collabs"],
   ["Media Kit", "#media-kit"],

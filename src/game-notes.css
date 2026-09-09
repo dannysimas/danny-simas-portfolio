@@ -1,0 +1,138 @@
+/* Game-selection layout; scoped to the standalone page. */
+.game-notes-page .game-notes-section { padding-top: 44px; }
+.game-notes-page .game-notes-head { grid-template-columns: 1fr 0.8fr; margin-bottom: 32px; }
+.game-notes-page .game-notes-head h2 { font-size: clamp(52px, 6.8vw, 100px); }
+.game-notes-page .section-kicker { font-size: 12px; letter-spacing: 0.24em; }
+.game-notes-page .game-notes-intro p { font-size: 16px; }
+.game-notes-page .game-notes-intro > span { border: 0; padding: 0; background: none; font-size: 12px; letter-spacing: 0.1em; }
+
+.game-notes-page .game-notes-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  border: 0;
+}
+.game-notes-page .game-note-card {
+  display: flex;
+  border: 1px solid #ffffff29;
+  background: linear-gradient(145deg, #10131bd9, #090a10f5);
+  transition: border-color 220ms ease, box-shadow 220ms ease;
+}
+.game-notes-page .game-note-card:hover,
+.game-notes-page .game-note-card:focus-within {
+  border-color: #67e8f97a;
+  box-shadow: 0 0 32px #22d3ee12, inset 0 0 24px #8b5cf608;
+}
+.game-notes-page .game-note-card::after {
+  inset: 0 auto auto 0;
+  width: 76px;
+  height: 3px;
+  opacity: 1;
+  background: #67e8f9;
+}
+.game-notes-page .game-note-wait::after { background: #c4b5fd; }
+.game-notes-page .game-note-skip::after { background: #ffffff8c; }
+.game-notes-page .game-note-image { aspect-ratio: 2.25 / 1; }
+.game-notes-page .game-note-image img { object-position: center 28%; }
+.game-notes-page .game-note-image-meta {
+  inset: 20px 22px auto;
+  align-items: flex-start;
+  font-size: 12px;
+  letter-spacing: 0.09em;
+}
+.game-notes-page .game-note-slot {
+  padding: 9px 12px;
+  background: #050607ce;
+  border-left: 2px solid #67e8f9;
+  color: #fff;
+  backdrop-filter: blur(8px);
+}
+.game-notes-page .game-note-image-meta > span:last-child {
+  padding: 9px 0;
+  text-shadow: 0 2px 8px #000;
+}
+.game-notes-page .game-note-body { padding: 26px 28px 0; }
+.game-notes-page .game-note-meta {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #ffffff99;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+.note-status-light { width: 6px; height: 6px; flex-shrink: 0; background: #c4b5fd; box-shadow: 0 0 10px #8b5cf67a; }
+.game-note-featured .note-status-light { background: #67e8f9; box-shadow: 0 0 12px #22d3eea0; }
+.game-notes-page .game-note-body h3 { font-size: clamp(30px, 3vw, 44px); }
+.game-notes-page .game-note-take { min-height: 0; font-size: 16px; line-height: 1.65; }
+.game-notes-page .game-note-signals { gap: 10px; margin: 24px 0 28px; }
+.game-notes-page .game-note-signals span { font-size: 14px; }
+.game-notes-page .game-note-signals b {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  border: 1px solid #22d3ee40;
+  background: #22d3ee0a;
+  font-weight: 500;
+}
+.game-notes-page .game-note-signals .negative b { border-color: #c4b5fd40; background: #8b5cf60a; }
+.game-notes-page .game-note-footer {
+  margin: auto -28px 0;
+  padding: 0 28px;
+  gap: 20px;
+  border-top-color: #67e8f940;
+  background: linear-gradient(90deg, #22d3ee19, #22d3ee03);
+}
+.game-notes-page .game-note-wait .game-note-footer { background: linear-gradient(90deg, #8b5cf626, #8b5cf603); border-color: #c4b5fd40; }
+.game-notes-page .game-note-skip .game-note-footer { background: linear-gradient(90deg, #ffffff0d, #ffffff03); border-color: #ffffff29; }
+.game-notes-page .game-note-footer span { font-size: 12px; color: #ffffff99; letter-spacing: 0.12em; }
+.game-notes-page .game-note-footer strong { font-size: 28px; white-space: normal; overflow: visible; }
+.game-notes-page .game-note-footer button { font-size: 12px; letter-spacing: 0.08em; min-height: 64px; }
+.game-notes-page .game-note-footer button:focus-visible { outline: 2px solid #67e8f9; outline-offset: -5px; }
+
+.game-notes-page .game-note-featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1.18fr 1fr;
+  min-height: 540px;
+}
+.game-notes-page .game-note-featured .game-note-image { aspect-ratio: auto; min-height: 100%; }
+.game-notes-page .game-note-featured .game-note-image img { position: absolute; object-position: center 30%; }
+.game-notes-page .game-note-featured .game-note-image-shade {
+  background: linear-gradient(90deg, transparent 58%, #0c0f16 100%), linear-gradient(0deg, #05060755, transparent 60%);
+}
+.game-notes-page .game-note-featured .game-note-body { padding-top: 36px; }
+.game-notes-page .game-note-featured h3 {
+  font-size: clamp(38px, 4.3vw, 70px);
+  margin-top: 24px;
+  max-width: 640px;
+  line-height: 0.95;
+}
+.game-notes-page .game-note-featured .game-note-take { max-width: 520px; }
+.game-notes-page .game-note-featured .game-note-footer strong { font-size: 36px; }
+
+@media (max-width: 1000px) {
+  .game-notes-page .game-notes-head { grid-template-columns: 1fr; gap: 22px; }
+  .game-notes-page .game-note-featured { grid-template-columns: 1fr 1fr; min-height: 520px; }
+  .game-notes-page .game-note-image-meta { flex-wrap: wrap; gap: 4px; }
+  .game-notes-page .game-note-footer { grid-template-columns: 1fr; gap: 0; }
+  .game-notes-page .game-note-footer button { border-left: 0; border-top: 1px solid #ffffff26; padding: 0; text-align: left; min-height: 48px; }
+}
+@media (max-width: 700px) {
+  .game-notes-page .game-notes-section { padding-top: 32px; }
+  .game-notes-page .game-notes-grid { grid-template-columns: 1fr; gap: 22px; }
+  .game-notes-page .game-note-featured { display: flex; min-height: 0; }
+  .game-notes-page .game-note-featured .game-note-image { min-height: 0; aspect-ratio: 1.2 / 1; }
+  .game-notes-page .game-note-featured .game-note-image img { position: static; }
+  .game-notes-page .game-note-featured .game-note-image-shade { background: linear-gradient(0deg, #0c0f16, transparent 55%); }
+  .game-notes-page .game-note-image { aspect-ratio: 1.65 / 1; }
+  .game-notes-page .game-note-image-meta { inset: 18px 18px auto; }
+  .game-notes-page .game-note-body,
+  .game-notes-page .game-note-featured .game-note-body { padding: 24px 20px 0; }
+  .game-notes-page .game-note-featured h3 { font-size: 42px; }
+  .game-notes-page .game-note-footer { margin-inline: -20px; padding-inline: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .game-notes-page .game-note-card,
+  .game-notes-page .game-note-image img { transition: none; }
+  .game-notes-page .game-note-card:hover .game-note-image img { transform: none; }
+}
