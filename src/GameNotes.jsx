@@ -8,6 +8,8 @@ const gameNotes = [
     title: "Onimusha: Way of the Sword",
     stage: "Demo impression",
     meta: "Played the demo · Personal take",
+    releaseDate: "September 4, 2026",
+    platforms: ["PC", "PlayStation 5", "Xbox Series X|S", "Nintendo Switch 2"],
     image: "/images/next-play/onimusha-demo.jpg",
     screenshots: [
       { src: "/images/next-play/screenshots/onimusha-combat.jpg", alt: "Musashi fighting a Genma in the Kiyomizu demo area" },
@@ -29,6 +31,8 @@ const gameNotes = [
     title: "The Blood of Dawnwalker",
     stage: "Early impression",
     meta: "Played 1 hour · Returned",
+    releaseDate: "September 3, 2026",
+    platforms: ["PC", "PlayStation 5", "Xbox Series X|S"],
     image: "/images/next-play/blood-dawnwalker.jpg",
     screenshots: [
       { src: "/images/next-play/screenshots/dawnwalker-combat.jpg", alt: "Coen fighting bandits in a Dawnwalker forest" },
@@ -826,6 +830,16 @@ export default function GameNotes() {
               <div className="game-note-body">
                 <p className="game-note-meta"><span className="note-status-light" aria-hidden="true" />{note.meta}</p>
                 <h1>{note.title}</h1>
+                <div className="play-game-facts" aria-label={`${note.title} release information`}>
+                  <div className="play-game-fact">
+                    <span>Release date</span>
+                    <strong>{note.releaseDate}</strong>
+                  </div>
+                  <div className="play-game-fact">
+                    <span>Platforms</span>
+                    <strong>{note.platforms.join(" · ")}</strong>
+                  </div>
+                </div>
                 <p className="game-note-take">{note.take}</p>
                 <div className="play-reason">
                   <h2>{note.reasonLabel}</h2>

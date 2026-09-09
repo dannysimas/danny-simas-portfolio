@@ -71,6 +71,10 @@
 .play-detail .game-note-body { width: min(640px,100%); padding: 0; margin-top: clamp(110px,20vh,230px); }
 .play-detail .game-note-meta { margin: 0 0 18px; color: #b8c4d8; font-size: 12px; letter-spacing: .12em; }
 .play-detail h1 { margin: 0; font-family: "Space Grotesk",sans-serif; font-size: clamp(42px,5vw,76px); line-height: .98; letter-spacing: -.05em; font-weight: 800; text-wrap: balance; text-shadow: 0 4px 32px #0008; }
+.play-game-facts { display: grid; grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr); gap: 16px; margin: 22px 0 0; padding: 14px 0; border-top: 1px solid #ffffff26; border-bottom: 1px solid #ffffff26; }
+.play-game-fact { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.play-game-fact span { color: #67e8f9; font: 800 var(--play-small-size) Inter,sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+.play-game-fact strong { color: #d7deea; font: 600 var(--play-label-size)/1.45 Inter,sans-serif; }
 .play-detail .game-note-take { min-height: 0; max-width: 530px; margin: 24px 0; font-size: 18px; line-height: 1.65; color: #d1d7e2; }
 .play-detail .game-note-signals { border-top: 1px solid #ffffff26; padding: 20px 0; margin: 0; gap: 12px; }
 .play-detail .game-note-signals span { font-size: 15px; color: #b4bed0; }
@@ -166,6 +170,7 @@
   .play-detail .game-note-image-meta { inset: 24px 18px auto; }
   .play-content-grid { grid-template-columns: 1fr; gap: 24px; }
   .play-detail h1 { font-size: 38px; }
+  .play-game-facts { grid-template-columns: 1fr; gap: 12px; }
   .play-content-grid > .play-video { padding: 12px; }
   .play-screenshots { padding: 12px; }
   .play-screenshots-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
