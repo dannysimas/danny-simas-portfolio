@@ -516,6 +516,19 @@ export default function App() {
             <p>Cinematic game visuals with a movie-poster mindset.</p>
             <div className="hero-line" />
             <a href="#work">Explore Work →</a>
+            <button
+              type="button"
+              className={`next-play-logo-button${nextPlayOpen ? " is-open" : ""}`}
+              onClick={() => setNextPlayOpen(true)}
+              aria-label="Open The Next Play"
+              aria-expanded={nextPlayOpen}
+            >
+              <span className="next-play-logo-arrows" aria-hidden="true"><i /><i /><i /></span>
+              <span className="next-play-logo-copy">
+                <span className="next-play-logo-title"><b>THE</b> <strong>NEXT</strong> <em>PLAY</em></span>
+                <small><b>//</b> BY DANNY SIMAS</small>
+              </span>
+            </button>
           </div>
         </div>
       </section>
@@ -871,18 +884,6 @@ export default function App() {
           </div>
         </div>
       )}
-
-      <button
-        type="button"
-        className={`next-play-orb${nextPlayOpen ? " is-open" : ""}${hideMenu ? " is-hidden" : ""}`}
-        onClick={() => setNextPlayOpen(true)}
-        aria-label="Open The Next Play"
-        aria-expanded={nextPlayOpen}
-      >
-        <span className="next-play-orb-arrows" aria-hidden="true"><i /><i /><i /></span>
-        <span className="next-play-orb-wordmark"><small>THE</small><strong>NEXT PLAY</strong></span>
-        <span className="next-play-orb-open" aria-hidden="true">OPEN</span>
-      </button>
 
       {nextPlayOpen && (
         <div className="next-play-lightbox" role="dialog" aria-modal="true" aria-labelledby="next-play-lightbox-title">
