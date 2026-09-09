@@ -515,16 +515,22 @@ function GameCommunity({ note }) {
     setStatus("");
 
     try {
-      await supabaseRequest("game_comments", {
+      const submittedName = name.trim();
+      const submittedBody = body.trim();
+      const createdComments = await supabaseRequest("game_comments?select=id,name,body,created_at", {
         method: "POST",
-        headers: { Prefer: "return=minimal" },
+        headers: { Prefer: "return=representation" },
         body: JSON.stringify({
           game_id: note.id,
-          name: name.trim(),
-          body: body.trim(),
+          name: submittedName,
+          body: submittedBody,
           status: "approved",
         }),
       });
+
+      if (Array.isArray(createdComments) && createdComments[0]) {
+        setComments((current) => [createdComments[0], ...current]);
+      }
       setName("");
       setBody("");
       setStatus("Thanks — your comment is live.");
