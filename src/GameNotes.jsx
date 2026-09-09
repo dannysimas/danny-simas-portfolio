@@ -44,27 +44,6 @@ const gameNotes = [
     positives: [],
     concerns: ["Visuals and characters feel underwhelming", "Combat and time system add friction", "Performance issues", "No photo mode"],
   },
-  {
-    id: "pragmata",
-    number: "03",
-    title: "Pragmata",
-    stage: "Why I’m skipping",
-    meta: "Not buying yet · Sample copy",
-    image: "/images/gallery/pragmata/full/01.webp",
-    screenshots: [
-      { src: "/images/gallery/pragmata/full/01.webp", alt: "Pragmata gameplay scene" },
-      { src: "/images/gallery/pragmata/full/02.webp", alt: "Pragmata gameplay scene" },
-      { src: "/images/gallery/pragmata/full/03.webp", alt: "Pragmata gameplay scene" },
-    ],
-    video: { youtubeId: "TzBtbtOghV0", label: "Official main trailer", credit: "Capcom" },
-    verdict: "Skip for now",
-    tone: "skip",
-    take: "The visual concept is excellent; I’m just not convinced by the gameplay yet.",
-    reasonLabel: "Why I’m skipping for now",
-    reason: "I need to see whether the gameplay appeals to me as much as the sci-fi setting does.",
-    positives: ["Bold sci-fi concept", "Memorable visuals"],
-    concern: "The core loop is unclear",
-  },
 ];
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, "");
@@ -755,7 +734,7 @@ export default function GameNotes() {
     <>
       <section id="game-notes" className="play-library">
         <aside className="play-shelf">
-          <div className="play-shelf-heading"><span>SELECT A GAME</span><span>03</span></div>
+          <div className="play-shelf-heading"><span>SELECT A GAME</span><span>02</span></div>
           <nav aria-label="Game library" className="play-titles">
             {gameNotes.map((note) => (
               <a key={note.id} href={`#note-${note.id}`} aria-current={selected.id === note.id ? "true" : undefined}
