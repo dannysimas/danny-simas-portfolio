@@ -498,7 +498,10 @@ export default function App() {
           <div className="hero-left">
             <p>Cinematic game visuals with a movie-poster mindset.</p>
             <div className="hero-line" />
-            <a href="#work">Explore Work →</a>
+            <div className="hero-links">
+              <a href="#work">Explore Work →</a>
+              <a href="/the-next-play">The Next Play →</a>
+            </div>
           </div>
         </div>
       </section>
