@@ -83,9 +83,9 @@ const gameNotes = [
     image: "/images/next-play/witcher3-remastered-cover.png",
     storyImage: "/images/next-play/witcher3-remastered-cover.png",
     screenshots: [
-      { src: "/images/next-play/screenshots/witcher3-visuals.jpg", alt: "Geralt overlooking a sunlit town in The Witcher 3: Wild Hunt — Remastered" },
-      { src: "/images/next-play/screenshots/witcher3-combat.jpg", alt: "Geralt fighting a monster in The Witcher 3: Wild Hunt — Remastered" },
-      { src: "/images/next-play/screenshots/witcher3-photo-mode.jpg", alt: "Geralt on horseback in a harbor at sunset in The Witcher 3: Wild Hunt — Remastered" },
+      { src: "/images/next-play/screenshots/witcher3-forest.png", alt: "Geralt riding through a sunlit forest with an eagle overhead in The Witcher 3: Wild Hunt — Remastered" },
+      { src: "/images/next-play/screenshots/witcher3-ciri.png", alt: "Ciri in warm candlelight in The Witcher 3: Wild Hunt — Remastered" },
+      { src: "/images/next-play/screenshots/witcher3-combat-new.png", alt: "Geralt casting a fire spell at a monster in The Witcher 3: Wild Hunt — Remastered" },
     ],
     video: { youtubeId: "IGk17XQ7IrQ", label: "Official announcement trailer", credit: "CD PROJEKT RED", poster: "/images/next-play/witcher3-remastered-cover.png" },
     verdict: "Must play",
