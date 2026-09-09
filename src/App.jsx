@@ -500,7 +500,14 @@ export default function App() {
             <div className="hero-line" />
             <div className="hero-links">
               <a href="#work">Explore Work →</a>
-              <a href="/the-next-play">The Next Play →</a>
+              <a className="hero-play-cta" href="/the-next-play">
+                <span className="hero-play-arrows" aria-hidden="true"><i /><i /><i /></span>
+                <span className="hero-play-copy">
+                  <span className="hero-play-title"><b>THE</b> <strong>NEXT</strong> <em>PLAY</em></span>
+                  <small>First impressions · No score</small>
+                </span>
+                <span className="hero-play-cta-arrow" aria-hidden="true">↗</span>
+              </a>
             </div>
           </div>
         </div>
