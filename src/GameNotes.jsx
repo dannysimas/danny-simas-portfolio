@@ -49,6 +49,29 @@ const gameNotes = [
     positives: [],
     concerns: ["Visuals and characters feel underwhelming", "Combat and time system add friction", "Performance issues", "No photo mode"],
   },
+  {
+    id: "marvels-wolverine",
+    number: "03",
+    title: "Marvel’s Wolverine",
+    stage: "Pre-release look",
+    meta: "Not played yet · Based on trailers and gameplay",
+    releaseDate: "September 15, 2026",
+    platforms: ["PlayStation 5"],
+    image: "/images/next-play/wolverine.jpg",
+    screenshots: [
+      { src: "/images/next-play/screenshots/wolverine-gameplay.jpg", alt: "Marvel’s Wolverine extended gameplay trailer thumbnail" },
+      { src: "/images/next-play/screenshots/wolverine-story.jpg", alt: "Marvel’s Wolverine story trailer thumbnail" },
+      { src: "/images/next-play/screenshots/wolverine-release.jpg", alt: "Marvel’s Wolverine release date trailer thumbnail" },
+    ],
+    video: { youtubeId: "_U56cQFx_Vw", label: "Official extended gameplay trailer", credit: "Marvel Entertainment / Insomniac Games" },
+    verdict: "Day one",
+    tone: "buy",
+    take: "The setting looks stunning and the gameplay looks fluid, but the story is still the biggest question mark for me.",
+    reasonLabel: "Why I’m buying day one",
+    reason: "I’m a huge Wolverine fan, and the beautiful setting, fast-looking combat, and photo mode are enough to make this a day-one purchase.",
+    positives: ["Beautiful setting", "Fluid-looking combat", "Photo mode"],
+    concerns: ["Story is still unproven", "Some character designs feel uneven"],
+  },
 ];
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, "");
@@ -794,7 +817,7 @@ export default function GameNotes() {
     <>
       <section id="game-notes" className="play-library">
         <aside className="play-shelf">
-          <div className="play-shelf-heading"><span>SELECT A GAME</span><span>02</span></div>
+          <div className="play-shelf-heading"><span>SELECT A GAME</span><span>03</span></div>
           <div className="play-month-group">
             <div className="play-month-label"><span>SEPTEMBER</span><span>2026</span></div>
             <nav aria-label="Game library — September 2026" className="play-titles">
