@@ -874,33 +874,33 @@ export default function App() {
 
       <button
         type="button"
-        className={`next-play-edge-tab${nextPlayOpen ? " is-open" : ""}`}
+        className={`next-play-orb${nextPlayOpen ? " is-open" : ""}`}
         onClick={() => setNextPlayOpen(true)}
         aria-label="Open The Next Play"
         aria-expanded={nextPlayOpen}
       >
-        <span className="next-play-edge-arrows" aria-hidden="true"><i /><i /><i /></span>
-        <span className="next-play-edge-wordmark"><small>THE NEXT</small><strong>PLAY</strong></span>
-        <span className="next-play-edge-open" aria-hidden="true">‹</span>
+        <span className="next-play-orb-arrows" aria-hidden="true"><i /><i /><i /></span>
+        <span className="next-play-orb-wordmark"><small>THE</small><strong>NEXT<br />PLAY</strong></span>
+        <span className="next-play-orb-open" aria-hidden="true">OPEN</span>
       </button>
 
       {nextPlayOpen && (
-        <div className="next-play-drawer" role="dialog" aria-modal="true" aria-labelledby="next-play-drawer-title">
+        <div className="next-play-lightbox" role="dialog" aria-modal="true" aria-labelledby="next-play-lightbox-title">
           <button
             type="button"
-            className="next-play-drawer-backdrop"
+            className="next-play-lightbox-backdrop"
             onClick={() => setNextPlayOpen(false)}
             aria-label="Close The Next Play"
           />
-          <aside className="next-play-drawer-panel">
-            <div className="next-play-drawer-head">
+          <aside className="next-play-lightbox-panel">
+            <div className="next-play-lightbox-head">
               <div>
-                <p id="next-play-drawer-title">THE NEXT PLAY</p>
+                <p id="next-play-lightbox-title">THE NEXT PLAY</p>
                 <span>First impressions · No score</span>
               </div>
-              <button type="button" className="next-play-drawer-close" onClick={() => setNextPlayOpen(false)} aria-label="Close The Next Play">×</button>
+              <button type="button" className="next-play-lightbox-close" onClick={() => setNextPlayOpen(false)} aria-label="Close The Next Play">×</button>
             </div>
-            <iframe className="next-play-drawer-frame" src="/the-next-play" title="The Next Play by Danny Simas" />
+            <iframe className="next-play-lightbox-frame" src="/the-next-play" title="The Next Play by Danny Simas" />
           </aside>
         </div>
       )}
