@@ -292,7 +292,7 @@ async function createStoryCard(note) {
   context.fillStyle = "rgba(255, 255, 255, 0.7)";
   context.font = '800 20px Inter, sans-serif';
   context.letterSpacing = "4px";
-  context.fillText("FIRST IMPRESSION · NO SCORE", 76, 242);
+  context.fillText("READ MORE AT DANNYSIMAS.COM", 76, 242);
 
   context.fillStyle = "#c4b5fd";
   context.font = '800 27px Inter, sans-serif';
@@ -450,7 +450,7 @@ function StoryPreview({ note, onClose }) {
           <div className="story-frame-top">
             <span>The Next Play</span>
             <span>By Danny Simas / {note.number}</span>
-            <small>First impression · No score</small>
+            <small>Read more at dannysimas.com</small>
           </div>
 
           <div className="story-frame-bottom">
