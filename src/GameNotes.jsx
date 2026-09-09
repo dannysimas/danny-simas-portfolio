@@ -223,13 +223,6 @@ async function createStoryCard(note) {
 
   if (document.fonts?.ready) await document.fonts.ready;
 
-  let nextPlayLogo;
-  try {
-    nextPlayLogo = await loadImage("/images/next-play/next-play-logo.png");
-  } catch {
-    // Keep the card usable if the logo asset cannot be loaded.
-  }
-
   context.fillStyle = "#050607";
   context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -286,11 +279,20 @@ async function createStoryCard(note) {
   context.fillRect(76, 78, 928, 7);
 
   context.textBaseline = "top";
-  if (nextPlayLogo) {
-    const logoWidth = 560;
-    const logoHeight = logoWidth * (nextPlayLogo.height / nextPlayLogo.width);
-    context.drawImage(nextPlayLogo, 76, 112, logoWidth, logoHeight);
-  }
+  context.fillStyle = "#ffffff";
+  context.font = '800 38px "Space Grotesk", Inter, sans-serif';
+  context.letterSpacing = "7px";
+  context.fillText("THE NEXT PLAY", 76, 116);
+
+  context.fillStyle = "#67e8f9";
+  context.font = '800 25px Inter, sans-serif';
+  context.letterSpacing = "5px";
+  context.fillText("BY DANNY SIMAS", 76, 186);
+
+  context.fillStyle = "rgba(255, 255, 255, 0.7)";
+  context.font = '800 20px Inter, sans-serif';
+  context.letterSpacing = "4px";
+  context.fillText("READ MORE AT DANNYSIMAS.COM", 76, 242);
 
   context.fillStyle = "#c4b5fd";
   context.font = '800 27px Inter, sans-serif';
@@ -323,7 +325,7 @@ async function createStoryCard(note) {
   context.fillStyle = "#ffffff";
   context.font = '800 24px Inter, sans-serif';
   context.letterSpacing = "4px";
-  context.fillText("READ MORE AT DANNYSIMAS.COM", 76, 1820);
+  context.fillText("DANNYSIMAS.COM", 76, 1820);
   context.textAlign = "right";
   context.fillText("@DANNYSIMAS", 1004, 1820);
   context.textAlign = "left";
@@ -446,11 +448,9 @@ function StoryPreview({ note, onClose }) {
           <div className="story-frame-shade" />
 
           <div className="story-frame-top">
-            <img
-              className="story-card-logo"
-              src="/images/next-play/next-play-logo.png"
-              alt="The Next Play by Danny Simas"
-            />
+            <span>The Next Play</span>
+            <span>By Danny Simas</span>
+            <small>Read more at dannysimas.com</small>
           </div>
 
           <div className="story-frame-bottom">
@@ -460,7 +460,7 @@ function StoryPreview({ note, onClose }) {
             <span>{note.take}</span>
 
             <div>
-              <small>Read more at dannysimas.com</small>
+              <small>dannysimas.com</small>
               <small>@dannysimas</small>
             </div>
           </div>
