@@ -874,13 +874,13 @@ export default function App() {
 
       <button
         type="button"
-        className={`next-play-orb${nextPlayOpen ? " is-open" : ""}`}
+        className={`next-play-orb${nextPlayOpen ? " is-open" : ""}${hideMenu ? " is-hidden" : ""}`}
         onClick={() => setNextPlayOpen(true)}
         aria-label="Open The Next Play"
         aria-expanded={nextPlayOpen}
       >
         <span className="next-play-orb-arrows" aria-hidden="true"><i /><i /><i /></span>
-        <span className="next-play-orb-wordmark"><small>THE</small><strong>NEXT<br />PLAY</strong></span>
+        <span className="next-play-orb-wordmark"><small>THE</small><strong>NEXT PLAY</strong></span>
         <span className="next-play-orb-open" aria-hidden="true">OPEN</span>
       </button>
 
