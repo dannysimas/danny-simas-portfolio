@@ -569,7 +569,7 @@ function GameCommunity({ note }) {
         <div>
           <p className="community-kicker">COMMUNITY SIGNAL</p>
           <h2 id={`community-${note.id}`}>What do you think?</h2>
-          <p>Leave a quick thought or react to the game. Comments appear immediately.</p>
+          <p>Leave a quick thought or react to the game.</p>
         </div>
 
         <div className="community-reactions" role="group" aria-label="Community reactions">
