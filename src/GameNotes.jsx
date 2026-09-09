@@ -72,6 +72,29 @@ const gameNotes = [
     positives: ["Beautiful setting", "Fluid-looking combat", "Photo mode"],
     concerns: ["Story is still unproven", "Some character designs feel uneven"],
   },
+  {
+    id: "the-witcher-3-wild-hunt-remastered",
+    number: "04",
+    title: "The Witcher 3: Wild Hunt — Remastered",
+    stage: "Remastered preview",
+    meta: "Returning classic · September 2026",
+    releaseDate: "September 29, 2026",
+    platforms: ["PC", "PlayStation 5", "Xbox Series X|S", "Nintendo Switch 2", "Battle.net"],
+    image: "/images/next-play/screenshots/witcher3-visuals.jpg",
+    screenshots: [
+      { src: "/images/next-play/screenshots/witcher3-visuals.jpg", alt: "Geralt overlooking a sunlit town in The Witcher 3: Wild Hunt — Remastered" },
+      { src: "/images/next-play/screenshots/witcher3-combat.jpg", alt: "Geralt fighting a monster in The Witcher 3: Wild Hunt — Remastered" },
+      { src: "/images/next-play/screenshots/witcher3-photo-mode.jpg", alt: "Geralt on horseback in a harbor at sunset in The Witcher 3: Wild Hunt — Remastered" },
+    ],
+    video: { youtubeId: "IGk17XQ7IrQ", label: "Official announcement trailer", credit: "CD PROJEKT RED" },
+    verdict: "Must play",
+    tone: "buy",
+    take: "The Witcher 3 is a masterpiece: its characters, story, and world still feel incredible, and the Remastered upgrade makes this September’s must-play.",
+    reasonLabel: "Why I’m playing",
+    reason: "The free upgrade for existing owners, visual improvements, expanded photo mode, and polished gameplay make this an easy recommendation—especially if you have never played it.",
+    positives: ["Masterpiece story", "Unforgettable characters", "Visual upgrade", "Expanded photo mode"],
+    concerns: [],
+  },
 ];
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, "");
@@ -817,7 +840,7 @@ export default function GameNotes() {
     <>
       <section id="game-notes" className="play-library">
         <aside className="play-shelf">
-          <div className="play-shelf-heading"><span>SELECT A GAME</span><span>03</span></div>
+          <div className="play-shelf-heading"><span>SELECT A GAME</span><span>04</span></div>
           <div className="play-month-group">
             <div className="play-month-label"><span>SEPTEMBER</span><span>2026</span></div>
             <nav aria-label="Game library — September 2026" className="play-titles">
