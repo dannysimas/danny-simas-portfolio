@@ -314,15 +314,15 @@ header a,
 .next-play-logo-button {
   position: relative;
   display: flex;
-  width: min(320px, 100%);
-  min-height: 78px;
+  width: min(337px, 100%);
+  min-height: 83px;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   margin-top: 32px;
   border: 1px solid rgba(103, 232, 249, 0.78);
   border-radius: 2px;
-  padding: 13px 18px 12px 14px;
-  background: linear-gradient(100deg, rgba(8, 16, 28, 0.96), rgba(20, 22, 43, 0.94));
+  padding: 11px 18px 10px 14px;
+  background: linear-gradient(100deg, rgba(7, 10, 20, 0.98), rgba(16, 20, 40, 0.96));
   color: #f4f7ff;
   box-shadow: 0 0 0 1px rgba(196, 181, 253, 0.18), 0 0 28px rgba(34, 211, 238, 0.3), 0 16px 38px rgba(0, 0, 0, 0.48), inset 0 0 24px rgba(139, 92, 246, 0.12);
   cursor: pointer;
@@ -356,14 +356,14 @@ header a,
 .next-play-logo-arrows {
   display: flex;
   flex-shrink: 0;
-  gap: 3px;
+  gap: 5px;
   transform: skewX(-9deg);
 }
 
 .next-play-logo-arrows i {
   display: block;
-  width: 8px;
-  height: 26px;
+  width: 7px;
+  height: 23px;
   background: linear-gradient(180deg, #67e8f9, #a78bfa);
   clip-path: polygon(0 0, 100% 50%, 0 100%, 0 74%, 55% 50%, 0 26%);
 }
@@ -374,25 +374,25 @@ header a,
 .next-play-logo-copy {
   display: grid;
   min-width: 0;
-  gap: 4px;
-  transform: skewX(-8deg);
+  gap: 5px;
+  transform: skewX(-10deg);
 }
 
 .next-play-logo-title {
   display: block;
   white-space: nowrap;
-  font: 900 clamp(1.5rem, 2.4vw, 2.1rem)/0.88 "Barlow Condensed", "Space Grotesk", sans-serif;
-  letter-spacing: -0.025em;
+  font: 900 clamp(1.7rem, 2.8vw, 2.3rem)/0.86 "Barlow Condensed", "Space Grotesk", sans-serif;
+  letter-spacing: -0.035em;
 }
 
-.next-play-logo-title b { color: #b5bfd2; font-size: 0.72em; }
+.next-play-logo-title b { color: #b5bfd2; font-size: 0.88em; }
 .next-play-logo-title strong { color: #f4f7ff; }
 .next-play-logo-title em { color: #67e8f9; font-style: normal; background: linear-gradient(115deg, #8cf0ff, #67e8f9 38%, #b59aff); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
 .next-play-logo-copy small {
   color: #c4b5fd;
   font: 800 10px/1 Inter, sans-serif;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
