@@ -34,6 +34,7 @@ const gameNotes = [
     releaseDate: "September 3, 2026",
     platforms: ["PC", "PlayStation 5", "Xbox Series X|S"],
     image: "/images/next-play/blood-dawnwalker.jpg",
+    storyImage: "/images/next-play/screenshots/dawnwalker-trail.jpg",
     screenshots: [
       { src: "/images/next-play/screenshots/dawnwalker-combat.jpg", alt: "Coen fighting bandits in a Dawnwalker forest" },
       { src: "/images/next-play/screenshots/dawnwalker-trail.jpg", alt: "Coen travelling through a mountain trail in Dawnwalker" },
@@ -179,7 +180,7 @@ async function createStoryCard(note) {
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   try {
-    const image = await loadImage(note.image);
+    const image = await loadImage(note.storyImage || note.image);
 
     // Keep a soft, full-bleed version behind the card so the portrait still feels rich.
     context.save();
@@ -396,7 +397,7 @@ function StoryPreview({ note, onClose }) {
         </div>
 
         <div className={`story-frame story-frame-${note.tone}`}>
-          <img src={note.image} alt="" />
+          <img src={note.storyImage || note.image} alt="" />
           <div className="story-frame-shade" />
 
           <div className="story-frame-top">
