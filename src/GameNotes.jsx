@@ -429,7 +429,7 @@ function StoryPreview({ note, onClose }) {
 }
 
 function GameCommunity({ note }) {
-  const [likes, setLikes] = useState({ count: 0, liked: false, loading: true });
+  const [reactions, setReactions] = useState({ likes: 0, dislikes: 0, choice: null, loading: true });
   const [comments, setComments] = useState([]);
   const [commentsLoading, setCommentsLoading] = useState(true);
   const [name, setName] = useState("");
@@ -443,7 +443,7 @@ function GameCommunity({ note }) {
 
     async function loadCommunity() {
       if (!communityConfigured) {
-        setLikes((current) => ({ ...current, loading: false }));
+        setReactions((current) => ({ ...current, loading: false }));
         setCommentsLoading(false);
         return;
       }
@@ -453,18 +453,30 @@ function GameCommunity({ note }) {
         const gameFilter = encodeURIComponent(`eq.${note.id}`);
         const visitorFilter = encodeURIComponent(`eq.${visitorId}`);
         const [reactionRows, visitorRows, commentRows] = await Promise.all([
-          supabaseRequest(`game_reactions?game_id=${gameFilter}&select=id`),
-          supabaseRequest(`game_reactions?game_id=${gameFilter}&visitor_id=${visitorFilter}&select=id`),
+          supabaseRequest(`game_reactions?game_id=${gameFilter}&select=reaction_type`),
+          supabaseRequest(`game_reactions?game_id=${gameFilter}&visitor_id=${visitorFilter}&select=reaction_type`),
           supabaseRequest(`game_comments?game_id=${gameFilter}&status=eq.approved&select=id,name,body,created_at&order=created_at.desc`),
         ]);
 
         if (!active) return;
-        setLikes({ count: reactionRows.length, liked: visitorRows.length > 0, loading: false });
+        const reactionCounts = reactionRows.reduce(
+          (counts, reaction) => {
+            if (reaction.reaction_type === "dislike") counts.dislikes += 1;
+            else counts.likes += 1;
+            return counts;
+          },
+          { likes: 0, dislikes: 0 },
+        );
+        setReactions({
+          ...reactionCounts,
+          choice: visitorRows[0]?.reaction_type ?? null,
+          loading: false,
+        });
         setComments(commentRows);
       } catch {
         if (!active) return;
         setStatus("Community features are unavailable right now.");
-        setLikes((current) => ({ ...current, loading: false }));
+        setReactions((current) => ({ ...current, loading: false }));
       } finally {
         if (active) setCommentsLoading(false);
       }
@@ -476,8 +488,8 @@ function GameCommunity({ note }) {
     };
   }, [note.id]);
 
-  async function toggleLike() {
-    if (!communityConfigured || likes.loading) return;
+  async function toggleReaction(type) {
+    if (!communityConfigured || reactions.loading) return;
     setStatus("");
 
     try {
@@ -485,18 +497,28 @@ function GameCommunity({ note }) {
       const gameFilter = encodeURIComponent(`eq.${note.id}`);
       const visitorFilter = encodeURIComponent(`eq.${visitorId}`);
 
-      if (likes.liked) {
+      if (reactions.choice) {
         await supabaseRequest(`game_reactions?game_id=${gameFilter}&visitor_id=${visitorFilter}`, { method: "DELETE" });
-      } else {
+      }
+
+      if (reactions.choice !== type) {
         await supabaseRequest("game_reactions", {
           method: "POST",
           headers: { Prefer: "return=minimal" },
-          body: JSON.stringify({ game_id: note.id, visitor_id: visitorId }),
+          body: JSON.stringify({ game_id: note.id, visitor_id: visitorId, reaction_type: type }),
         });
       }
 
-      const reactionRows = await supabaseRequest(`game_reactions?game_id=${gameFilter}&select=id`);
-      setLikes({ count: reactionRows.length, liked: !likes.liked, loading: false });
+      const reactionRows = await supabaseRequest(`game_reactions?game_id=${gameFilter}&select=reaction_type`);
+      const reactionCounts = reactionRows.reduce(
+        (counts, reaction) => {
+          if (reaction.reaction_type === "dislike") counts.dislikes += 1;
+          else counts.likes += 1;
+          return counts;
+        },
+        { likes: 0, dislikes: 0 },
+      );
+      setReactions({ ...reactionCounts, choice: reactions.choice === type ? null : type, loading: false });
     } catch {
       setStatus("That reaction could not be saved. Please try again.");
     }
@@ -547,26 +569,40 @@ function GameCommunity({ note }) {
         <div>
           <p className="community-kicker">COMMUNITY SIGNAL</p>
           <h2 id={`community-${note.id}`}>What do you think?</h2>
-          <p>Leave a quick thought or tap the heart. Comments appear immediately.</p>
+          <p>Leave a quick thought or react to the game. Comments appear immediately.</p>
         </div>
 
-        <button
-          type="button"
-          className={`community-heart ${likes.liked ? "is-liked" : ""}`}
-          onClick={toggleLike}
-          disabled={!communityConfigured || likes.loading}
-          aria-pressed={likes.liked}
-          title={communityConfigured ? "Like this game" : "Community features are being connected"}
-        >
-          <span className="community-heart-icon" aria-hidden="true">♥</span>
-          <span>{likes.liked ? "Liked" : "Like this game"}</span>
-          <strong>{likes.count}</strong>
-        </button>
+        <div className="community-reactions" role="group" aria-label="Community reactions">
+            <button
+              type="button"
+              className={`community-reaction community-like ${reactions.choice === "like" ? "is-selected" : ""}`}
+              onClick={() => toggleReaction("like")}
+              disabled={!communityConfigured || reactions.loading}
+              aria-pressed={reactions.choice === "like"}
+              title={communityConfigured ? "Like this game" : "Community features are being connected"}
+            >
+              <span className="community-reaction-icon" aria-hidden="true">♥</span>
+              <span>{reactions.choice === "like" ? "Liked" : "Like this game"}</span>
+              <strong>{reactions.likes}</strong>
+            </button>
+            <button
+              type="button"
+              className={`community-reaction community-dislike ${reactions.choice === "dislike" ? "is-selected" : ""}`}
+              onClick={() => toggleReaction("dislike")}
+              disabled={!communityConfigured || reactions.loading}
+              aria-pressed={reactions.choice === "dislike"}
+              title={communityConfigured ? "Not for me" : "Community features are being connected"}
+            >
+              <span className="community-reaction-icon" aria-hidden="true">×</span>
+              <span>{reactions.choice === "dislike" ? "Not for me" : "Not for me"}</span>
+              <strong>{reactions.dislikes}</strong>
+            </button>
+        </div>
       </div>
 
       {!communityConfigured ? (
         <div className="community-setup">
-          Community features are ready to connect. Add the Supabase keys to enable hearts and comments.
+          Community features are ready to connect. Add the Supabase keys to enable reactions and comments.
         </div>
       ) : (
         <div className="community-grid">

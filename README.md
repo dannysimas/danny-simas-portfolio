@@ -15,7 +15,7 @@ Then deploy the project folder to Vercel.
 
 ## The Next Play community features
 
-The game pages use Supabase for hearts and comments.
+The game pages use Supabase for like/dislike reactions and comments.
 
 1. Create a Supabase project.
 2. Run `supabase/game-feedback.sql` in the Supabase SQL Editor.

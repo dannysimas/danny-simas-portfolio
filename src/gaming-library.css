@@ -243,13 +243,18 @@
 .community-kicker { margin: 0 0 10px; color: #67e8f9; font-size: var(--play-small-size); font-weight: 800; letter-spacing: .18em; }
 .community-heading h2 { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: clamp(1.7rem, 2.2vw, 2.6rem); line-height: 1; letter-spacing: -.04em; }
 .community-heading p:not(.community-kicker) { max-width: 580px; margin: 12px 0 0; color: #9da8bb; font-size: var(--play-label-size); line-height: 1.55; }
-.community-heart { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; flex-shrink: 0; border: 1px solid #c4b5fd66; padding: 0 16px; background: #8b5cf615; color: #e7e3ff; font: 700 var(--play-label-size) Inter, sans-serif; cursor: pointer; transition: border-color 180ms ease, background 180ms ease, transform 180ms ease; }
-.community-heart:hover:not(:disabled) { border-color: #67e8f9; background: #22d3ee18; transform: translateY(-2px); }
-.community-heart:disabled { cursor: not-allowed; opacity: .58; }
-.community-heart-icon { color: #c4b5fd; font-size: 22px; line-height: 1; }
-.community-heart.is-liked { border-color: #67e8f9; background: #22d3ee1c; }
-.community-heart.is-liked .community-heart-icon { color: #67e8f9; }
-.community-heart strong { min-width: 1.2em; color: #ffffff; }
+.community-reactions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+.community-reaction { display: inline-flex; align-items: center; gap: 9px; min-height: 48px; flex-shrink: 0; border: 1px solid #c4b5fd66; padding: 0 14px; background: #8b5cf615; color: #e7e3ff; font: 700 var(--play-label-size) Inter, sans-serif; cursor: pointer; transition: border-color 180ms ease, background 180ms ease, transform 180ms ease; }
+.community-reaction:hover:not(:disabled) { border-color: #67e8f9; background: #22d3ee18; transform: translateY(-2px); }
+.community-reaction:disabled { cursor: not-allowed; opacity: .58; }
+.community-reaction-icon { color: #c4b5fd; font-size: 22px; line-height: 1; }
+.community-like.is-selected { border-color: #67e8f9; background: #22d3ee1c; }
+.community-like.is-selected .community-reaction-icon { color: #67e8f9; }
+.community-dislike { border-color: #ffffff2b; background: #ffffff08; }
+.community-dislike .community-reaction-icon { color: #c4b5fd; font-size: 25px; }
+.community-dislike.is-selected { border-color: #fda4af; background: #fb71851a; }
+.community-dislike.is-selected .community-reaction-icon { color: #fda4af; }
+.community-reaction strong { min-width: 1.2em; color: #ffffff; }
 .community-grid { display: grid; grid-template-columns: minmax(250px, .8fr) minmax(0, 1.2fr); gap: clamp(24px, 4vw, 58px); margin-top: 30px; }
 .community-form, .community-comments { min-width: 0; }
 .community-form h3, .community-comments h3 { margin: 0 0 18px; font: 800 var(--play-text-size) "Space Grotesk", sans-serif; }
@@ -274,7 +279,8 @@
 .community-status { min-height: 1.4em; margin: 18px 0 0; color: #67e8f9; font-size: var(--play-label-size); }
 @media (max-width: 760px) {
   .community-heading { flex-direction: column; }
-  .community-heart { width: 100%; justify-content: center; }
+  .community-reactions { width: 100%; }
+  .community-reaction { flex: 1; justify-content: center; }
   .community-grid { grid-template-columns: 1fr; }
   .community-comments { border-left: 0; border-top: 1px solid #ffffff20; padding: 24px 0 0; }
 }
