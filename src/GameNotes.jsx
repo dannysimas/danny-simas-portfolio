@@ -794,20 +794,23 @@ export default function GameNotes() {
       <section id="game-notes" className="play-library">
         <aside className="play-shelf">
           <div className="play-shelf-heading"><span>SELECT A GAME</span><span>02</span></div>
-          <nav aria-label="Game library" className="play-titles">
-            {gameNotes.map((note) => (
-              <a key={note.id} href={`#note-${note.id}`} aria-current={selected.id === note.id ? "true" : undefined}
-                onClick={(event) => {
-                  event.preventDefault();
-                  setSelectedId(note.id);
-                  window.history.replaceState(null, "", `#note-${note.id}`);
-                }}>
-                <img src={note.image} alt="" />
-                <span><small>{note.stage}</small><strong>{note.title}</strong><em>{note.verdict}</em></span>
-                <b aria-hidden="true">›</b>
-              </a>
-            ))}
-          </nav>
+          <div className="play-month-group">
+            <div className="play-month-label"><span>SEPTEMBER</span><span>2026</span></div>
+            <nav aria-label="Game library — September 2026" className="play-titles">
+              {gameNotes.map((note) => (
+                <a key={note.id} href={`#note-${note.id}`} aria-current={selected.id === note.id ? "true" : undefined}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setSelectedId(note.id);
+                    window.history.replaceState(null, "", `#note-${note.id}`);
+                  }}>
+                  <img src={note.image} alt="" />
+                  <span><small>{note.stage}</small><strong>{note.title}</strong><em>{note.verdict}</em></span>
+                  <b aria-hidden="true">›</b>
+                </a>
+              ))}
+            </nav>
+          </div>
           <div className="play-shelf-foot"><span>THE NEXT PLAY</span><p>New releases.<br />Upcoming games. My take.</p><small>First entry live · More games coming soon</small></div>
         </aside>
         <div className="game-notes-grid">
