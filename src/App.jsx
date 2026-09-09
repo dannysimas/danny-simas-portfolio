@@ -252,6 +252,7 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [formStatus, setFormStatus] = useState("");
   const [cursor, setCursor] = useState({ x: -100, y: -100 });
+  const [nextPlayOpen, setNextPlayOpen] = useState(false);
   const [audienceCount, setAudienceCount] = useState(0);
   const [statsAnimated, setStatsAnimated] = useState(false);
   const lastScrollY = useRef(0);
@@ -285,6 +286,22 @@ export default function App() {
       window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
+
+  useEffect(() => {
+    if (!nextPlayOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setNextPlayOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [nextPlayOpen]);
 
   useEffect(() => {
     const items = document.querySelectorAll(".reveal, .slide-up, .fade-in");
@@ -498,17 +515,7 @@ export default function App() {
           <div className="hero-left">
             <p>Cinematic game visuals with a movie-poster mindset.</p>
             <div className="hero-line" />
-            <div className="hero-links">
-              <a href="#work">Explore Work →</a>
-              <a className="hero-play-cta" href="/the-next-play">
-                <span className="hero-play-arrows" aria-hidden="true"><i /><i /><i /></span>
-                <span className="hero-play-copy">
-                  <span className="hero-play-title"><b>THE</b> <strong>NEXT</strong> <em>PLAY</em></span>
-                  <small>First impressions · No score</small>
-                </span>
-                <span className="hero-play-cta-arrow" aria-hidden="true">↗</span>
-              </a>
-            </div>
+            <a href="#work">Explore Work →</a>
           </div>
         </div>
       </section>
@@ -862,6 +869,39 @@ export default function App() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      <button
+        type="button"
+        className={`next-play-edge-tab${nextPlayOpen ? " is-open" : ""}`}
+        onClick={() => setNextPlayOpen(true)}
+        aria-label="Open The Next Play"
+        aria-expanded={nextPlayOpen}
+      >
+        <span className="next-play-edge-arrows" aria-hidden="true"><i /><i /><i /></span>
+        <span className="next-play-edge-wordmark"><small>THE NEXT</small><strong>PLAY</strong></span>
+        <span className="next-play-edge-open" aria-hidden="true">‹</span>
+      </button>
+
+      {nextPlayOpen && (
+        <div className="next-play-drawer" role="dialog" aria-modal="true" aria-labelledby="next-play-drawer-title">
+          <button
+            type="button"
+            className="next-play-drawer-backdrop"
+            onClick={() => setNextPlayOpen(false)}
+            aria-label="Close The Next Play"
+          />
+          <aside className="next-play-drawer-panel">
+            <div className="next-play-drawer-head">
+              <div>
+                <p id="next-play-drawer-title">THE NEXT PLAY</p>
+                <span>First impressions · No score</span>
+              </div>
+              <button type="button" className="next-play-drawer-close" onClick={() => setNextPlayOpen(false)} aria-label="Close The Next Play">×</button>
+            </div>
+            <iframe className="next-play-drawer-frame" src="/the-next-play" title="The Next Play by Danny Simas" />
+          </aside>
         </div>
       )}
 
