@@ -82,7 +82,8 @@
 .play-detail .game-note-take { min-height: 0; max-width: 530px; margin: 24px 0; font-size: 18px; line-height: 1.65; color: #d1d7e2; }
 .play-detail .game-note-signals { border-top: 1px solid #ffffff26; padding: 20px 0; margin: 0; gap: 12px; }
 .play-detail .game-note-signals span { font-size: 15px; color: #b4bed0; }
-.play-detail .game-note-signals b { display: inline-grid; place-items: center; width: 21px; height: 21px; border: 1px solid #67e8f940; background: #22d3ee15; }
+.play-detail .game-note-signals b { display: inline-grid; place-items: center; align-self: flex-start; width: 21px; height: 21px; margin-top: calc((1.45em - 21px) / 2); line-height: 1; border: 1px solid #67e8f940; background: #22d3ee15; }
+.play-detail .game-note-signals b svg { display: block; width: 12px; height: 12px; }
 .play-detail .game-note-signals .negative b { border-color: #c4b5fd40; background: #8b5cf615; }
 .play-detail .game-note-footer { margin-top: 12px; border: 1px solid #67e8f93d; border-left: 3px solid #67e8f9; background: linear-gradient(90deg,#22d3ee20,#22d3ee03); padding: 0 22px; }
 .play-detail .game-note-footer > div { padding: 18px 0; gap: 7px; }

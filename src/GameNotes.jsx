@@ -876,12 +876,12 @@ export default function GameNotes() {
                 <div className="game-note-signals" aria-label="Quick takeaways">
                   {note.positives.map((positive) => (
                     <span key={positive} className="positive">
-                      <b>+</b> {positive}
+                      <b><svg viewBox="0 0 12 12" role="img" aria-label="Positive" focusable="false"><path d="M1 6h10M6 1v10" fill="none" stroke="currentColor" strokeWidth="2" /></svg></b> {positive}
                     </span>
                   ))}
                   {(note.concerns || [note.concern]).map((concern) => (
                     <span key={concern} className="negative">
-                      <b>−</b> {concern}
+                      <b><svg viewBox="0 0 12 12" role="img" aria-label="Negative" focusable="false"><path d="M1 6h10" fill="none" stroke="currentColor" strokeWidth="2" /></svg></b> {concern}
                     </span>
                   ))}
                 </div>
