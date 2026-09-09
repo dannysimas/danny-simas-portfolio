@@ -272,8 +272,9 @@ header a,
   margin: 0;
   font-size: clamp(2rem, 3.2vw, 3.4rem);
   font-weight: 900;
-  line-height: 1;
+  line-height: 0.97;
   letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 .hero-line {
@@ -303,7 +304,7 @@ header a,
   min-height: 78px;
   align-items: center;
   gap: 14px;
-  margin-top: 20px;
+  margin-top: 32px;
   border: 1px solid rgba(103, 232, 249, 0.78);
   border-radius: 2px;
   padding: 13px 18px 12px 14px;
@@ -2583,8 +2584,10 @@ textarea:focus {
   }
 
   .main-nav {
-    gap: 52px;
-    font-size: 20px;
+    gap: clamp(20px, 1.5vw, 46px);
+    font-size: 30px;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
   }
 
   .header-socials a {
@@ -2603,6 +2606,11 @@ textarea:focus {
 
   .hero-left a {
     font-size: 18px;
+  }
+
+  .hero-left p {
+    max-width: 520px;
+    text-wrap: balance;
   }
 
   .outline-btn,
