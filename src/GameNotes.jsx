@@ -4,7 +4,6 @@ import "./gaming-library.css";
 const gameNotes = [
   {
     id: "onimusha-way-of-the-sword",
-    number: "01",
     title: "Onimusha: Way of the Sword",
     stage: "Demo impression",
     meta: "Played the demo · Personal take",
@@ -27,7 +26,6 @@ const gameNotes = [
   },
   {
     id: "blood-of-dawnwalker",
-    number: "02",
     title: "The Blood of Dawnwalker",
     stage: "Early impression",
     meta: "Played 1 hour · Returned",
@@ -51,7 +49,6 @@ const gameNotes = [
   },
   {
     id: "marvels-wolverine",
-    number: "03",
     title: "Marvel’s Wolverine",
     stage: "Pre-release look",
     meta: "Not played yet · Based on trailers and gameplay",
@@ -74,7 +71,6 @@ const gameNotes = [
   },
   {
     id: "the-witcher-3-wild-hunt-remastered",
-    number: "04",
     title: "The Witcher 3: Wild Hunt — Remastered",
     stage: "Remastered preview",
     meta: "Returning classic · September 2026",
@@ -287,7 +283,7 @@ async function createStoryCard(note) {
   context.fillStyle = "#67e8f9";
   context.font = '800 25px Inter, sans-serif';
   context.letterSpacing = "5px";
-  context.fillText(`BY DANNY SIMAS / ${note.number}`, 76, 186);
+  context.fillText("BY DANNY SIMAS", 76, 186);
 
   context.fillStyle = "rgba(255, 255, 255, 0.7)";
   context.font = '800 20px Inter, sans-serif';
@@ -449,7 +445,7 @@ function StoryPreview({ note, onClose }) {
 
           <div className="story-frame-top">
             <span>The Next Play</span>
-            <span>By Danny Simas / {note.number}</span>
+            <span>By Danny Simas</span>
             <small>Read more at dannysimas.com</small>
           </div>
 
@@ -784,7 +780,7 @@ export default function GameNotes() {
     <>
       <section id="game-notes" className="play-library">
         <aside className="play-shelf">
-          <div className="play-shelf-heading"><span>SELECT A GAME</span><span>04</span></div>
+          <div className="play-shelf-heading"><span>SELECT A GAME</span></div>
           <div className="play-month-group">
             <div className="play-month-label"><span>SEPTEMBER</span><span>2026</span></div>
             <nav aria-label="Game library — September 2026" className="play-titles">
@@ -815,7 +811,6 @@ export default function GameNotes() {
                 <img src={note.image} alt="" />
                 <div className="game-note-image-shade" />
                 <div className="game-note-image-meta">
-                  <span className="game-note-slot">Note / {note.number}</span>
                   <span>{note.stage}</span>
                 </div>
               </div>
