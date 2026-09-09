@@ -700,7 +700,7 @@ function GameScreenshots({ note }) {
           <p className="play-screenshots-kicker">VISUAL CHECK</p>
           <h2>Gameplay screenshots</h2>
         </div>
-        <span>Click to view full size ↗</span>
+        <span>Click to view full size</span>
       </div>
       <div className="play-screenshots-grid">
         {note.screenshots.map((screenshot, index) => (
@@ -708,11 +708,9 @@ function GameScreenshots({ note }) {
             key={screenshot.src}
             className="play-screenshot"
             href={screenshot.src}
-            target="_blank"
-            rel="noreferrer"
           >
             <img src={screenshot.src} alt={screenshot.alt} loading="lazy" />
-            <span>Screenshot {String(index + 1).padStart(2, "0")} ↗</span>
+            <span>Screenshot {String(index + 1).padStart(2, "0")}</span>
           </a>
         ))}
       </div>
