@@ -94,6 +94,10 @@ const gameNotes = [
   },
 ];
 
+const orderedGameNotes = [...gameNotes].sort(
+  (a, b) => new Date(a.releaseDate) - new Date(b.releaseDate),
+);
+
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, "");
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const communityConfigured = Boolean(supabaseUrl && supabaseAnonKey);
@@ -784,7 +788,7 @@ export default function GameNotes() {
           <div className="play-month-group">
             <div className="play-month-label"><span>SEPTEMBER</span><span>2026</span></div>
             <nav aria-label="Game library — September 2026" className="play-titles">
-              {gameNotes.map((note) => (
+              {orderedGameNotes.map((note) => (
                 <a key={note.id} href={`#note-${note.id}`} aria-current={selected.id === note.id ? "true" : undefined}
                   onClick={(event) => {
                     event.preventDefault();
