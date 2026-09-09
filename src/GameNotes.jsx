@@ -80,7 +80,7 @@ const gameNotes = [
     meta: "Returning classic · September 2026",
     releaseDate: "September 29, 2026",
     platforms: ["PC", "PlayStation 5", "Xbox Series X|S", "Nintendo Switch 2", "Battle.net"],
-    image: "/images/next-play/screenshots/witcher3-visuals.jpg",
+    image: "/images/next-play/witcher3-remastered-cover.png",
     storyImage: "/images/next-play/witcher3-remastered-cover.png",
     screenshots: [
       { src: "/images/next-play/screenshots/witcher3-visuals.jpg", alt: "Geralt overlooking a sunlit town in The Witcher 3: Wild Hunt — Remastered" },
