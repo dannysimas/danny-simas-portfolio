@@ -9,6 +9,11 @@ const gameNotes = [
     stage: "Demo impression",
     meta: "Played the demo · Personal take",
     image: "/images/next-play/onimusha-demo.jpg",
+    screenshots: [
+      { src: "/images/next-play/screenshots/onimusha-combat.jpg", alt: "Musashi fighting a Genma in the Kiyomizu demo area" },
+      { src: "/images/next-play/screenshots/onimusha-enemy.png", alt: "Musashi facing a group of Genma in a temple courtyard" },
+      { src: "/images/next-play/screenshots/onimusha-forest.jpg", alt: "Musashi clashing swords with a Genma in a dark forest" },
+    ],
     video: { youtubeId: "YBO6nE9I7A8", label: "Official demo trailer", credit: "Capcom USA" },
     verdict: "Wait for sale",
     tone: "wait",
@@ -25,6 +30,11 @@ const gameNotes = [
     stage: "Early impression",
     meta: "Played 1 hour · Returned",
     image: "/images/next-play/blood-dawnwalker.jpg",
+    screenshots: [
+      { src: "/images/next-play/screenshots/dawnwalker-combat.jpg", alt: "Coen fighting bandits in a Dawnwalker forest" },
+      { src: "/images/next-play/screenshots/dawnwalker-trail.jpg", alt: "Coen travelling through a mountain trail in Dawnwalker" },
+      { src: "/images/next-play/screenshots/dawnwalker-ruins.jpg", alt: "Coen exploring torch-lit ruins in Dawnwalker" },
+    ],
     video: { youtubeId: "jVQiJ9ci0HI", label: "Official story trailer", credit: "Rebel Wolves / Bandai Namco" },
     verdict: "Wait for sale",
     tone: "wait",
@@ -41,6 +51,11 @@ const gameNotes = [
     stage: "Why I’m skipping",
     meta: "Not buying yet · Sample copy",
     image: "/images/gallery/pragmata/full/01.webp",
+    screenshots: [
+      { src: "/images/gallery/pragmata/full/01.webp", alt: "Pragmata gameplay scene" },
+      { src: "/images/gallery/pragmata/full/02.webp", alt: "Pragmata gameplay scene" },
+      { src: "/images/gallery/pragmata/full/03.webp", alt: "Pragmata gameplay scene" },
+    ],
     video: { youtubeId: "TzBtbtOghV0", label: "Official main trailer", credit: "Capcom" },
     verdict: "Skip for now",
     tone: "skip",
@@ -696,6 +711,36 @@ function GameVideo({ note }) {
   );
 }
 
+function GameScreenshots({ note }) {
+  if (!note.screenshots?.length) return null;
+
+  return (
+    <section className="play-screenshots" aria-label={`${note.title} screenshots`}>
+      <div className="play-screenshots-heading">
+        <div>
+          <p className="play-screenshots-kicker">VISUAL CHECK</p>
+          <h2>Gameplay screenshots</h2>
+        </div>
+        <span>Click to view full size ↗</span>
+      </div>
+      <div className="play-screenshots-grid">
+        {note.screenshots.map((screenshot, index) => (
+          <a
+            key={screenshot.src}
+            className="play-screenshot"
+            href={screenshot.src}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={screenshot.src} alt={screenshot.alt} loading="lazy" />
+            <span>Screenshot {String(index + 1).padStart(2, "0")} ↗</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function GameNotes() {
   const [activeNote, setActiveNote] = useState(null);
   const [selectedId, setSelectedId] = useState(() => window.location.hash.replace("#note-", ""));
@@ -779,6 +824,7 @@ export default function GameNotes() {
               </div>
               <GameVideo key={note.id} note={note} />
               </div>
+              <GameScreenshots note={note} />
               <GameCommunity note={note} />
             </article>
           ))}
