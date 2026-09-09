@@ -535,11 +535,11 @@ export default function App() {
               aria-label="Open The Next Play"
               aria-expanded={nextPlayOpen}
             >
-              <span className="next-play-logo-arrows" aria-hidden="true"><i /><i /><i /></span>
-              <span className="next-play-logo-copy">
-                <span className="next-play-logo-title"><b>THE</b> <strong>NEXT</strong> <em>PLAY</em></span>
-                <small><b>//</b> BY DANNY SIMAS</small>
-              </span>
+              <img
+                className="next-play-logo-art"
+                src="/images/next-play/next-play-logo.png"
+                alt="The Next Play by Danny Simas"
+              />
             </button>
           </div>
         </div>

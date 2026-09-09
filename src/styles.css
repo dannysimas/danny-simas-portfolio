@@ -313,22 +313,30 @@ header a,
 
 .next-play-logo-button {
   position: relative;
-  display: flex;
+  display: block;
   width: min(337px, 100%);
   min-height: 83px;
-  align-items: center;
-  gap: 16px;
   margin-top: 32px;
   border: 1px solid rgba(103, 232, 249, 0.78);
   border-radius: 2px;
-  padding: 11px 18px 10px 14px;
-  background: linear-gradient(100deg, rgba(7, 10, 20, 0.98), rgba(16, 20, 40, 0.96));
+  padding: 0;
+  overflow: visible;
+  background: #080b16;
   color: #f4f7ff;
   box-shadow: 0 0 0 1px rgba(196, 181, 253, 0.18), 0 0 28px rgba(34, 211, 238, 0.3), 0 16px 38px rgba(0, 0, 0, 0.48), inset 0 0 24px rgba(139, 92, 246, 0.12);
   cursor: pointer;
   text-align: left;
   transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
   animation: next-play-logo-breathe 2.4s ease-in-out infinite;
+}
+
+.next-play-logo-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 350 / 83;
+  object-fit: cover;
+  border-radius: 1px;
 }
 
 .next-play-logo-button::before,
@@ -352,51 +360,6 @@ header a,
 }
 
 .next-play-logo-button.is-open { opacity: 0; pointer-events: none; }
-
-.next-play-logo-arrows {
-  display: flex;
-  flex-shrink: 0;
-  gap: 5px;
-  transform: skewX(-9deg);
-}
-
-.next-play-logo-arrows i {
-  display: block;
-  width: 7px;
-  height: 23px;
-  background: linear-gradient(180deg, #67e8f9, #a78bfa);
-  clip-path: polygon(0 0, 100% 50%, 0 100%, 0 74%, 55% 50%, 0 26%);
-}
-
-.next-play-logo-arrows i:nth-child(2) { opacity: 0.68; }
-.next-play-logo-arrows i:nth-child(3) { opacity: 0.34; }
-
-.next-play-logo-copy {
-  display: grid;
-  min-width: 0;
-  gap: 5px;
-  transform: skewX(-10deg);
-}
-
-.next-play-logo-title {
-  display: block;
-  white-space: nowrap;
-  font: 900 clamp(1.7rem, 2.8vw, 2.3rem)/0.86 "Barlow Condensed", "Space Grotesk", sans-serif;
-  letter-spacing: -0.035em;
-}
-
-.next-play-logo-title b { color: #b5bfd2; font-size: 0.88em; }
-.next-play-logo-title strong { color: #f4f7ff; }
-.next-play-logo-title em { color: #67e8f9; font-style: normal; background: linear-gradient(115deg, #8cf0ff, #67e8f9 38%, #b59aff); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-.next-play-logo-copy small {
-  color: #c4b5fd;
-  font: 800 10px/1 Inter, sans-serif;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.next-play-logo-copy small b { color: #67e8f9; margin-right: 4px; }
 
 .next-play-lightbox {
   position: fixed;
@@ -2518,10 +2481,7 @@ textarea:focus {
 }
 
 @media (max-width: 700px) {
-  .next-play-logo-button { width: min(320px, 100%); min-height: 70px; padding: 11px 14px 10px 12px; }
-  .next-play-logo-arrows i { height: 22px; }
-  .next-play-logo-title { font-size: 1.72rem; }
-  .next-play-logo-copy small { font-size: 8px; }
+  .next-play-logo-button { width: min(337px, 100%); min-height: 0; }
   .next-play-lightbox { padding: 10px; }
   .next-play-lightbox-panel { width: 96vw; height: 92vh; grid-template-rows: 60px minmax(0, 1fr); }
   .next-play-lightbox-head { padding: 10px 14px; }
