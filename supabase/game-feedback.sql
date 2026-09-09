@@ -1,5 +1,5 @@
 -- Run this once in Supabase SQL Editor.
--- Public visitors can read approved comments, add pending comments,
+-- Public visitors can read and add approved comments,
 -- and toggle their own anonymous reaction row.
 
 create table if not exists public.game_reactions (
@@ -16,7 +16,7 @@ create table if not exists public.game_comments (
   game_id text not null,
   name text not null,
   body text not null,
-  status text not null default 'pending',
+  status text not null default 'approved',
   created_at timestamptz not null default now(),
   constraint game_comments_name_length check (char_length(name) between 1 and 60),
   constraint game_comments_body_length check (char_length(body) between 1 and 800),
@@ -25,6 +25,7 @@ create table if not exists public.game_comments (
 
 alter table public.game_reactions enable row level security;
 alter table public.game_comments enable row level security;
+alter table public.game_comments alter column status set default 'approved';
 
 drop policy if exists "Anyone can read reactions" on public.game_reactions;
 create policy "Anyone can read reactions"
@@ -51,10 +52,11 @@ create policy "Anyone can read approved comments"
   using (status = 'approved');
 
 drop policy if exists "Visitors can submit pending comments" on public.game_comments;
-create policy "Visitors can submit pending comments"
+drop policy if exists "Visitors can submit approved comments" on public.game_comments;
+create policy "Visitors can submit approved comments"
   on public.game_comments for insert
   to anon, authenticated
-  with check (status = 'pending');
+  with check (status = 'approved');
 
 grant select, insert, delete on public.game_reactions to anon, authenticated;
 grant select, insert on public.game_comments to anon, authenticated;

@@ -15,13 +15,13 @@ Then deploy the project folder to Vercel.
 
 ## The Next Play community features
 
-The game pages use Supabase for hearts and moderated comments.
+The game pages use Supabase for hearts and comments.
 
 1. Create a Supabase project.
 2. Run `supabase/game-feedback.sql` in the Supabase SQL Editor.
 3. Copy `.env.example` to `.env.local` and add the project URL and public anon key.
 4. Add the same `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` values to the Vercel project environment variables.
-5. Approve comments by changing their `status` from `pending` to `approved` in the `game_comments` table.
+5. New comments are automatically approved and appear immediately. Remove any unwanted comments from the `game_comments` table.
 
 Only the public anon key belongs in the website environment. Never add the Supabase service-role key to Vite or the browser.
 

@@ -522,12 +522,12 @@ function GameCommunity({ note }) {
           game_id: note.id,
           name: name.trim(),
           body: body.trim(),
-          status: "pending",
+          status: "approved",
         }),
       });
       setName("");
       setBody("");
-      setStatus("Thanks — your comment is waiting for approval.");
+      setStatus("Thanks — your comment is live.");
     } catch {
       setStatus("Your comment could not be sent. Please try again.");
     } finally {
@@ -541,7 +541,7 @@ function GameCommunity({ note }) {
         <div>
           <p className="community-kicker">COMMUNITY SIGNAL</p>
           <h2 id={`community-${note.id}`}>What do you think?</h2>
-          <p>Leave a quick thought or tap the heart. Comments appear after approval.</p>
+          <p>Leave a quick thought or tap the heart. Comments appear immediately.</p>
         </div>
 
         <button
