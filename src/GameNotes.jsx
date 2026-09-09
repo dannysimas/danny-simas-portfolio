@@ -34,7 +34,7 @@ const gameNotes = [
     releaseDate: "September 3, 2026",
     platforms: ["PC", "PlayStation 5", "Xbox Series X|S"],
     image: "/images/next-play/blood-dawnwalker.jpg",
-    storyImage: "/images/next-play/screenshots/dawnwalker-trail.jpg",
+    storyImage: "/images/next-play/dawnwalker-story.jpg",
     screenshots: [
       { src: "/images/next-play/screenshots/dawnwalker-combat.jpg", alt: "Coen fighting bandits in a Dawnwalker forest" },
       { src: "/images/next-play/screenshots/dawnwalker-trail.jpg", alt: "Coen travelling through a mountain trail in Dawnwalker" },
