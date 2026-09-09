@@ -270,12 +270,12 @@ header a,
 .hero-left p {
   max-width: 380px;
   margin: 0;
-  font-family: "Barlow Condensed", "Space Grotesk", sans-serif;
-  font-size: clamp(2.4rem, 3.8vw, 4.4rem);
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: clamp(2.1rem, 3vw, 3.6rem);
   font-style: italic;
-  font-weight: 900;
-  line-height: 0.9;
-  letter-spacing: -0.025em;
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.02em;
   text-wrap: balance;
   text-shadow: 0 4px 22px rgba(0, 0, 0, 0.55);
 }
@@ -2742,7 +2742,7 @@ textarea:focus {
 @media (min-width: 1201px) {
   .main-nav {
     gap: clamp(20px, 1.5vw, 46px);
-    font-size: 30px;
+    font-size: 18px;
     letter-spacing: 0.14em;
     white-space: nowrap;
   }
