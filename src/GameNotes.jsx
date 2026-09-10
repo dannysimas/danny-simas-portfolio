@@ -325,7 +325,7 @@ async function createStoryCard(note) {
   context.fillStyle = "rgba(255, 255, 255, 0.84)";
   context.font = '600 38px Inter, sans-serif';
   context.letterSpacing = "0px";
-  drawWrappedText(context, note.take, 76, nextY + 120, 900, 48, 3);
+  drawWrappedText(context, note.take, 76, nextY + 120, 900, 48, 4);
 
   context.strokeStyle = "rgba(255, 255, 255, 0.24)";
   context.lineWidth = 2;
