@@ -2571,7 +2571,7 @@ textarea:focus {
 
   .main-nav {
     gap: clamp(20px, 1.5vw, 46px);
-    font-size: 30px;
+    font-size: 15px;
     letter-spacing: 0.14em;
     white-space: nowrap;
   }
@@ -2725,7 +2725,7 @@ textarea:focus {
 @media (min-width: 1201px) {
   .main-nav {
     gap: clamp(20px, 1.5vw, 46px);
-    font-size: 18px;
+    font-size: 15px;
     letter-spacing: 0.14em;
     white-space: nowrap;
   }
