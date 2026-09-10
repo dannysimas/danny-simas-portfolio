@@ -16,7 +16,7 @@ const gameNotes = [
       { src: "/images/next-play/screenshots/onimusha-forest.jpg", alt: "Musashi clashing swords with a Genma in a dark forest" },
     ],
     video: { youtubeId: "YBO6nE9I7A8", label: "Official demo trailer", credit: "Capcom USA" },
-    verdict: "Wait for sale",
+    verdict: "Wait for a sale",
     tone: "wait",
     take: "The combat is fun and the characters look incredible, but the blue-and-teal-heavy palette keeps the world from popping.",
     reasonLabel: "Why I’m waiting",
@@ -27,7 +27,7 @@ const gameNotes = [
   {
     id: "blood-of-dawnwalker",
     title: "The Blood of Dawnwalker",
-    stage: "Early impression",
+    stage: "Early impressions",
     meta: "Played 1 hour · Returned",
     releaseDate: "September 3, 2026",
     platforms: ["PC", "PlayStation 5", "Xbox Series X|S"],
@@ -39,7 +39,7 @@ const gameNotes = [
       { src: "/images/next-play/screenshots/dawnwalker-ruins.jpg", alt: "Coen exploring torch-lit ruins in Dawnwalker" },
     ],
     video: { youtubeId: "jVQiJ9ci0HI", label: "Official story trailer", credit: "Rebel Wolves / Bandai Namco" },
-    verdict: "Wait for sale",
+    verdict: "Wait for a sale",
     tone: "wait",
     take: "After one hour I can’t judge the story, but the visuals and characters disappointed me—and the combat and time system added more friction than fun.",
     reasonLabel: "Why I’m waiting",
@@ -311,7 +311,7 @@ async function createStoryCard(note) {
   context.fillText(note.verdict.toUpperCase(), 76, nextY + 38);
 
   context.fillStyle = "rgba(255, 255, 255, 0.84)";
-  context.font = '600 34px Inter, sans-serif';
+  context.font = '600 38px Inter, sans-serif';
   context.letterSpacing = "0px";
   drawWrappedText(context, note.take, 76, nextY + 120, 900, 48, 3);
 
