@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import CursorDot from "./CursorDot.jsx";
 import "./styles.css";
 
 const heroCollage = "/images/hero/hero-collage.webp";
@@ -251,7 +252,6 @@ export default function App() {
   const [hideMenu, setHideMenu] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [formStatus, setFormStatus] = useState("");
-  const [cursor, setCursor] = useState({ x: -100, y: -100 });
   const [nextPlayOpen, setNextPlayOpen] = useState(false);
   const [audienceCount, setAudienceCount] = useState(0);
   const [statsAnimated, setStatsAnimated] = useState(false);
@@ -272,18 +272,6 @@ export default function App() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (event) => {
-      setCursor({ x: event.clientX, y: event.clientY });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
@@ -437,13 +425,7 @@ export default function App() {
 
   return (
     <main className="site-bg">
-      <div
-        className="cursor-dot"
-        style={{
-          "--cursor-x": `${cursor.x}px`,
-          "--cursor-y": `${cursor.y}px`,
-        }}
-      />
+      <CursorDot />
 
       <header className={`top-menu ${hideMenu ? "top-menu-hidden" : ""}`}>
         <div className="edge header-inner">

@@ -1,15 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import CursorDot from "./CursorDot.jsx";
 import GameNotes from "./GameNotes.jsx";
 
 export default function GameNotesPage() {
-  const [cursor, setCursor] = useState({ x: -100, y: -100 });
-
-  useEffect(() => {
-    const handleMouseMove = (event) => setCursor({ x: event.clientX, y: event.clientY });
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   useEffect(() => {
     document.title = "The Next Play | Danny Simas";
     if (window.location.pathname.replace(/\/$/, "") === "/game-notes") {
@@ -26,13 +19,7 @@ export default function GameNotesPage() {
 
   return (
     <main className="site-bg game-notes-page play-page">
-      <div
-        className="cursor-dot"
-        style={{
-          "--cursor-x": `${cursor.x}px`,
-          "--cursor-y": `${cursor.y}px`,
-        }}
-      />
+      <CursorDot />
       <header className="play-header">
         <a className="play-brand" href="/the-next-play">
           <span aria-hidden="true" className="play-forward-mark"><i /><i /><i /></span>
