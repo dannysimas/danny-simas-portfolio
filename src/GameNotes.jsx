@@ -272,6 +272,18 @@ async function createStoryCard(note) {
   context.fillStyle = colorWash;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
+  const edgeStroke = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+  edgeStroke.addColorStop(0, "rgba(103, 232, 249, 0.58)");
+  edgeStroke.addColorStop(0.52, "rgba(255, 255, 255, 0.2)");
+  edgeStroke.addColorStop(1, "rgba(167, 139, 250, 0.58)");
+  context.save();
+  context.strokeStyle = edgeStroke;
+  context.lineWidth = 2;
+  context.shadowColor = "rgba(103, 232, 249, 0.18)";
+  context.shadowBlur = 16;
+  context.strokeRect(18, 18, canvas.width - 36, canvas.height - 36);
+  context.restore();
+
   const accent = context.createLinearGradient(76, 0, 1004, 0);
   accent.addColorStop(0, "#22d3ee");
   accent.addColorStop(1, "#8b5cf6");

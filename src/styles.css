@@ -3111,9 +3111,13 @@ textarea:focus {
   width: 286px;
   aspect-ratio: 9 / 16;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  border: 1px solid rgba(103, 232, 249, 0.42);
   background: #050607;
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.56);
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.56),
+    0 0 0 1px rgba(167, 139, 250, 0.16),
+    0 0 24px rgba(34, 211, 238, 0.14),
+    inset 0 0 24px rgba(139, 92, 246, 0.08);
 }
 
 .story-frame::before {
