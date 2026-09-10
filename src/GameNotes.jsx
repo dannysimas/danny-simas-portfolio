@@ -41,7 +41,7 @@ const gameNotes = [
     video: { youtubeId: "jVQiJ9ci0HI", label: "Official story trailer", credit: "Rebel Wolves / Bandai Namco" },
     verdict: "Wait for a sale",
     tone: "wait",
-    take: "After one hour I can’t judge the story, but the visuals and characters disappointed me—and the combat and time system added more friction than fun.",
+    take: "After one hour I can’t judge the story, but the visuals and characters disappointed me. The combat and time system added more friction than fun.",
     reasonLabel: "Why I’m waiting",
     reason: "I returned it for now; I’ll revisit it when the price drops. The performance issues and time investment are hard to justify at $70, especially with The Witcher 3 remaster on the way.",
     positives: [],
@@ -71,7 +71,7 @@ const gameNotes = [
   },
   {
     id: "the-witcher-3-wild-hunt-remastered",
-    title: "The Witcher 3: Wild Hunt — Remastered",
+    title: "The Witcher 3: Wild Hunt: Remastered",
     stage: "Remastered preview",
     meta: "Returning classic · September 2026",
     releaseDate: "September 29, 2026",
@@ -79,16 +79,16 @@ const gameNotes = [
     image: "/images/next-play/witcher3-remastered-cover.png",
     storyImage: "/images/next-play/witcher3-remastered-cover.png",
     screenshots: [
-      { src: "/images/next-play/screenshots/witcher3-forest.png", alt: "Geralt riding through a sunlit forest with an eagle overhead in The Witcher 3: Wild Hunt — Remastered" },
-      { src: "/images/next-play/screenshots/witcher3-ciri.png", alt: "Ciri in warm candlelight in The Witcher 3: Wild Hunt — Remastered" },
-      { src: "/images/next-play/screenshots/witcher3-combat-new.png", alt: "Geralt casting a fire spell at a monster in The Witcher 3: Wild Hunt — Remastered" },
+      { src: "/images/next-play/screenshots/witcher3-forest.png", alt: "Geralt riding through a sunlit forest with an eagle overhead in The Witcher 3: Wild Hunt: Remastered" },
+      { src: "/images/next-play/screenshots/witcher3-ciri.png", alt: "Ciri in warm candlelight in The Witcher 3: Wild Hunt: Remastered" },
+      { src: "/images/next-play/screenshots/witcher3-combat-new.png", alt: "Geralt casting a fire spell at a monster in The Witcher 3: Wild Hunt: Remastered" },
     ],
     video: { youtubeId: "IGk17XQ7IrQ", label: "Official announcement trailer", credit: "CD PROJEKT RED", poster: "/images/next-play/witcher3-remastered-cover.png" },
     verdict: "Must play",
     tone: "buy",
     take: "The Witcher 3 is a masterpiece: its characters, story, and world still feel incredible, and the Remastered upgrade makes this September’s must-play.",
     reasonLabel: "Why I’m playing",
-    reason: "The free upgrade for existing owners, visual improvements, expanded photo mode, and polished gameplay make this an easy recommendation—especially if you have never played it.",
+    reason: "The free upgrade for existing owners, visual improvements, expanded photo mode, and polished gameplay make this an easy recommendation, especially if you have never played it.",
     positives: ["Masterpiece story", "Unforgettable characters", "Visual upgrade", "Expanded photo mode"],
     concerns: [],
   },
@@ -397,7 +397,7 @@ function StoryPreview({ note, onClose }) {
       if (navigator.share && navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
-          title: `${note.title} — The Next Play`,
+          title: `${note.title} | The Next Play`,
           text: note.take,
         });
         setStatus("Ready to share.");
@@ -613,7 +613,7 @@ function GameCommunity({ note }) {
       }
       setName("");
       setBody("");
-      setStatus("Thanks — your comment is live.");
+      setStatus("Thanks. Your comment is live.");
     } catch {
       setStatus("Your comment could not be sent. Please try again.");
     } finally {
@@ -731,7 +731,7 @@ function GameVideo({ note }) {
           video.youtubeId ? (
             <iframe
               src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0`}
-              title={`${note.title} — ${video.label}`}
+              title={`${note.title}: ${video.label}`}
               allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
               referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
@@ -799,7 +799,7 @@ export default function GameNotes() {
           <div className="play-shelf-heading"><span>SELECT A GAME</span></div>
           <div className="play-month-group">
             <div className="play-month-label"><span>SEPTEMBER</span><span>2026</span></div>
-            <nav aria-label="Game library — September 2026" className="play-titles">
+            <nav aria-label="Game library: September 2026" className="play-titles">
               {orderedGameNotes.map((note) => (
                 <a key={note.id} href={`#note-${note.id}`} aria-current={selected.id === note.id ? "true" : undefined}
                   onClick={(event) => {
