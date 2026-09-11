@@ -801,7 +801,7 @@ export default function GameNotes() {
     swipe.current = null;
     if (event.pointerType !== "touch" || !event.isPrimary || activeNote ||
         !window.matchMedia("(max-width: 640px)").matches ||
-        event.target.closest("iframe, video")) return;
+        event.target.closest(".play-titles, iframe, video")) return;
     swipe.current = { id: event.pointerId, x: event.clientX, y: event.clientY, time: event.timeStamp };
   }
 

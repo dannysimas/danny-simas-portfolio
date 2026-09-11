@@ -1,6 +1,12 @@
 .play-swipe-hint { display: none; }
 @media (max-width:640px) {
-  .play-page, .play-page .play-titles { touch-action: pan-y pinch-zoom; }
+  .play-page .play-header,
+  .play-page .game-notes-grid,
+  .play-page .play-shelf-heading,
+  .play-page .play-month-label,
+  .play-page .play-shelf-foot { touch-action: pan-y pinch-zoom; }
+  /* Leave native horizontal scrolling enabled for the game picker. */
+  .play-page .play-titles { touch-action: auto; }
   .play-swipe-hint { display: block; margin: 0; padding: 14px 18px; color: #67e8f9; background: #0b0e16; text-align: center; font: 600 13px/1.5 Inter,sans-serif; }
 }
 .play-video { margin-top: 32px; }
