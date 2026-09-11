@@ -1,4 +1,6 @@
 .play-swipe-hint { display: none; }
+.play-thumbnail-browser { min-width: 0; }
+.play-thumbnail-arrow { display: none; }
 @media (max-width:640px) {
   .play-page .play-header,
   .play-page .game-notes-grid,
@@ -6,7 +8,11 @@
   .play-page .play-month-label,
   .play-page .play-shelf-foot { touch-action: pan-y pinch-zoom; }
   /* Leave native horizontal scrolling enabled for the game picker. */
-  .play-page .play-titles { touch-action: auto; }
+  .play-thumbnail-browser { display: grid; grid-template-columns: 44px minmax(0,1fr) 44px; align-items: center; }
+  .play-page .play-titles { touch-action: auto; scrollbar-width: none; -ms-overflow-style: none; padding-inline: 4px; }
+  .play-page .play-titles::-webkit-scrollbar { display: none; width: 0; height: 0; }
+  .play-thumbnail-arrow { display: grid; place-items: center; width: 44px; min-height: 56px; border: 0; padding: 0; color: #67e8f9; background: transparent; cursor: pointer; touch-action: manipulation; }
+  .play-thumbnail-arrow:active { background: #67e8f910; }
   .play-swipe-hint { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0; padding: 14px 12px; color: #c6d2e5; background: linear-gradient(90deg,#0b0e16,#121527,#0b0e16); text-align: center; font: 700 12px/20px Inter,sans-serif; letter-spacing: .08em; text-transform: uppercase; }
   .play-swipe-hint > span { min-width: 0; }
   .play-swipe-chevron { display: block; flex: 0 0 28px; width: 28px; height: 24px; fill: #67e8f9; filter: drop-shadow(0 0 5px #22d3ee40); }

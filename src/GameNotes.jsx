@@ -790,6 +790,7 @@ export default function GameNotes() {
   const swipe = useRef(null);
   const suppressClickUntil = useRef(0);
   const detailRef = useRef(null);
+  const titlesRef = useRef(null);
   const selectedIndex = orderedGameNotes.findIndex((note) => note.id === selected.id);
 
   function selectGame(id) {
@@ -797,11 +798,21 @@ export default function GameNotes() {
     window.history.replaceState(null, "", `#note-${id}`);
   }
 
+  function scrollThumbnails(direction) {
+    const titles = titlesRef.current;
+    if (!titles) return;
+    const step = titles.firstElementChild.getBoundingClientRect().width + parseFloat(getComputedStyle(titles).gap || "0");
+    titles.scrollBy({
+      left: direction * step,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    });
+  }
+
   function startSwipe(event) {
     swipe.current = null;
     if (event.pointerType !== "touch" || !event.isPrimary || activeNote ||
         !window.matchMedia("(max-width: 640px)").matches ||
-        event.target.closest(".play-titles, iframe, video")) return;
+        event.target.closest(".play-thumbnail-browser, iframe, video")) return;
     swipe.current = { id: event.pointerId, x: event.clientX, y: event.clientY, time: event.timeStamp };
   }
 
@@ -852,7 +863,10 @@ export default function GameNotes() {
   useEffect(() => {
     if (!window.matchMedia("(max-width: 640px)").matches) return;
     const current = document.querySelector('.play-titles a[aria-current="true"]');
-    if (current) current.parentElement.scrollLeft = current.offsetLeft - 18;
+    if (current) {
+      const titles = current.parentElement;
+      titles.scrollLeft += current.getBoundingClientRect().left - titles.getBoundingClientRect().left - 4;
+    }
   }, [selected.id]);
   useEffect(() => {
     const sync = () => setSelectedId(window.location.hash.replace("#note-", ""));
@@ -867,7 +881,14 @@ export default function GameNotes() {
           <div className="play-shelf-heading"><span>SELECT A GAME</span></div>
           <div className="play-month-group">
             <div className="play-month-label"><span>SEPTEMBER</span><span>2026</span></div>
-            <nav aria-label="Game library: September 2026" className="play-titles">
+            <div className="play-thumbnail-browser">
+              <button className="play-thumbnail-arrow" type="button" aria-label="Scroll game thumbnails left" aria-controls="play-game-thumbnails" onClick={() => scrollThumbnails(-1)}>
+                <svg className="play-swipe-chevron play-swipe-chevron-left" viewBox="0 0 28 24" aria-hidden="true" focusable="false">
+                  <path d="M2 3h5l8 9-8 9H2l8-9Z" />
+                  <path d="M13 3h5l8 9-8 9h-5l8-9Z" />
+                </svg>
+              </button>
+            <nav id="play-game-thumbnails" ref={titlesRef} aria-label="Game library: September 2026" className="play-titles">
               {orderedGameNotes.map((note) => (
                 <a key={note.id} href={`#note-${note.id}`} aria-current={selected.id === note.id ? "true" : undefined}
                   onClick={(event) => {
@@ -880,6 +901,13 @@ export default function GameNotes() {
                 </a>
               ))}
             </nav>
+              <button className="play-thumbnail-arrow" type="button" aria-label="Scroll game thumbnails right" aria-controls="play-game-thumbnails" onClick={() => scrollThumbnails(1)}>
+                <svg className="play-swipe-chevron" viewBox="0 0 28 24" aria-hidden="true" focusable="false">
+                  <path d="M2 3h5l8 9-8 9H2l8-9Z" />
+                  <path d="M13 3h5l8 9-8 9h-5l8-9Z" />
+                </svg>
+              </button>
+            </div>
           </div>
           <div className="play-shelf-foot"><span>THE NEXT PLAY</span><p>New releases.<br />Upcoming games. My take.</p><small>First entry live · More games coming soon</small></div>
         </aside>
