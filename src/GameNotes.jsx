@@ -913,15 +913,7 @@ export default function GameNotes() {
         </aside>
         <div className="game-notes-grid" ref={detailRef}>
           <p className="play-swipe-hint">
-            <svg className="play-swipe-chevron play-swipe-chevron-left" viewBox="0 0 28 24" aria-hidden="true" focusable="false">
-              <path d="M2 3h5l8 9-8 9H2l8-9Z" />
-              <path d="M13 3h5l8 9-8 9h-5l8-9Z" />
-            </svg>
             <span>Swipe between games</span>
-            <svg className="play-swipe-chevron" viewBox="0 0 28 24" aria-hidden="true" focusable="false">
-              <path d="M2 3h5l8 9-8 9H2l8-9Z" />
-              <path d="M13 3h5l8 9-8 9h-5l8-9Z" />
-            </svg>
           </p>
           {[selected].map((note) => (
             <article
