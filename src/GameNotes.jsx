@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { swipeDirection } from "./gameSwipe.mjs";
 import "./gaming-library.css";
 
 const gameNotes = [
@@ -786,6 +787,73 @@ export default function GameNotes() {
   const [activeNote, setActiveNote] = useState(null);
   const [selectedId, setSelectedId] = useState(() => window.location.hash.replace("#note-", ""));
   const selected = gameNotes.find((note) => note.id === selectedId) || gameNotes[0];
+  const swipe = useRef(null);
+  const suppressClickUntil = useRef(0);
+  const detailRef = useRef(null);
+  const selectedIndex = orderedGameNotes.findIndex((note) => note.id === selected.id);
+
+  function selectGame(id) {
+    setSelectedId(id);
+    window.history.replaceState(null, "", `#note-${id}`);
+  }
+
+  function startSwipe(event) {
+    swipe.current = null;
+    if (event.pointerType !== "touch" || !event.isPrimary || activeNote ||
+        !window.matchMedia("(max-width: 640px)").matches ||
+        event.target.closest("iframe, video")) return;
+    swipe.current = { id: event.pointerId, x: event.clientX, y: event.clientY, time: event.timeStamp };
+  }
+
+  function moveSwipe(event) {
+    const start = swipe.current;
+    if (!start || start.id !== event.pointerId) return;
+    const dx = Math.abs(event.clientX - start.x);
+    const dy = Math.abs(event.clientY - start.y);
+    // Once a gesture becomes a vertical scroll, never turn it into a game change.
+    if (dy > 12 && dy >= dx) swipe.current = null;
+  }
+
+  function finishSwipe(event) {
+    const start = swipe.current;
+    swipe.current = null;
+    if (!start || start.id !== event.pointerId || activeNote) return;
+    const direction = swipeDirection(event.clientX - start.x, event.clientY - start.y, event.timeStamp - start.time);
+    const next = orderedGameNotes[selectedIndex + direction];
+    if (!direction) return;
+    suppressClickUntil.current = performance.now() + 500;
+    if (!next) return;
+    selectGame(next.id);
+    // Start the next review at its heading, even after swiping farther down.
+    detailRef.current?.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  useEffect(() => {
+    // Capture across the entire iframe document, including its header and controls.
+    const cancel = () => { swipe.current = null; };
+    const blockSwipeClick = (event) => {
+      if (performance.now() < suppressClickUntil.current) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+    document.addEventListener("pointerdown", startSwipe, true);
+    document.addEventListener("pointermove", moveSwipe, true);
+    document.addEventListener("pointerup", finishSwipe, true);
+    document.addEventListener("pointercancel", cancel, true);
+    document.addEventListener("click", blockSwipeClick, true);
+    return () => {
+      document.removeEventListener("pointerdown", startSwipe, true);
+      document.removeEventListener("pointermove", moveSwipe, true);
+      document.removeEventListener("pointerup", finishSwipe, true);
+      document.removeEventListener("pointercancel", cancel, true);
+      document.removeEventListener("click", blockSwipeClick, true);
+    };
+  });
+  useEffect(() => {
+    if (!window.matchMedia("(max-width: 640px)").matches) return;
+    const current = document.querySelector('.play-titles a[aria-current="true"]');
+    if (current) current.parentElement.scrollLeft = current.offsetLeft - 18;
+  }, [selected.id]);
   useEffect(() => {
     const sync = () => setSelectedId(window.location.hash.replace("#note-", ""));
     window.addEventListener("hashchange", sync);
@@ -804,8 +872,7 @@ export default function GameNotes() {
                 <a key={note.id} href={`#note-${note.id}`} aria-current={selected.id === note.id ? "true" : undefined}
                   onClick={(event) => {
                     event.preventDefault();
-                    setSelectedId(note.id);
-                    window.history.replaceState(null, "", `#note-${note.id}`);
+                    selectGame(note.id);
                   }}>
                   <img src={note.image} alt="" />
                   <span><small>{note.stage}</small><strong>{note.title}</strong><em>{note.verdict}</em></span>
@@ -816,7 +883,8 @@ export default function GameNotes() {
           </div>
           <div className="play-shelf-foot"><span>THE NEXT PLAY</span><p>New releases.<br />Upcoming games. My take.</p><small>First entry live · More games coming soon</small></div>
         </aside>
-        <div className="game-notes-grid">
+        <div className="game-notes-grid" ref={detailRef}>
+          <p className="play-swipe-hint">← Swipe between games →</p>
           {[selected].map((note) => (
             <article
               id={`note-${note.id}`}

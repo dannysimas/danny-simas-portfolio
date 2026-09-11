@@ -1,3 +1,8 @@
+.play-swipe-hint { display: none; }
+@media (max-width:640px) {
+  .play-page, .play-page .play-titles { touch-action: pan-y pinch-zoom; }
+  .play-swipe-hint { display: block; margin: 0; padding: 14px 18px; color: #67e8f9; background: #0b0e16; text-align: center; font: 600 13px/1.5 Inter,sans-serif; }
+}
 .play-video { margin-top: 32px; }
 .play-video-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
 .play-video-heading h2 { margin: 0; font: 700 14px Inter,sans-serif; color: #d1d7e2; }
