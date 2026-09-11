@@ -7,7 +7,11 @@
   .play-page .play-shelf-foot { touch-action: pan-y pinch-zoom; }
   /* Leave native horizontal scrolling enabled for the game picker. */
   .play-page .play-titles { touch-action: auto; }
-  .play-swipe-hint { display: block; margin: 0; padding: 14px 18px; color: #67e8f9; background: #0b0e16; text-align: center; font: 600 13px/1.5 Inter,sans-serif; }
+  .play-swipe-hint { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0; padding: 14px 12px; color: #c6d2e5; background: linear-gradient(90deg,#0b0e16,#121527,#0b0e16); text-align: center; font: 700 12px/20px Inter,sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+  .play-swipe-hint > span { min-width: 0; }
+  .play-swipe-chevron { display: block; flex: 0 0 28px; width: 28px; height: 24px; fill: #67e8f9; filter: drop-shadow(0 0 5px #22d3ee40); }
+  .play-swipe-chevron path:first-child { fill: #a78bfa; opacity: .7; }
+  .play-swipe-chevron-left { transform: rotate(180deg); }
 }
 .play-video { margin-top: 32px; }
 .play-video-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
