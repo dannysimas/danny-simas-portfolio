@@ -8,6 +8,25 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Shared document scrollbar for the portfolio and The Next Play iframe. */
+@media (forced-colors: none) {
+  html { scrollbar-width: thin; scrollbar-color: #93b6e7 #0b0e16; }
+  @supports selector(::-webkit-scrollbar) {
+    html { scrollbar-width: auto; scrollbar-color: auto; }
+    html::-webkit-scrollbar { width: 12px; height: 12px; }
+    html::-webkit-scrollbar-track { background: #0b0e16; }
+    html::-webkit-scrollbar-thumb { min-height: 48px; border: 3px solid #0b0e16; border-radius: 12px; background: linear-gradient(180deg, #67e8f9, #a78bfa); background-clip: padding-box; }
+    html::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #a5f3fc, #c4b5fd); background-clip: padding-box; }
+    html::-webkit-scrollbar-corner { background: #0b0e16; }
+    html::-webkit-scrollbar-button { display: none; }
+    html::-webkit-scrollbar-button:vertical:decrement:start,
+    html::-webkit-scrollbar-button:vertical:increment:end { display: block; height: 18px; background-color: #0b0e16; background-position: center; background-repeat: no-repeat; background-size: 10px 10px; }
+    html::-webkit-scrollbar-button:vertical:decrement:start { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='m3 8 3-4 3 4' fill='none' stroke='%2367e8f9' stroke-width='2'/%3E%3C/svg%3E"); }
+    html::-webkit-scrollbar-button:vertical:increment:end { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='m3 4 3 4 3-4' fill='none' stroke='%23a78bfa' stroke-width='2'/%3E%3C/svg%3E"); }
+    html::-webkit-scrollbar-button:vertical:hover { background-color: #1c2540; }
+  }
+}
+
 [id] {
   scroll-margin-top: 88px;
 }

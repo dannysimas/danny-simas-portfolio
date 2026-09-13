@@ -4,8 +4,6 @@ import GameNotes from "./GameNotes.jsx";
 
 export default function GameNotesPage() {
   useEffect(() => {
-    // The iframe scrolls its document, not the page's inner main element.
-    document.documentElement.classList.add("next-play-document");
     document.title = "The Next Play | Danny Simas";
     if (window.location.pathname.replace(/\/$/, "") === "/game-notes") {
       window.history.replaceState(null, "", `/the-next-play${window.location.search}${window.location.hash}`);
@@ -17,7 +15,6 @@ export default function GameNotesPage() {
     if (window.location.hash) {
       document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
     }
-    return () => document.documentElement.classList.remove("next-play-document");
   }, []);
 
   return (
