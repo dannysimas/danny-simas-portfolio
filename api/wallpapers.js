@@ -15,7 +15,7 @@ export function createWallpaperHandler(source=service){return async function han
     const revision=url.searchParams.get('revision');
     if(revision&&revision!==snapshot.revision){res.setHeader('Cache-Control','no-store');return send(409,{error:'Catalog changed during refresh'})}
     if(page>pages){res.setHeader('Cache-Control','no-store');return send(404,{error:'Page not found'})}
-    res.setHeader('Cache-Control','public, max-age=0, s-maxage='+(snapshot.stale?'15':'60'));
+    res.setHeader('Cache-Control','public, max-age=0, s-maxage=15');
     return send(200,{complete:true,revision:snapshot.revision,checkedAt:snapshot.checkedAt,stale:snapshot.stale,page,pages,total:snapshot.items.length,items:snapshot.items.slice((page-1)*PAGE_SIZE,page*PAGE_SIZE)});
   }catch(error){console.error('Wallpaper sync unavailable:',error.message);res.setHeader('Cache-Control','no-store');res.setHeader('Retry-After','60');return send(503,{error:'Wallpaper refresh temporarily unavailable'})}
 }};

@@ -1,5 +1,5 @@
 // Keep the last complete snapshot and share one refresh between concurrent requests.
-export function createWallpaperService({load,now=Date.now,ttlMs=300000,retryMs=60000}){
+export function createWallpaperService({load,now=Date.now,ttlMs=60000,retryMs=60000}){
   let snapshot=null,expires=0,pending=null,retryAt=0,lastError=null;
   return {async get(){
     if(snapshot&&now()<expires)return {...snapshot,stale:false};

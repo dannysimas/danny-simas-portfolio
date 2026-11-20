@@ -1,5 +1,5 @@
 // Read a complete, consistent feed before replacing anything visitors can see.
-export const SYNC_INTERVAL=300000;
+export const SYNC_INTERVAL=60000;
 function mediaUrl(value){
   if(typeof value!=='string')return false;
   if(/^\/wallpapers\/assets\/[a-f0-9]{18}-(thumb|preview)\.(jpg|jpeg|png|webp|avif|gif)$/.test(value))return true;
