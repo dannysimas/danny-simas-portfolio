@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import CursorDot from "./CursorDot.jsx";
+import { NEXT_PLAY_ENABLED } from "./features.js";
 import "./styles.css";
 
 const heroCollage = "/images/hero/hero-collage.webp";
@@ -63,7 +64,7 @@ const nav = [
   ["Media Kit", "#media-kit"],
   ["FAQ", "#faq"],
   ["Contact", "#contact"],
-];
+].filter(([, href]) => NEXT_PLAY_ENABLED || href !== "/the-next-play");
 
 const collabs = [
   ["Studios", ["Rogue Factor", "Myrkur Games", "Nekki", "One More Level"]],
@@ -510,19 +511,21 @@ export default function App() {
             <p>Cinematic game visuals with a movie-poster mindset.</p>
             <div className="hero-line" />
             <a href="#work">Explore Work →</a>
-            <button
-              type="button"
-              className={`next-play-logo-button${nextPlayOpen ? " is-open" : ""}`}
-              onClick={() => setNextPlayOpen(true)}
-              aria-label="Open The Next Play"
-              aria-expanded={nextPlayOpen}
-            >
-              <img
-                className="next-play-logo-art"
-                src="/images/next-play/next-play-logo.png"
-                alt="The Next Play by Danny Simas"
-              />
-            </button>
+            {NEXT_PLAY_ENABLED && (
+              <button
+                type="button"
+                className={`next-play-logo-button${nextPlayOpen ? " is-open" : ""}`}
+                onClick={() => setNextPlayOpen(true)}
+                aria-label="Open The Next Play"
+                aria-expanded={nextPlayOpen}
+              >
+                <img
+                  className="next-play-logo-art"
+                  src="/images/next-play/next-play-logo.png"
+                  alt="The Next Play by Danny Simas"
+                />
+              </button>
+            )}
           </div>
         </div>
       </section>
@@ -879,7 +882,7 @@ export default function App() {
         </div>
       )}
 
-      {nextPlayOpen && (
+      {NEXT_PLAY_ENABLED && nextPlayOpen && (
         <div className="next-play-lightbox" role="dialog" aria-modal="true" aria-labelledby="next-play-lightbox-title">
           <button
             type="button"

@@ -13,6 +13,12 @@ npm run build
 
 Then deploy the project folder to Vercel.
 
+## The Next Play availability
+
+The Next Play is temporarily paused. `NEXT_PLAY_ENABLED` in `src/features.js` controls its desktop and mobile menu entries, homepage logo, lightbox, and standalone pages. While disabled, `/the-next-play` and `/game-notes` show the portfolio at `/`.
+
+To restore it, set `NEXT_PLAY_ENABLED` to `true`, then rebuild and deploy. All content, images, styles, and community configuration are preserved; no database changes are needed.
+
 ## The Next Play community features
 
 The game pages use Supabase for like/dislike reactions and comments.
