@@ -25,6 +25,31 @@
       "permanent": true
     },
     {
+      "source": "/concepts/motion-lab/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/concepts/motion-lab/wallpapers",
+      "destination": "/wallpapers/",
+      "permanent": true
+    },
+    {
+      "source": "/concepts/motion-lab/wallpapers/",
+      "destination": "/wallpapers/",
+      "permanent": true
+    },
+    {
+      "source": "/concepts/motion-lab/photomodes",
+      "destination": "/photomodes/",
+      "permanent": true
+    },
+    {
+      "source": "/concepts/motion-lab/photomodes/",
+      "destination": "/photomodes/",
+      "permanent": true
+    },
+    {
       "source": "/concepts/motion-lab/:path*",
       "destination": "/:path*",
       "permanent": true
