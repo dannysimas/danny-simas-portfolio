@@ -29,13 +29,21 @@ function render(reset=true){
  if(reset)visibleCount=24;
  const query=$('#wallpaper-search').value.trim().toLowerCase(),game=$('#game-filter').value,min=Number($('#resolution-filter').value)||0,sort=$('#sort-filter').value;
  filtered=items.filter(x=>(orientation==='all'||screen(x)===orientation)&&(game==='all'||x.game===game)&&Math.max(x.width,x.height)>=min&&(!query||`${x.title} ${x.game} ${x.collection} ${x.filename}`.toLowerCase().includes(query)));
- filtered.sort((a,b)=>sort==='resolution'?b.width*b.height-a.width*a.height:sort==='size'?(a.bytes||Infinity)-(b.bytes||Infinity):`${a.game} ${a.title}`.localeCompare(`${b.game} ${b.title}`,undefined,{numeric:true}));
+ filtered.sort((a,b)=>{
+  if(sort==='newest'||sort==='oldest'){
+   const aDate=Date.parse(a.modified),bDate=Date.parse(b.modified),aDated=Number.isFinite(aDate),bDated=Number.isFinite(bDate);
+   // Keep undated images last in either direction, and break date ties by name.
+   if(aDated!==bDated)return aDated?-1:1;
+   if(aDated&&aDate!==bDate)return sort==='newest'?bDate-aDate:aDate-bDate;
+  }
+  return sort==='resolution'?b.width*b.height-a.width*a.height:sort==='size'?(a.bytes||Infinity)-(b.bytes||Infinity):`${a.game} ${a.title}`.localeCompare(`${b.game} ${b.title}`,undefined,{numeric:true});
+ });
  grid.dataset.orientation=orientation;grid.innerHTML=filtered.slice(0,visibleCount).map(card).join('');
  $('#result-count').textContent=`${filtered.length.toLocaleString()} wallpaper${filtered.length===1?'':'s'}${game==='all'?'':` / ${game}`}`;
  $('#empty-state').hidden=filtered.length>0;$('#load-more').hidden=visibleCount>=filtered.length;
  $('.load-more-wrap').hidden=!filtered.length;$('#loaded-count').textContent=`Showing ${Math.min(visibleCount,filtered.length).toLocaleString()} of ${filtered.length.toLocaleString()}`;
 }
-function reset(){orientation='all';$('#wallpaper-search').value='';$('#game-filter').value='all';$('#resolution-filter').value='all';$('#sort-filter').value='game';$$('[data-orientation]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.orientation==='all')));render()}
+function reset(){orientation='all';$('#wallpaper-search').value='';$('#game-filter').value='all';$('#resolution-filter').value='all';$('#sort-filter').value='newest';$$('[data-orientation]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.orientation==='all')));render()}
 $$('[data-orientation]').forEach(button=>button.addEventListener('click',()=>{orientation=button.dataset.orientation;$$('[data-orientation]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));render()}));
 $('#wallpaper-search').addEventListener('input',()=>render());['game-filter','resolution-filter','sort-filter'].forEach(id=>$('#'+id).addEventListener('change',()=>render()));
 $('#reset-filters').addEventListener('click',reset);$('#empty-reset').addEventListener('click',reset);

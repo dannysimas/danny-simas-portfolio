@@ -4,6 +4,8 @@ The catalog uses image originals from Danny's public **Danny Vault** shared Drop
 
 `catalog.json` is the bundled starting catalog and offline fallback; the live endpoint replaces it with a complete current listing. Original width, height, byte size, modification date, and filename come from Dropbox file metadata. IDs derive from stable Dropbox file IDs. `format` describes the original, while the local preview and thumbnail assets are JPEG derivatives. The originals are unchanged.
 
+The gallery defaults to **Most recent**, with **Oldest** available in the sort menu. Both use the original file's Dropbox modification date (`modified`), including after live sync. Images with missing dates appear last, and matching dates sort by game and title. Reset filters restores Most recent.
+
 `source-inventory.json` records every visited folder, page count, excluded non-image file, import error, and completion status. The import follows every pagination voucher and traverses nested folders. Only JPG/JPEG, PNG, WebP, AVIF, and GIF image files are eligible; video and source/project files are excluded. Public owner/account metadata is discarded.
 
 ## Automatic syncing
