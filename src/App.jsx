@@ -125,9 +125,9 @@ const wins = [
     text: "Created gaming hardware content through a gifted creator partnership.",
   },
   {
-    label: "Publisher Access",
-    title: "PLAION / Deep Silver",
-    text: "Creator access, game coverage opportunities, and participation in the Deep Silver Creator Collective.",
+    label: "Paid Commission",
+    title: "Gears of War: E-Day",
+    text: "Paid commission celebrating the Gears of War 20th anniversary.",
   },
 ];
 
