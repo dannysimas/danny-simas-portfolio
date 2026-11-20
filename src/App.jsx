@@ -67,12 +67,12 @@ const nav = [
 ].filter(([, href]) => NEXT_PLAY_ENABLED || href !== "/the-next-play");
 
 const collabs = [
-  ["Studios", ["Rogue Factor", "Myrkur Games", "Nekki", "One More Level"]],
+  ["Studios", ["Rogue Factor", "Myrkur Games", "Nekki", "One More Level", "The Coalition"]],
   [
     "Publishers",
     ["PLAION", "Deep Silver", "Focus Entertainment", "Fictions, Inc."],
   ],
-  ["Gaming & Hardware", ["Razer", "GameSir"]],
+  ["Gaming & Hardware", ["Razer", "GameSir", "JMGO", "Hbada", "Uperfect"]],
   [
     "Creator Programs",
     ["IO Interactive Partner Program", "Deep Silver Creator Collective", "Keymailer"],
