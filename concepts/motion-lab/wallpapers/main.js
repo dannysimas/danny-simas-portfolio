@@ -36,7 +36,7 @@ function render(reset=true){
    if(aDated!==bDated)return aDated?-1:1;
    if(aDated&&aDate!==bDate)return sort==='newest'?bDate-aDate:aDate-bDate;
   }
-  return sort==='resolution'?b.width*b.height-a.width*a.height:sort==='size'?(a.bytes||Infinity)-(b.bytes||Infinity):`${a.game} ${a.title}`.localeCompare(`${b.game} ${b.title}`,undefined,{numeric:true});
+  return `${a.game} ${a.title}`.localeCompare(`${b.game} ${b.title}`,undefined,{numeric:true});
  });
  grid.dataset.orientation=orientation;grid.innerHTML=filtered.slice(0,visibleCount).map(card).join('');
  $('#result-count').textContent=`${filtered.length.toLocaleString()} wallpaper${filtered.length===1?'':'s'}${game==='all'?'':` / ${game}`}`;
