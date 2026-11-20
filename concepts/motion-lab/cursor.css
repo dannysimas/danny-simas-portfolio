@@ -1,0 +1,8 @@
+﻿/* Native cursors follow the pointer directly; touch devices keep their defaults. */
+@media (hover:hover) and (pointer:fine) {
+  html,body {cursor:url('./cursor-arrow.svg') 4 3,default}
+  a[href],button:not(:disabled),summary,select,[role="button"],label[for] {cursor:url('./cursor-hand.svg') 13 3,pointer}
+  input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]),textarea,[contenteditable="true"] {cursor:text}
+  input[type="checkbox"],input[type="radio"],input[type="range"],input[type="color"],input[type="file"] {cursor:url('./cursor-hand.svg') 13 3,pointer}
+  button:disabled {cursor:not-allowed}
+}

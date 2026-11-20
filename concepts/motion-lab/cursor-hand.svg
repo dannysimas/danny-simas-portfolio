@@ -1,0 +1,5 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs><linearGradient id="edge" x1="13" y1="3" x2="21" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="#a78bfa"/><stop offset=".42" stop-color="#8b5cf6"/><stop offset=".75" stop-color="#22d3ee"/><stop offset="1" stop-color="#67e8f9"/></linearGradient></defs>
+  <path id="hand" d="M10 18V5C10 1.5 15 1.5 15 5V12C15 8.5 20 8.5 20 12V14C20 11 24.5 11 24.5 14V16C24.5 13 29 13 29 16.5V21C29 26.5 25.5 29.5 20 29.5H17C14 29.5 12 28 10 26L3 19.5C.5 17 4 13.5 6.5 16L10 19Z" fill="#06080e" stroke="#020306" stroke-width="4.5" stroke-linejoin="round"/>
+  <path d="M10 18V5C10 1.5 15 1.5 15 5V12C15 8.5 20 8.5 20 12V14C20 11 24.5 11 24.5 14V16C24.5 13 29 13 29 16.5V21C29 26.5 25.5 29.5 20 29.5H17C14 29.5 12 28 10 26L3 19.5C.5 17 4 13.5 6.5 16L10 19Z" fill="#06080e" stroke="url(#edge)" stroke-width="2.3" stroke-linejoin="round"/>
+</svg>

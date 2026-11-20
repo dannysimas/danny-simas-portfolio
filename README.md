@@ -1,5 +1,13 @@
 # Danny Simas Portfolio
 
+The production website uses the approved Worlds in Frame design in `concepts/motion-lab/`. Vite serves that directory at `/` and builds the portfolio, `/wallpapers/`, and `/photomodes/` into `dist/`. The earlier React implementation in `src/` is preserved but is not the active entry point.
+
+The existing GitHub `main` branch deploys through Vercel to https://dannysimas.com. `vercel.json` retains the paused Next Play routes, configures the wallpaper sync endpoint, and redirects the old concept preview URLs.
+
+Run `npm test`, `npm run build`, and `npm run verify:build` before deploying. The build includes the optimized wallpaper image cache; subsequent Dropbox uploads sync automatically without rebuilding. See [wallpaper maintenance](concepts/motion-lab/wallpapers/README.md).
+
+For local Dropbox access on this Windows machine: `node --use-system-ca node_modules/vite/bin/vite.js --host 127.0.0.1 --port 5174 --strictPort`.
+
 ## Run locally
 ```bash
 npm install
@@ -17,7 +25,7 @@ Then deploy the project folder to Vercel.
 
 The Next Play is temporarily paused. `NEXT_PLAY_ENABLED` in `src/features.js` controls its desktop and mobile menu entries, homepage logo, lightbox, and standalone pages. While disabled, `/the-next-play` and `/game-notes` show the portfolio at `/`.
 
-To restore it, set `NEXT_PLAY_ENABLED` to `true`, then rebuild and deploy. All content, images, styles, and community configuration are preserved; no database changes are needed.
+To restore it later, reintroduce its routes and menu entry in the active design, then enable `NEXT_PLAY_ENABLED` in the preserved React implementation if that implementation is used. All content, images, styles, and community configuration are preserved; no database changes are needed.
 
 ## The Next Play community features
 
@@ -53,7 +61,7 @@ public/images/tomb-raider/tr-cover.webp
 ```
 
 ## How to change images
-Open `src/App.jsx`.
+The active site content lives in `concepts/motion-lab/content.js`. The original React source is retained in `src/App.jsx`; the examples below describe that preserved implementation.
 
 At the top, replace the stock image URLs with local paths:
 

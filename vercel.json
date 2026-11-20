@@ -1,6 +1,33 @@
 {
   "rewrites": [
-    { "source": "/game-notes", "destination": "/index.html" },
-    { "source": "/the-next-play", "destination": "/index.html" }
+    {
+      "source": "/game-notes",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/the-next-play",
+      "destination": "/index.html"
+    }
+  ],
+  "functions": {
+    "api/wallpapers.js": {
+      "maxDuration": 60,
+      "includeFiles": "concepts/motion-lab/wallpapers/catalog.json"
+    }
+  },
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/concepts/motion-lab",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/concepts/motion-lab/:path*",
+      "destination": "/:path*",
+      "permanent": true
+    }
   ]
 }
