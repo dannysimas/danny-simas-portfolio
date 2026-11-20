@@ -12,5 +12,9 @@
     "react": "latest",
     "react-dom": "latest"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  }
 }
