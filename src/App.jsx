@@ -81,7 +81,7 @@ const collabs = [
 
 const stats = [
   [
-    "70K+",
+    "80K+",
     "Followers Across Platforms",
     "M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2 M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M21 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75",
   ],
@@ -336,7 +336,7 @@ export default function App() {
         setStatsAnimated(true);
 
         if (prefersReducedMotion) {
-          setAudienceCount(70);
+          setAudienceCount(80);
           return;
         }
 
@@ -347,7 +347,7 @@ export default function App() {
           const progress = Math.min((currentTime - startTime) / duration, 1);
           const easedProgress = 1 - Math.pow(1 - progress, 3);
 
-          setAudienceCount(Math.round(70 * easedProgress));
+          setAudienceCount(Math.round(80 * easedProgress));
 
           if (progress < 1) {
             statsAnimationFrame.current = requestAnimationFrame(animateCount);
@@ -588,7 +588,7 @@ export default function App() {
               </span>
 
               <div>
-                <p className="stat-value" aria-label={index === 0 ? "70K+" : undefined}>
+                <p className="stat-value" aria-label={index === 0 ? "80K+" : undefined}>
                   <span className="stat-gradient-text">
                     {index === 0 ? `${audienceCount}K+` : number}
                   </span>
@@ -773,7 +773,7 @@ export default function App() {
               [
                 "Audience",
                 [
-                  "70K+ community across platforms",
+                  "80K+ community across platforms",
                   "Millions in monthly reach",
                   "Highly engaged gaming audience",
                 ],
