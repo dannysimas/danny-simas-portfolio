@@ -7,6 +7,7 @@
     "verify:build": "node scripts/verify-build.mjs"
   },
   "dependencies": {
+    "@vercel/functions": "^3.11.3",
     "@vitejs/plugin-react": "latest",
     "vite": "latest",
     "react": "latest",

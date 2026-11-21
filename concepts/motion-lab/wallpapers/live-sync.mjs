@@ -1,5 +1,7 @@
 // Read a complete, consistent feed before replacing anything visitors can see.
 export const SYNC_INTERVAL=60000;
+export const RETRY_INTERVAL=5000;
+const CACHE_KEY='danny-wallpapers:v1',CACHE_MAX_AGE=900000,CACHE_MAX_LENGTH=2000000;
 function mediaUrl(value){
   if(typeof value!=='string')return false;
   if(/^\/wallpapers\/assets\/[a-f0-9]{18}-(thumb|preview)\.(jpg|jpeg|png|webp|avif|gif)$/.test(value))return true;
@@ -10,6 +12,24 @@ function validItem(item){
   if(!['width','height','bytes'].every(key=>item[key]===null||(Number.isFinite(item[key])&&item[key]>0)))return false;
   if(!mediaUrl(item.thumbnail)||!mediaUrl(item.preview))return false;
   try{const url=new URL(item.download);return url.protocol==='https:'&&url.hostname==='www.dropbox.com'&&!url.username&&!url.password&&url.pathname.startsWith('/scl/fo/')}catch{return false}
+}
+function validCachedSnapshot(snapshot,now){
+  const age=now-Date.parse(snapshot?.checkedAt);
+  return snapshot&&/^[a-f0-9]{24}$/.test(snapshot.revision)&&age>=0&&age<CACHE_MAX_AGE&&Array.isArray(snapshot.items)&&snapshot.items.length<=20000&&snapshot.items.every(validItem)&&new Set(snapshot.items.map(item=>item.id)).size===snapshot.items.length;
+}
+export function readWallpaperCache({storage,now=Date.now}={}){
+  try{
+    storage??=globalThis.localStorage;
+    const value=storage?.getItem(CACHE_KEY);if(!value||value.length>CACHE_MAX_LENGTH)return null;
+    const snapshot=JSON.parse(value);return validCachedSnapshot(snapshot,now())?snapshot:null;
+  }catch{return null}
+}
+export function writeWallpaperCache(snapshot,{storage,now=Date.now}={}){
+  try{
+    if(!validCachedSnapshot(snapshot,now()))return;
+    const value=JSON.stringify(snapshot);if(value.length>CACHE_MAX_LENGTH)return;
+    storage??=globalThis.localStorage;storage?.setItem(CACHE_KEY,value);
+  }catch{/* Private browsing and storage quotas must not interrupt the gallery. */}
 }
 export function catalogSignature(items){return JSON.stringify(items.map(({id,title,game,collection,filename,width,height,bytes,format,download,modified})=>({id,title,game,collection,filename,width,height,bytes,format,download,modified})))}
 export async function fetchWallpaperSnapshot({fetchImpl=fetch,signal=AbortSignal.timeout(65000)}={}){
@@ -31,18 +51,18 @@ export async function fetchWallpaperSnapshot({fetchImpl=fetch,signal=AbortSignal
     }catch(error){if(!error.restart||attempt)throw error}
   }
 }
-export function startWallpaperSync({onUpdate,canApply=()=>true,request=fetchWallpaperSnapshot,interval=SYNC_INTERVAL,documentObject=document,windowObject=window}){
-  let timer=null,controller=null,pending=null,lastChecked=0,stopped=false;
-  function schedule(){clearTimeout(timer);if(!stopped&&!documentObject.hidden)timer=setTimeout(refresh,interval)}
+export function startWallpaperSync({onUpdate,canApply=()=>true,request=fetchWallpaperSnapshot,interval=SYNC_INTERVAL,retryInterval=RETRY_INTERVAL,documentObject=document,windowObject=window}){
+  let timer=null,controller=null,pending=null,lastChecked=0,stopped=false,needsRefresh=true;
+  function schedule(){clearTimeout(timer);if(!stopped&&!documentObject.hidden)timer=setTimeout(refresh,needsRefresh?retryInterval:interval)}
   function flush(){if(pending&&!documentObject.hidden&&canApply()){const next=pending;pending=null;onUpdate(next)}}
   async function refresh(){
     if(stopped||controller||documentObject.hidden)return;
     controller=new AbortController();
-    try{pending=await request({signal:AbortSignal.any([controller.signal,AbortSignal.timeout(65000)])});lastChecked=Date.now();flush()}
-    catch(error){if(error.name!=='AbortError')console.warn('Keeping the current wallpaper gallery; automatic refresh will retry.');}
+    try{pending=await request({signal:AbortSignal.any([controller.signal,AbortSignal.timeout(65000)])});needsRefresh=pending.stale===true;lastChecked=Date.now();flush()}
+    catch(error){needsRefresh=true;if(error.name!=='AbortError')console.warn('Keeping the current wallpaper gallery; automatic refresh will retry.');}
     finally{controller=null;schedule()}
   }
-  function resume(){if(documentObject.hidden){clearTimeout(timer);controller?.abort();return}flush();if(Date.now()-lastChecked>60000)refresh();else schedule()}
+  function resume(){if(documentObject.hidden){clearTimeout(timer);controller?.abort();return}flush();if(needsRefresh||Date.now()-lastChecked>interval)refresh();else schedule()}
   function hide(){clearTimeout(timer);controller?.abort()}
   documentObject.addEventListener('visibilitychange',resume);windowObject.addEventListener('online',resume);windowObject.addEventListener('pagehide',hide);windowObject.addEventListener('pageshow',resume);
   refresh();

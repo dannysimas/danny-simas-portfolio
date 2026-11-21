@@ -1,13 +1,14 @@
 import '../navigation.js';
 import '../graphic-details.js';
-import {startWallpaperSync,catalogSignature} from './live-sync.mjs';
+import {startWallpaperSync,catalogSignature,readWallpaperCache,writeWallpaperCache} from './live-sync.mjs';
 import source from './catalog.json';
 import content from '../content.js';
 import {socialIcons} from '../social-icons.js';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const downloadIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>';
-const items=(Array.isArray(source)?source:source.items).map(x=>({...x,width:Number(x.width)||0,height:Number(x.height)||0,bytes:Number(x.bytes)||0}));
+const savedCatalog=readWallpaperCache();
+const items=(savedCatalog?.items||(Array.isArray(source)?source:source.items)).map(x=>({...x,width:Number(x.width)||0,height:Number(x.height)||0,bytes:Number(x.bytes)||0}));
 const itemMap=new Map(items.map(x=>[x.id,x]));
 const formatBytes=bytes=>bytes?(bytes/1048576<1?`${Math.round(bytes/1024)} KB`:`${(bytes/1048576).toFixed(1)} MB`):'';
 const screen=x=>x.width&&x.height?(x.width>x.height?'landscape':x.height>x.width?'portrait':'square'):(x.orientation||'unknown');
@@ -86,6 +87,7 @@ $('header').classList.toggle('scrolled',scrollY>40);
 // Update in place without resetting filters, load-more state, or an open preview.
 let lastCatalogSignature=catalogSignature(items);
 function applyCatalog(snapshot){
+ writeWallpaperCache(snapshot);
  const signature=catalogSignature(snapshot.items),changed=signature!==lastCatalogSignature;
  const focused=document.activeElement,focusedId=focused?.dataset.open||focused?.dataset.download,downloadFocused=!!focused?.dataset.download;
  const anchor=[...grid.querySelectorAll('.wallpaper-card')].find(card=>{const rect=card.getBoundingClientRect();return rect.bottom>130&&rect.top<innerHeight});

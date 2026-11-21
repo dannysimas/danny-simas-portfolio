@@ -2,7 +2,7 @@
 
 The catalog uses image originals from Danny's public **Danny Vault** shared Dropbox folder. No account credentials are needed. Image downloads go directly to the original file using Dropbox's `dl=1` option. Visitors browse cached previews on the website instead of a Dropbox folder.
 
-`catalog.json` is the bundled starting catalog and offline fallback; the live endpoint replaces it with a complete current listing. Original width, height, byte size, modification date, and filename come from Dropbox file metadata. IDs derive from stable Dropbox file IDs. `format` describes the original, while the local preview and thumbnail assets are JPEG derivatives. The originals are unchanged.
+`catalog.json` is the offline fallback. On repeat visits, the browser first restores its last validated complete gallery if it was checked within 15 minutes; otherwise it starts with the bundled fallback. The live endpoint replaces it with a complete current listing. Original width, height, byte size, modification date, and filename come from Dropbox file metadata. IDs derive from stable Dropbox file IDs. `format` describes the original, while the local preview and thumbnail assets are JPEG derivatives. The originals are unchanged.
 
 The gallery defaults to **Most recent**, with **Oldest** available in the sort menu. Both use the original file's Dropbox modification date (`modified`), including after live sync. Images with missing dates appear last, and matching dates sort by game and title. Reset filters restores Most recent.
 
@@ -10,16 +10,19 @@ The gallery defaults to **Most recent**, with **Oldest** available in the sort m
 
 ## Automatic syncing
 
-The gallery checks the shared Dropbox folder on opening and every minute while visible, with the next check scheduled after the previous request completes. Returning to a tab or reconnecting also triggers a check if the last successful check is over a minute old. Updates are applied without resetting filters or loaded-card counts; an open image preview or menu defers the update until it closes. Newly synced wallpapers also support the existing share links.
+The gallery checks the shared Dropbox folder on opening and every minute while visible, with the next check scheduled after the previous request completes. When a response says a background scan is pending, or a request fails, it retries after five seconds instead of waiting another full minute. Returning to a tab or reconnecting also triggers a check if the last successful check is over a minute old or still stale. Updates are applied without resetting filters or loaded-card counts; an open image preview or menu defers the update until it closes. Newly synced wallpapers also support the existing share links.
 
 Add originals to the existing shared folder or its subfolders. The first folder level supplies the game name; deeper folders become collections. New images and game folders appear automatically, and deleted images disappear after a successful sync. Videos are excluded. These updates require no manual import, website edit, or redeployment through the production site and its server endpoint.
 
-This is polling, not an instant Dropbox webhook. The server caches a successful listing for one minute and the CDN may cache a page for another 15 seconds. A full crawl currently takes about 25 seconds; visitors see the bundled gallery immediately during the first request. Refreshes run when the gallery is requested, not as a background cron job when nobody is visiting. New uploads will generally appear within about one to two minutes, but may take longer depending on cache timing, scan duration, and Dropbox availability. Hidden tabs resume checking when visible, and open previews defer gallery updates until closed.
+This is polling, not an instant Dropbox webhook. A successful listing is fresh for one minute and the CDN may cache a fresh page for another 15 seconds. Vercel Runtime Cache retains the last complete listing across function instances and deployments for up to one day. When that listing needs a new check, the server returns it immediately and uses `waitUntil` to finish the Dropbox scan in the background. Stale responses are not CDN-cached, allowing the browser's five-second retries to pick up the completed scan promptly.
+
+A full crawl currently takes about 25 seconds. If neither the function nor shared cache has a usable catalog (for example, the first request after cache eviction), that request still needs a full scan; visitors keep seeing their saved or bundled gallery in the meantime. Refreshes run when the gallery is requested, not as a background cron job when nobody is visiting. Newly uploaded images still depend on polling, scan duration, and Dropbox availability; opening the page no longer needs to repeat the scan when a complete cached listing exists.
 
 - `api/wallpapers.js` exposes the read-only, paginated feed. It uses the fixed shared folder and returns only public image metadata and links. No Dropbox password, account token, or private-folder permission is needed.
 - `server/wallpaper-source.mjs` traverses nested folders and pagination with timeouts, retries, URL validation, and bounded limits. Anonymous cookies exist only in server memory. It never uploads, deletes, or modifies anything in Dropbox.
-- `server/wallpaper-service.mjs` shares concurrent refreshes and retains the last complete listing on a temporary failure. Cold instances fall back to the bundled browser catalog if Dropbox is unavailable. Partial listings never replace the gallery.
-- `live-sync.mjs` checks every page against one catalog revision before applying it. Hidden tabs pause polling. Network failures leave existing images visible and retry automatically.
+- `server/wallpaper-service.mjs` restores the shared snapshot, shares concurrent refreshes, and retains the last complete listing on a temporary failure. Partial listings never replace the gallery. If shared caching is unavailable, in-memory caching and the Dropbox fallback remain functional.
+- `server/wallpaper-cache.mjs` stores compressed snapshots and a separate small freshness marker in Vercel Runtime Cache. Unchanged scans update only the marker; signed previews are refreshed in the shared payload at least every 15 minutes while scans succeed. Compressed entries are bounded below Vercel's 2 MB limit, and reads/writes have timeouts. The cache uses the existing hosting plan without a separate database or credentials.
+- `live-sync.mjs` checks every page against one catalog revision before applying it, restores only validated recent browser snapshots, and tolerates unavailable browser storage. Hidden tabs pause polling. Network failures leave existing images visible and retry automatically.
 
 Unchanged originals use the existing local JPEG previews. New or replaced originals use fresh Dropbox preview renditions immediately, while download buttons still retrieve the untouched originals. The optional import below can periodically refresh the offline fallback and local optimized assets; it is not required for new uploads to appear.
 
@@ -43,7 +46,7 @@ The production Vite build includes the portfolio, wallpapers, and photomodes. It
 node --test tests/wallpaper-sync.test.mjs
 ```
 
-The checks cover recursive discovery, pagination, added/changed/removed images, preview reuse, incomplete-feed rejection, retry recovery, concurrent requests, revision consistency, and deferring updates while a preview is open. Live read-only verification found 1,183 originals across 26 game collections. No test uploads or deletions were made to Dropbox.
+The checks cover recursive discovery, pagination, added/changed/removed images, preview reuse, incomplete-feed rejection, retry recovery, concurrent requests, revision consistency, and deferring updates while a preview is open. They also cover shared-cache restoration, nonblocking background refreshes, cache outages/expiry, compressed payload reuse, browser-cache validation, and prompt polling during a background scan. Read-only verification on 2026-11-21 found 1,199 originals; one uncached API page took 22.55 seconds while a cached page took 0.11 seconds. No test uploads or deletions were made to Dropbox.
 
 ## Optional offline catalog refresh
 

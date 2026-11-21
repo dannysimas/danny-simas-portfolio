@@ -1,8 +1,10 @@
 import {readFile} from 'node:fs/promises';
+import {getCache,waitUntil} from '@vercel/functions';
 import {discoverWallpapers} from '../server/wallpaper-source.mjs';
 import {createWallpaperService} from '../server/wallpaper-service.mjs';
+import {createWallpaperCache} from '../server/wallpaper-cache.mjs';
 const baseline=readFile(new URL('../concepts/motion-lab/wallpapers/catalog.json',import.meta.url),'utf8').then(JSON.parse).catch(()=>[]);
-const service=createWallpaperService({load:async()=>discoverWallpapers({baseline:await baseline})});
+const service=createWallpaperService({load:async()=>discoverWallpapers({baseline:await baseline}),cache:process.env.VERCEL?createWallpaperCache(getCache()):null,defer:waitUntil});
 const PAGE_SIZE=500;
 export function createWallpaperHandler(source=service){return async function handler(req,res){
   res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('X-Content-Type-Options','nosniff');
@@ -15,7 +17,7 @@ export function createWallpaperHandler(source=service){return async function han
     const revision=url.searchParams.get('revision');
     if(revision&&revision!==snapshot.revision){res.setHeader('Cache-Control','no-store');return send(409,{error:'Catalog changed during refresh'})}
     if(page>pages){res.setHeader('Cache-Control','no-store');return send(404,{error:'Page not found'})}
-    res.setHeader('Cache-Control','public, max-age=0, s-maxage=15');
+    res.setHeader('Cache-Control',snapshot.stale?'no-store':'public, max-age=0, s-maxage=15');
     return send(200,{complete:true,revision:snapshot.revision,checkedAt:snapshot.checkedAt,stale:snapshot.stale,page,pages,total:snapshot.items.length,items:snapshot.items.slice((page-1)*PAGE_SIZE,page*PAGE_SIZE)});
   }catch(error){console.error('Wallpaper sync unavailable:',error.message);res.setHeader('Cache-Control','no-store');res.setHeader('Retry-After','60');return send(503,{error:'Wallpaper refresh temporarily unavailable'})}
 }};
