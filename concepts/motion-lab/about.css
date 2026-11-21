@@ -1,0 +1,72 @@
+/* Keep the portrait and biography in proportion on large desktop displays. */
+@media (min-width: 1151px) {
+  #about {
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    gap: 6vw;
+    align-items: center;
+    padding-block: clamp(7.8125rem, 6.5vw, 15rem);
+  }
+
+  #about .portrait {
+    position: relative;
+    top: auto;
+    padding-bottom: clamp(2.5rem, 2vw, 5rem);
+  }
+
+  #about .portrait > div {
+    font-size: clamp(6.875rem, 8vw, 18.75rem);
+  }
+
+  #about .collab-copy {
+    min-width: 0;
+  }
+
+  #about .eyebrow {
+    font-size: clamp(.875rem, .8vw, 1.75rem) !important;
+  }
+
+  #about h2 {
+    font-size: clamp(4rem, 6vw, 14rem);
+    line-height: .94;
+    margin-block: clamp(1.5rem, 1.5vw, 3.5rem) clamp(1.75rem, 2vw, 4.5rem);
+  }
+
+  #about h2 em {
+    -webkit-text-stroke-width: clamp(1.4px, .075vw, 2.8px);
+  }
+
+  #about .about-title {
+    font-size: clamp(1.35rem, 1.25vw, 3rem);
+    line-height: 1.4;
+    margin-bottom: clamp(1.5rem, 1.5vw, 3.5rem);
+  }
+
+  #about .description {
+    max-width: 64ch;
+    font-size: clamp(1.125rem, 1.1vw, 2.5rem);
+    line-height: 1.75;
+    margin-bottom: clamp(1.5rem, 1.5vw, 3.5rem);
+  }
+
+  #about .tags {
+    gap: clamp(.625rem, .6vw, 1.375rem);
+    margin-top: clamp(2rem, 2vw, 4.5rem);
+  }
+
+  #about .tags span {
+    font-size: clamp(.875rem, .85vw, 2rem);
+    padding: .4em .9em;
+    border-radius: 2em;
+  }
+
+  #about .collab-links {
+    gap: clamp(1.875rem, 2vw, 4.5rem);
+    margin-top: clamp(1.875rem, 2vw, 4.5rem);
+  }
+
+  #about .text-link {
+    font-size: clamp(1.125rem, 1.1vw, 2.5rem) !important;
+    padding-bottom: .5em;
+    min-height: 44px;
+  }
+}
