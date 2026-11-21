@@ -16,6 +16,8 @@ const catalog=JSON.parse(fs.readFileSync('concepts/motion-lab/wallpapers/catalog
 for(const item of catalog){exists(item.thumbnail);exists(item.preview)}
 const content=(await import('../concepts/motion-lab/content.js')).default;
 for(const collection of content.folders)for(const image of collection.images)for(const asset of Object.values(image))exists(asset);
+const photomodes=(await import('../concepts/motion-lab/photomodes-data.js')).default;
+for(const mode of photomodes)if(mode.preview?.startsWith('/'))exists(mode.preview);
 for(const file of ['catalog.json','source-inventory.json','import-dropbox.mjs'])assert.ok(!fs.existsSync(path.join(root,'wallpapers',file)),'Maintenance file accidentally published');
 exists('/robots.txt');exists('/sitemap.xml');exists('/favicon.png');
-console.log('Production package verified: 3 pages, '+catalog.length*2+' wallpaper previews, all portfolio images, metadata, and contact form.');
+console.log('Production package verified: 3 pages, '+catalog.length*2+' wallpaper previews, all portfolio images, photomode covers, metadata, and contact form.');

@@ -8,9 +8,8 @@ if(list){
     const article=element('article','photomode-card reveal');article.id='photomode-'+mode.id;article.setAttribute('aria-labelledby',article.id+'-title');
     const visual=element('div','photomode-visual');visual.setAttribute('aria-hidden','true');
     const preview=safeUrl(mode.preview);
-    if(preview){const img=element('img');img.src=preview.href;img.alt='';img.loading='lazy';visual.append(img)}
-    else{visual.classList.add('photomode-abstract');visual.append(element('span','photomode-number',number),element('span','photomode-reticle'));}
-    visual.append(element('span','photomode-visual-label','PM / '+number),element('span','photomode-visual-caption','DANNY SIMAS / PHOTOMODES'));
+    if(preview){visual.classList.add('photomode-cover');const img=element('img');img.src=preview.href;img.alt='';img.width=600;img.height=900;img.loading='lazy';img.decoding='async';visual.append(img)}
+    else{visual.classList.add('photomode-abstract');visual.append(element('span','photomode-number',number),element('span','photomode-reticle'),element('span','photomode-visual-label','PM / '+number),element('span','photomode-visual-caption','DANNY SIMAS / PHOTOMODES'));}
     const body=element('div','photomode-card-body');body.append(element('p','eyebrow','CUSTOM PHOTOMODE'));
     const title=element('h3');title.id=article.id+'-title';title.setAttribute('aria-label',mode.game);
     (mode.lines||[mode.game]).forEach(line=>title.append(element('span','',line)));body.append(title);
