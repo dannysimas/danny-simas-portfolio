@@ -1,7 +1,7 @@
 /* Shared visual details derived from the Photomodes release cards. */
 :root {
-  --frame-rules: repeating-linear-gradient(-35deg, transparent 0 28px, #a78bfa08 29px 30px);
-  --frame-glow: radial-gradient(ellipse at 82% 22%, #67e8f90b, transparent 58%);
+  --frame-rules: repeating-linear-gradient(-35deg, transparent 0 28px, #a78bfa20 29px 30px);
+  --frame-glow: radial-gradient(ellipse at 82% 22%, #67e8f924, transparent 62%);
 }
 
 .frame-accent { isolation: isolate; }
@@ -18,57 +18,63 @@
   overflow: hidden;
   pointer-events: none;
   user-select: none;
-  background: var(--frame-rules), var(--frame-glow), linear-gradient(140deg, #17122855, #080a1000 75%);
-  /* Let the pattern soften before the next section instead of forming a panel. */
+}
+.frame-details::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--frame-rules), var(--frame-glow), linear-gradient(140deg, #211832cc, #080a1020 75%);
+  /* Fade the texture at section boundaries without fading the graphic marks. */
   mask-image: linear-gradient(transparent, #000 12%, #000 82%, transparent);
 }
 
 .frame-corner-start,
 .frame-corner-end {
   position: absolute;
-  width: 25px;
-  height: 25px;
-  opacity: .55;
+  width: 34px;
+  height: 34px;
+  opacity: .9;
 }
-.frame-corner-start { left: 3vw; top: 38px; border: solid var(--cyan); border-width: 1px 0 0 1px; }
-.frame-corner-end { right: 3vw; bottom: 38px; border: solid var(--violet); border-width: 0 1px 1px 0; }
+.frame-corner-start { left: 3vw; top: 38px; border: solid var(--cyan); border-width: 2px 0 0 2px; }
+.frame-corner-end { right: 3vw; bottom: 38px; border: solid var(--violet); border-width: 0 2px 2px 0; }
 .frame-reticle {
   position: absolute;
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   right: 8vw;
   bottom: 42px;
-  opacity: .4;
+  opacity: .85;
   transition: transform .65s cubic-bezier(.2,.75,.2,1);
 }
 .frame-reticle::before,
 .frame-reticle::after { content: ''; position: absolute; background: var(--cyan); }
-.frame-reticle::before { width: 1px; height: 100%; left: calc(50% - .5px); top: 0; }
-.frame-reticle::after { height: 1px; width: 100%; top: calc(50% - .5px); left: 0; }
+.frame-reticle::before { width: 2px; height: 100%; left: calc(50% - 1px); top: 0; }
+.frame-reticle::after { height: 2px; width: 100%; top: calc(50% - 1px); left: 0; }
 .frame-index {
   position: absolute;
   top: 12px;
   right: 6vw;
   color: transparent;
-  -webkit-text-stroke: 1px #a78bfa30;
+  -webkit-text-stroke: 1.5px #a78bfa8c;
   font: italic 700 clamp(160px, 17vw, 280px)/1 'Barlow Condensed', sans-serif;
   letter-spacing: -.045em;
   transform: rotate(-8deg);
 }
 
 /* Give artwork plenty of clear space; the marks live around its edges. */
-.frame-accent--hero > .frame-details { background: var(--frame-rules); mask-image: linear-gradient(#0008, #000 90%); }
+.frame-accent--hero > .frame-details::before { background: var(--frame-rules); mask-image: linear-gradient(#000b, #000 90%); }
 .frame-accent--hero .frame-corner-start { top: 112px; }
 .frame-accent--hero .frame-corner-end { bottom: 88px; }
-.frame-accent--hero .frame-reticle { top: 17%; right: 4vw; bottom: auto; opacity: .55; }
-.frame-accent--work .frame-index { top: 65px; right: 30%; font-size: clamp(130px, 13vw, 210px); }
-.frame-accent--work .frame-reticle { right: 3vw; bottom: 24px; width: 22px; height: 22px; }
+.frame-accent--hero .frame-reticle { top: 17%; right: 4vw; bottom: auto; }
+.frame-accent--work .frame-index { top: 65px; right: 38%; font-size: clamp(130px, 13vw, 210px); }
+.frame-accent--work .frame-reticle { right: 3vw; bottom: 24px; width: 32px; height: 32px; }
 .frame-accent--intro .frame-corner-start { top: 125px; }
-.frame-accent--intro .frame-index { top: 110px; right: 43%; font-size: clamp(150px, 17vw, 265px); -webkit-text-stroke-color: #a78bfa24; }
+.frame-accent--intro .frame-index { top: 110px; right: 43%; font-size: clamp(150px, 17vw, 265px); -webkit-text-stroke-color: #a78bfa70; }
 .frame-accent--intro .frame-reticle { right: 3vw; bottom: 32px; }
-.frame-accent--compact > .frame-details { mask-image: none; background: var(--frame-rules), var(--frame-glow); }
-.frame-accent--compact .frame-corner-start { left: 16px; top: 16px; width: 16px; height: 16px; }
-.frame-accent--compact .frame-corner-end { right: 16px; bottom: 16px; width: 16px; height: 16px; }
+.frame-accent--compact > .frame-details::before { mask-image: none; background: var(--frame-rules), var(--frame-glow); }
+.frame-accent--compact .frame-corner-start { left: 16px; top: 16px; width: 22px; height: 22px; }
+.frame-accent--compact .frame-corner-end { right: 16px; bottom: 16px; width: 22px; height: 22px; }
 .frame-accent--compact .frame-reticle { display: none; }
 
 /* Clip only image surfaces. Buttons retain their full focus outlines and hit area. */
@@ -85,8 +91,9 @@
   height: 21px;
   pointer-events: none;
   border: solid var(--cyan);
-  border-width: 1px 0 0 1px;
-  opacity: .6;
+  border-width: 2px 0 0 2px;
+  opacity: .95;
+  filter: drop-shadow(0 1px 2px #0008);
   transition: width .3s, height .3s, opacity .3s;
 }
 .piece:focus-visible .art-image::after,
@@ -94,18 +101,18 @@
 .media-item {
   position: relative;
   padding: 26px 24px 22px;
-  background: var(--frame-rules), linear-gradient(140deg, #17122855, #080a1020);
-  border-top-color: #a78bfa80;
+  background: var(--frame-rules), linear-gradient(140deg, #211832cc, #080a1040);
+  border-top-color: #a78bfacc;
 }
 .media-item::after {
   content: '';
   position: absolute;
   right: 12px;
   bottom: 12px;
-  width: 16px;
-  height: 16px;
-  border: solid #67e8f970;
-  border-width: 0 1px 1px 0;
+  width: 22px;
+  height: 22px;
+  border: solid #67e8f9d9;
+  border-width: 0 2px 2px 0;
   pointer-events: none;
 }
 
@@ -115,10 +122,10 @@
   .wallpaper-art:hover::after { width: 27px; height: 27px; opacity: 1; }
 }
 @media (max-width: 700px) {
-  .frame-index { font-size: 150px; top: 22px; right: 6vw; -webkit-text-stroke-color: #a78bfa24; }
-  .frame-corner-start { left: 3vw; top: 22px; width: 18px; height: 18px; }
-  .frame-corner-end { right: 3vw; bottom: 22px; width: 18px; height: 18px; }
-  .frame-reticle { width: 23px; height: 23px; bottom: 24px; opacity: .3; }
+  .frame-index { font-size: 150px; top: 22px; right: 6vw; -webkit-text-stroke-color: #a78bfa70; }
+  .frame-corner-start { left: 3vw; top: 22px; width: 24px; height: 24px; }
+  .frame-corner-end { right: 3vw; bottom: 22px; width: 24px; height: 24px; }
+  .frame-reticle { width: 30px; height: 30px; bottom: 24px; opacity: .85; }
   .frame-accent--hero .frame-corner-start { top: 126px; }
   .frame-accent--hero .frame-reticle { top: 21%; right: 6vw; }
   .frame-accent--work .frame-index { top: 40px; right: 7vw; font-size: 130px; }
@@ -126,7 +133,7 @@
   .frame-accent--intro .frame-index { top: 138px; right: 4vw; font-size: 135px; }
   .frame-accent--intro .frame-reticle { display: none; }
   .art-image, .wallpaper-art img { clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%); }
-  .wallpaper-art::after { top: 9px; left: 9px; width: 15px; height: 15px; }
+  .wallpaper-art::after { top: 9px; left: 9px; width: 19px; height: 19px; }
   .media-item { padding: 22px 18px 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
