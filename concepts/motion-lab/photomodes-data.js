@@ -8,7 +8,7 @@ export default [
       "PHANTOM",
       "BLADE ZERO"
     ],
-    "downloadUrl": null,
+    "downloadUrl": "https://www.dropbox.com/scl/fi/6q7w7mwszgfhw56z0zytj/PBZ-Photomode-0.5.0-preview92-Drop-In.zip?rlkey=wjqpdfq0ffh43vve8qzs0xb6g&dl=1",
     "preview": null,
     "version": null,
     "platform": null,
@@ -22,7 +22,7 @@ export default [
       "KINGDOM",
       "HEARTS 3"
     ],
-    "downloadUrl": null,
+    "downloadUrl": "https://www.dropbox.com/scl/fi/i3t0qclg4oxu6ftl4zdnm/KH3-FreeCam-PhotoMode-v1.zip?rlkey=bzh1h9mdsgy29tkuqtv9tvdsk&dl=1",
     "preview": null,
     "version": null,
     "platform": null,
@@ -36,7 +36,7 @@ export default [
       "GEARS OF WAR",
       "E-DAY"
     ],
-    "downloadUrl": null,
+    "downloadUrl": "https://www.dropbox.com/scl/fi/74d24s9xos4tch6040tgf/EDayFreeCamera-v0.3.11-Final.zip?rlkey=n03d8o4a68gwcupi0x3ecmtf6&dl=1",
     "preview": null,
     "version": null,
     "platform": null,
@@ -50,7 +50,7 @@ export default [
       "RESONANCE:",
       "A PLAGUE TALE LEGACY"
     ],
-    "downloadUrl": null,
+    "downloadUrl": "https://www.dropbox.com/scl/fi/5ulqmwquftq0e0ns8ddx6/Photomode-v1.1.zip?rlkey=2t04ib2xsakbjpa852dwcs46s&dl=1",
     "preview": null,
     "version": null,
     "platform": null,
@@ -64,7 +64,7 @@ export default [
       "STAR WARS",
       "GALACTIC RACER"
     ],
-    "downloadUrl": null,
+    "downloadUrl": "https://www.dropbox.com/scl/fi/28wpr4h7ww69c8f0wix6e/GalacticPhotoMode-v0.1.17.zip?rlkey=p8itni0kbcn5uc1sv6ebac7h7&dl=1",
     "preview": null,
     "version": null,
     "platform": null,
@@ -78,7 +78,7 @@ export default [
       "THE SINKING",
       "CITY 2"
     ],
-    "downloadUrl": null,
+    "downloadUrl": "https://www.dropbox.com/scl/fi/1kovl06744a2766744ohq/TSC2-PhotoMode-Unlocked-Camera.zip?rlkey=fa7ctmhijvc95mw5p4s0223wj&dl=1",
     "preview": null,
     "version": null,
     "platform": null,
