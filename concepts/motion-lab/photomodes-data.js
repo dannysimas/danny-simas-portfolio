@@ -16,11 +16,11 @@ export default [
     "installation": []
   },
   {
-    "id": "kingdom-hearts-4",
-    "game": "Kingdom Hearts 4",
+    "id": "kingdom-hearts-3",
+    "game": "Kingdom Hearts 3",
     "lines": [
       "KINGDOM",
-      "HEARTS 4"
+      "HEARTS 3"
     ],
     "downloadUrl": null,
     "preview": null,
@@ -35,6 +35,48 @@ export default [
     "lines": [
       "GEARS OF WAR",
       "E-DAY"
+    ],
+    "downloadUrl": null,
+    "preview": null,
+    "version": null,
+    "platform": null,
+    "requirements": [],
+    "installation": []
+  },
+  {
+    "id": "resonance-a-plague-tale-legacy",
+    "game": "Resonance: A Plague Tale Legacy",
+    "lines": [
+      "RESONANCE:",
+      "A PLAGUE TALE LEGACY"
+    ],
+    "downloadUrl": null,
+    "preview": null,
+    "version": null,
+    "platform": null,
+    "requirements": [],
+    "installation": []
+  },
+  {
+    "id": "star-wars-galactic-racer",
+    "game": "STAR WARS Galactic Racer",
+    "lines": [
+      "STAR WARS",
+      "GALACTIC RACER"
+    ],
+    "downloadUrl": null,
+    "preview": null,
+    "version": null,
+    "platform": null,
+    "requirements": [],
+    "installation": []
+  },
+  {
+    "id": "the-sinking-city-2",
+    "game": "The Sinking City 2",
+    "lines": [
+      "THE SINKING",
+      "CITY 2"
     ],
     "downloadUrl": null,
     "preview": null,
