@@ -1,3 +1,5 @@
+import './hero-card-details.css';
+
 // Rotate actual artwork cards through the existing collage positions.
 export function setupHeroStack({hero,floats,caption,onFrame}){
   const cards=[hero,...floats];
@@ -5,6 +7,13 @@ export function setupHeroStack({hero,floats,caption,onFrame}){
   const stack=document.createElement('div');stack.className='hero-stack';
   hero.before(stack);cards.forEach(card=>{card.classList.add('stack-card');stack.append(card)});
   const images=cards.map(card=>card.querySelector('img'));
+  const frames=cards.map((card,index)=>{
+    const details=document.createElement('span');
+    details.className='hero-card-graphics';details.setAttribute('aria-hidden','true');
+    details.innerHTML=`<span class="hero-card-sheen"></span><svg class="hero-card-frame" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false"><defs><linearGradient id="hero-frame-${index}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#67e8f9"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs><path class="hero-frame-outline" stroke="url(#hero-frame-${index})"/><path class="hero-frame-cyan"/><path class="hero-frame-violet"/></svg><span class="hero-card-stamp">DS / ${String(index+1).padStart(2,'0')}</span><span class="hero-card-registration"></span><span class="hero-card-hatch"></span>`;
+    card.append(details);
+    return {outline:details.querySelector('.hero-frame-outline'),cyan:details.querySelector('.hero-frame-cyan'),violet:details.querySelector('.hero-frame-violet'),cut:null};
+  });
   const desktop=[{x:57,y:12,w:33,h:78,r:6},{x:39,y:16,w:27,h:62,r:-12},{x:74,y:15,w:24,h:63,r:12},{x:45,y:38,w:27,h:58,r:-7},{x:68,y:39,w:27,h:55,r:9}];
   const phone=[{x:32,y:17,w:65,h:70,r:6},{x:4,y:20,w:53,h:55,r:-12},{x:54,y:18,w:49,h:55,r:12},{x:16,y:44,w:57,h:42,r:-7},{x:47,y:41,w:50,h:45,r:9}];
   const layers=[5,1,2,3,4],loads=new Map();
@@ -13,6 +22,7 @@ export function setupHeroStack({hero,floats,caption,onFrame}){
   function describe(){
     stack.dataset.front=titles[front];caption.querySelector('.eyebrow').textContent=titles[front].toUpperCase();
     images.forEach((img,i)=>{img.alt=i===front?titles[i]+' artwork by Danny Simas':''});
+    cards.forEach((card,i)=>card.classList.toggle('is-front',i===front));
   }
   function prepare(index){
     if(loads.has(index))return loads.get(index);
@@ -53,6 +63,17 @@ export function setupHeroStack({hero,floats,caption,onFrame}){
       card.style.transform='translate3d('+dx+'px,'+dy+'px,0) rotate('+value('r')+'deg)';
       card.style.opacity=value('opacity');card.style.zIndex=layers[amount<.44?from:to];
       const cut=value('cut');card.style.clipPath='polygon('+cut+'% 0,100% 0,'+(100-cut)+'% 100%,0 100%)';
+      card.style.setProperty('--hero-detail-opacity',1-o);
+      card.style.setProperty('--hero-card-cut',cut+'%');
+      // Follow the existing slanted crop as cards shuffle and expand.
+      const detail=frames[i],roundedCut=Math.round(cut*100)/100;
+      if(detail.cut!==roundedCut){
+        const left=y=>2+roundedCut*(1-y/100),right=y=>98-roundedCut*y/100;
+        detail.outline.setAttribute('d',`M${left(2)} 2H${right(2)}L${right(98)} 98H${left(98)}Z`);
+        detail.cyan.setAttribute('d',`M${left(14)} 14L${left(2)} 2H${left(2)+13}`);
+        detail.violet.setAttribute('d',`M${right(86)} 86L${right(98)} 98H${right(98)-13}`);
+        detail.cut=roundedCut;
+      }
       card.style.setProperty('--card-light',value('light'));images[i].style.objectPosition='center '+value('focal')+'%';
     });
     stack.dataset.shuffling=String(!!transition);schedule();return !!transition;
