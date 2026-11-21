@@ -9,6 +9,16 @@
 .photomode-library-heading{display:flex;justify-content:space-between;gap:25px;align-items:center;border-top:1px solid var(--line);padding:22px 0 28px}
 .photomode-library-heading h2,.photomode-library-heading p{font-family:'Space Grotesk',sans-serif;font-size:.875rem;font-weight:400;letter-spacing:.08em;line-height:1.5}
 .photomode-library-heading h2{color:var(--cyan)}.photomode-library-heading p{color:var(--muted)}
+.photomode-library-note{margin:0 0 30px;font-size:.9375rem;line-height:1.7;color:var(--muted)}
+.photomode-library-note a{color:var(--cyan);text-decoration:underline;text-underline-offset:4px}
+.photomode-terms{padding:56px 7vw 64px;border-top:1px solid var(--line);background:radial-gradient(ellipse at 85% 35%,#a78bfa10,transparent 65%);scroll-margin-top:110px}
+.photomode-terms h2{font-size:clamp(40px,4vw,64px);line-height:1;letter-spacing:-.025em;margin:16px 0 34px}
+.photomode-terms-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3vw}
+.photomode-terms-grid>div{border-top:1px solid #a78bfa55;padding-top:20px}
+.photomode-terms-grid h3{font-size:.9375rem;font-weight:500;letter-spacing:.06em;line-height:1.5;color:var(--cyan);margin-bottom:12px}
+.photomode-terms-grid p{max-width:42ch;font-size:1rem;line-height:1.75;color:var(--muted)}
+.photomode-terms-grid strong{color:var(--white)}
+@media(max-width:700px){.photomode-terms{padding-block:42px 48px;scroll-margin-top:130px}.photomode-terms-grid{grid-template-columns:1fr;gap:26px}.photomode-terms h2{margin-bottom:28px}}
 .photomode-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3vw}
 .photomode-card{min-width:0;position:relative}
 .photomode-visual{position:relative;aspect-ratio:1.35;overflow:hidden;isolation:isolate;clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,0 100%);background:linear-gradient(140deg,#121124,#070a10 75%)}
