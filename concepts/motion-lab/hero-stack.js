@@ -1,4 +1,5 @@
 import './hero-card-details.css';
+import './hero-responsive.css';
 
 // Rotate actual artwork cards through the existing collage positions.
 export function setupHeroStack({hero,floats,caption,onFrame}){

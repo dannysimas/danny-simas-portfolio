@@ -1,0 +1,61 @@
+/* Preserve the approved 1920 x 1080 poster proportions on larger displays.
+   Height limits the scale on ultrawide screens so the menu stays in view. */
+@media (min-width: 1921px) and (min-height: 741px) {
+  body:has(.hero-stack) {
+    --hero-unit: max(1px, min(calc(100vw / 1920), calc(100svh / 1080)));
+  }
+
+  .intro .hero-copy h1 { font-size: calc(250 * var(--hero-unit)); }
+  .intro .hero-copy h1 > span:nth-child(2) { margin-top: calc(4 * var(--hero-unit)); }
+  .intro .hero-copy .gradient { -webkit-text-stroke-width: calc(1.8 * var(--hero-unit)); }
+  .intro .hero-copy > .eyebrow {
+    /* The base portfolio eyebrow size is also marked important. */
+    font-size: calc(14 * var(--hero-unit)) !important;
+    margin-bottom: calc(26 * var(--hero-unit));
+  }
+  .intro .hero-bottom {
+    max-width: calc(850 * var(--hero-unit));
+    margin-top: calc(40 * var(--hero-unit));
+    gap: calc(40 * var(--hero-unit));
+  }
+  .intro .hero-bottom p { font-size: calc(20 * var(--hero-unit)); max-width: calc(340 * var(--hero-unit)); }
+  .intro .hero-explore { flex-basis: calc(390 * var(--hero-unit)); }
+  .intro .hero-explore::before { transform: translate(calc(10 * var(--hero-unit)), calc(10 * var(--hero-unit))) rotate(3deg); }
+  .intro .hero-explore:hover::before,
+  .intro .hero-explore:focus-visible::before { transform: translate(calc(14 * var(--hero-unit)), calc(13 * var(--hero-unit))) rotate(5deg); }
+  .intro .explore-surface { padding: calc(14 * var(--hero-unit)) calc(27 * var(--hero-unit)) calc(15 * var(--hero-unit)); }
+  .intro .explore-eyebrow, .intro .explore-detail { font-size: calc(11 * var(--hero-unit)); }
+  .intro .explore-title {
+    font-size: calc(76 * var(--hero-unit));
+    gap: calc(16 * var(--hero-unit));
+    margin: calc(3 * var(--hero-unit)) 0 calc(9 * var(--hero-unit));
+  }
+  .intro .explore-title svg { width: calc(43 * var(--hero-unit)); height: calc(43 * var(--hero-unit)); }
+  .intro .hero-caption h2 { font-size: calc(140 * var(--hero-unit)); max-width: calc(1100 * var(--hero-unit)); margin-top: calc(12 * var(--hero-unit)); }
+  .intro .hero-caption .eyebrow { font-size: calc(14 * var(--hero-unit)); }
+
+  .intro .hero-foot { bottom: calc(26 * var(--hero-unit)); gap: calc(20 * var(--hero-unit)); font-size: calc(14 * var(--hero-unit)); }
+  .intro .hero-foot > span:first-child { font-size: calc(14 * var(--hero-unit)); }
+  .intro .hero-foot strong { font-size: calc(24 * var(--hero-unit)); }
+  .intro .hero-foot .scroll-cue { font-size: calc(16 * var(--hero-unit)); gap: calc(12 * var(--hero-unit)); }
+  .intro .scroll-cue i { width: calc(17 * var(--hero-unit)); height: calc(27 * var(--hero-unit)); border-width: var(--hero-unit); border-radius: calc(12 * var(--hero-unit)); }
+  .intro .scroll-cue i::after { top: calc(5 * var(--hero-unit)); left: calc(7 * var(--hero-unit)); width: calc(2 * var(--hero-unit)); height: calc(5 * var(--hero-unit)); }
+
+  /* Keep the artwork's fine marks proportional to the cards, too. */
+  .intro .hero-frame-outline { stroke-width: var(--hero-unit); }
+  .intro .hero-frame-cyan, .intro .hero-frame-violet { stroke-width: calc(2.5 * var(--hero-unit)); }
+  .intro .hero-card-stamp {
+    font-size: calc(12 * var(--hero-unit));
+    padding: calc(6 * var(--hero-unit)) calc(9 * var(--hero-unit));
+    border-left-width: calc(2 * var(--hero-unit));
+  }
+  .intro .hero-card-registration { width: calc(23 * var(--hero-unit)); height: calc(23 * var(--hero-unit)); }
+  .intro .hero-card-registration::before { width: var(--hero-unit); left: calc(11 * var(--hero-unit)); }
+  .intro .hero-card-registration::after { height: var(--hero-unit); top: calc(11 * var(--hero-unit)); }
+  .intro .hero-card-hatch {
+    width: calc(54 * var(--hero-unit));
+    height: calc(7 * var(--hero-unit));
+    background: repeating-linear-gradient(-55deg, var(--cyan) 0 var(--hero-unit), transparent var(--hero-unit) calc(5 * var(--hero-unit)));
+  }
+
+}
