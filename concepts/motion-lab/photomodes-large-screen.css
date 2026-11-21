@@ -1,0 +1,31 @@
+/* Cover artwork, download labels, and installation notes share one scale. */
+.photomode-cover-eyebrow, .photomode-cover-detail { font-size: clamp(.75rem, 3.5cqw, 1.625rem); }
+
+@media (min-width: 1151px) {
+  .photomodes-page .photomodes-intro { padding-top: calc(var(--site-header-height) + clamp(74px, 4vw, 150px)); padding-bottom: clamp(64px, 3.4vw, 128px); }
+  .photomodes-page .photomodes-intro h1 { font-size: clamp(64px, 7.6vw, 290px); }
+  .photomodes-page .photomodes-intro h1 em { -webkit-text-stroke-width: clamp(1.5px, .08vw, 3px); }
+  .photomodes-page .photomodes-intro-copy { font-size: var(--reading-body); max-width: 42ch; }
+  .photomodes-page .photomodes-intro-copy .text-link { font-size: var(--reading-control) !important; margin-top: 1.4em; }
+  .photomodes-page .photomode-terms { padding-block: clamp(56px, 3vw, 112px) clamp(64px, 3.4vw, 128px); }
+  .photomodes-page .photomode-terms h2 { font-size: clamp(40px, 3.4vw, 128px); margin-block: .3em .55em; }
+  .photomodes-page .photomode-terms-grid > div { padding-top: var(--reading-space); }
+  .photomodes-page .photomode-terms-grid h3 { font-size: var(--reading-control); margin-bottom: .8em; }
+  .photomodes-page .photomode-terms-grid p { font-size: var(--reading-body); }
+  .photomodes-page .photomode-library-heading { padding-block: var(--reading-space); }
+  .photomodes-page .photomode-library-heading h2, .photomodes-page .photomode-library-heading p { font-size: var(--reading-label); }
+  .photomodes-page .photomode-library-note { font-size: var(--reading-control); margin-bottom: var(--reading-space); }
+  .photomodes-page .photomode-card-body { padding-top: var(--reading-space); }
+  .photomodes-page .photomode-card h3 { font-size: clamp(34px, 3.4vw, 128px); margin-block: .25em .4em; }
+  .photomodes-page .photomode-card h3 > span:last-child { -webkit-text-stroke-width: clamp(1.2px, .065vw, 2.4px); }
+  .photomodes-page .photomode-download, .photomodes-page .photomode-pending,
+  .photomodes-page .photomode-setup summary { font-size: var(--reading-control); padding-block: 1em; }
+  .photomodes-page .photomode-download > span, .photomodes-page .photomode-setup summary > span { font-size: 1.6em; }
+  .photomodes-page .photomode-meta { font-size: var(--reading-label); }
+  .photomodes-page .photomode-setup-content, .photomodes-page .photomode-setup h4 { font-size: var(--reading-body); }
+  .photomodes-page .photomode-setup-content { padding-bottom: 1em; }
+  .photomodes-page .photomode-setup li + li { margin-top: .5em; }
+  .photomodes-page .photomode-visual-label, .photomodes-page .photomode-visual-caption { font-size: var(--reading-label); }
+  .photomodes-page .photomode-cover-cta { max-width: clamp(480px, 25vw, 960px); }
+  .photomodes-page .photomode-cover-title { font-size: clamp(20px, 17cqw, 164px); }
+}

@@ -1,0 +1,68 @@
+/* Library controls and metadata grow with the artwork on large displays. */
+@media (min-width: 1151px) {
+  .wallpaper-page .vault-intro { padding-top: calc(var(--site-header-height) + clamp(74px, 4vw, 150px)); padding-bottom: clamp(64px, 3.4vw, 128px); }
+  .wallpaper-page .vault-intro h1 { font-size: clamp(76px, 8.4vw, 320px); }
+  .wallpaper-page .vault-intro h1 em { -webkit-text-stroke-width: clamp(1.5px, .08vw, 3px); }
+  .wallpaper-page .vault-intro-copy { max-width: 46ch; font-size: var(--reading-body); }
+  .wallpaper-page .vault-count { font-size: var(--reading-label); }
+  .wallpaper-page .vault-intro-copy .text-link { font-size: var(--reading-control) !important; }
+  .wallpaper-page .vault-toolbar { gap: var(--reading-space); padding-block: var(--reading-space); flex-wrap: wrap; }
+  .wallpaper-page .screen-filters { gap: clamp(8px, .5vw, 18px); }
+  .wallpaper-page .screen-filters button { font-size: var(--reading-control); padding: .7em 1em; gap: .6em; }
+  .wallpaper-page .screen-filters button span { font-size: .875em; }
+  .wallpaper-page .screen-filters svg, .wallpaper-page .library-search svg { width: clamp(20px, 1.05vw, 40px); height: clamp(20px, 1.05vw, 40px); }
+  .wallpaper-page .library-search { max-width: clamp(360px, 22vw, 800px); padding-inline: .875em; font-size: var(--reading-control); }
+  .wallpaper-page .library-search input { font-size: inherit; padding-block: .8em; }
+  .wallpaper-page .library-filters { gap: var(--reading-space); margin-block: var(--reading-space) clamp(32px, 1.7vw, 64px); }
+  .wallpaper-page .library-filters > div { max-width: clamp(300px, 18vw, 650px); }
+  .wallpaper-page .library-filters label, .wallpaper-page .result-summary { font-size: var(--reading-label); }
+  .wallpaper-page .library-filters select, .wallpaper-page .library-filters > button { font-size: var(--reading-control); min-height: 2.9em; }
+  .wallpaper-page .library-filters select { padding: .6em 2em .6em .75em; }
+  .wallpaper-page .result-summary { gap: var(--reading-space); margin-bottom: var(--reading-space); }
+  .wallpaper-page .wallpaper-grid { gap: clamp(35px, 2vw, 72px) clamp(22px, 1.2vw, 44px); }
+  .wallpaper-page .wallpaper-info { padding-top: clamp(14px, .8vw, 28px); }
+  .wallpaper-page .wallpaper-info h2 { font-size: clamp(27.2px, 1.6vw, 60px); }
+  .wallpaper-page .wallpaper-info .file-meta, .wallpaper-page .wallpaper-info .card-download,
+  .wallpaper-page .wallpaper-info .game-label, .wallpaper-page .wallpaper-art .open-label { font-size: var(--reading-label); }
+  .wallpaper-page .wallpaper-info .file-meta { margin-block: .65em .85em; }
+  .wallpaper-page .wallpaper-info .card-download { min-height: 44px; padding-bottom: .35em; }
+  .wallpaper-page .card-download svg { width: 1.2em; height: 1.2em; }
+  .wallpaper-page .screen-badge { font-size: clamp(12px, .7vw, 26px); padding: .35em .65em; }
+  .wallpaper-page .wallpaper-art .open-label { padding: .6em .9em; }
+  .wallpaper-page .load-more-wrap { padding-top: clamp(50px, 2.7vw, 100px); }
+  .wallpaper-page .load-more-wrap p { font-size: var(--reading-label); }
+  .wallpaper-page .load-more-wrap button, .wallpaper-page #empty-reset { font-size: var(--reading-control); padding: .8em 1.75em; }
+  .wallpaper-page #empty-state h2 { font-size: clamp(48px, 2.5vw, 96px); }
+  .wallpaper-page #empty-state p { font-size: var(--reading-body); }
+  .wallpaper-page .usage-section { padding-block: clamp(70px, 4vw, 150px); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wallpaper-page .usage-section h2 { font-size: clamp(48px, 5vw, 180px); }
+  .wallpaper-page .usage-section h2 em { -webkit-text-stroke-width: clamp(1.2px, .065vw, 2.4px); }
+  .wallpaper-page .usage-copy { max-width: 64ch; font-size: var(--reading-body); }
+  .wallpaper-page .usage-copy p + p { margin-top: 1em; }
+
+  #wallpaper-viewer { width: min(96vw, 2680px); padding: var(--reading-space); }
+  #wallpaper-viewer .wallpaper-viewer-head h2 { font-size: clamp(32px, 1.8vw, 64px); }
+  #wallpaper-viewer button, #wallpaper-viewer .wallpaper-actions .solid-link { font-size: var(--reading-control) !important; }
+  #wallpaper-viewer .wallpaper-viewer-head button { padding: .6em 1em; }
+  #wallpaper-viewer .wallpaper-viewer-info { font-size: var(--reading-label); padding-block: var(--reading-space); flex-wrap: wrap; }
+  #wallpaper-viewer #wallpaper-filename { font-size: .9em; max-width: 64ch; }
+  #wallpaper-viewer .image-navigation { gap: var(--reading-space); }
+  #wallpaper-viewer .wallpaper-actions { padding-top: var(--reading-space); gap: var(--reading-space); }
+  #wallpaper-viewer .wallpaper-actions .solid-link { padding: .7em 1.4em; }
+  #wallpaper-viewer #share-status { font-size: var(--reading-label); max-width: 45ch; }
+  #wallpaper-viewer #image-loading { font-size: var(--reading-label); }
+}
+
+@media (min-width: 1800px) {
+  .wallpaper-page .wallpaper-art { height: clamp(380px, 20vw, 760px); }
+  .wallpaper-page .wallpaper-grid[data-orientation=landscape] .wallpaper-art { height: auto; }
+}
+
+/* Keep the smallest filter controls readable on narrow phones. */
+@media (max-width: 700px) {
+  .wallpaper-page .library-filters select { font-size: 1rem; }
+  .wallpaper-page .wallpaper-info .card-download { min-height: 44px; }
+}
+@media (max-width: 370px) {
+  .wallpaper-page .screen-filters button { font-size: .875rem; }
+}
