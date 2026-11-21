@@ -25,7 +25,7 @@ updateCatalogControls();
 $$('.social-links').forEach(el=>el.innerHTML=content.socials.map(([name,url])=>`<a href="${escape(url)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(name)}" title="${escape(name)}">${el.classList.contains('social-icons')?socialIcons[name]:escape(name)}</a>`).join(''));
 let orientation='all',visibleCount=24,filtered=[],activeItem=null,returnFocus=null,loadVersion=0;
 const grid=$('#wallpaper-grid'),viewer=$('#wallpaper-viewer'),menu=$('#site-menu'),fullImage=$('#wallpaper-image'),visual=$('.wallpaper-visual');
-function card(x,i){return `<article class="wallpaper-card" style="--i:${i%24}"><button class="wallpaper-art" type="button" data-open="${escape(x.id)}" aria-label="Open ${escape(x.title)}, ${escape(x.game)} wallpaper"><img src="${escape(x.thumbnail)}" alt="${escape(x.title)} artwork by Danny Simas" ${x.width&&x.height?`width="${x.width}" height="${x.height}"`:''} loading="lazy" decoding="async"><span class="screen-badge">${screenLabel(x)}</span><span class="open-label">Open wallpaper \u2197</span></button><div class="wallpaper-info"><p class="game-label">${escape(x.game)}</p><h2>${escape(x.title)}</h2><p class="file-meta">${escape(details(x))}</p><a class="card-download" data-download="${escape(x.id)}" href="${escape(x.download)}" download="${escape(x.filename)}" target="_blank" rel="noopener noreferrer" aria-label="Download original ${escape(x.title)}">Download original ${downloadIcon}</a></div></article>`}
+function card(x,i){return `<article class="wallpaper-card" style="--i:${i%24}"><button class="wallpaper-art" type="button" data-open="${escape(x.id)}" aria-label="Open ${escape(x.game)} wallpaper"><img src="${escape(x.thumbnail)}" alt="${escape(x.game)} artwork by Danny Simas" ${x.width&&x.height?`width="${x.width}" height="${x.height}"`:''} loading="lazy" decoding="async"><span class="screen-badge">${screenLabel(x)}</span><span class="open-label">Open wallpaper \u2197</span></button><div class="wallpaper-info"><h2>${escape(x.game)}</h2><p class="file-meta">${escape(details(x))}</p><a class="card-download" data-download="${escape(x.id)}" href="${escape(x.download)}" download="${escape(x.filename)}" target="_blank" rel="noopener noreferrer" aria-label="Download original ${escape(x.game)} wallpaper">Download original ${downloadIcon}</a></div></article>`}
 function render(reset=true){
  if(reset)visibleCount=24;
  const query=$('#wallpaper-search').value.trim().toLowerCase(),game=$('#game-filter').value,min=Number($('#resolution-filter').value)||0,sort=$('#sort-filter').value;
@@ -57,9 +57,9 @@ function openWallpaper(id,trigger){
  const x=itemMap.get(id);if(!x)return;
  if(!viewer.open){returnFocus=trigger||document.activeElement;viewer.showModal();lock()}
  activeItem=x;const version=++loadVersion;zoom(false);$('#zoom-wallpaper').disabled=true;
- $('#wallpaper-game').textContent=x.game;$('#wallpaper-title').textContent=x.title;$('#wallpaper-details').textContent=details(x);$('#wallpaper-filename').textContent=x.filename;
+ $('#wallpaper-title').textContent=x.game;$('#wallpaper-details').textContent=details(x);$('#wallpaper-filename').textContent=x.filename;
  $('#download-wallpaper').href=x.download;$('#download-wallpaper').download=x.filename;$('#download-wallpaper').textContent=`Download original${x.bytes?` \u00b7 ${formatBytes(x.bytes)}`:''}`;
- $('#share-status').textContent='';fullImage.alt=`${x.title}, ${x.game} artwork by Danny Simas`;fullImage.src=x.thumbnail;
+ $('#share-status').textContent='';fullImage.alt=`${x.game} artwork by Danny Simas`;fullImage.src=x.thumbnail;
  $('#image-loading').hidden=false;$('#image-loading').textContent='Loading preview\u2026';
  const sequence=filtered.some(i=>i.id===id)?filtered:items;$('#wallpaper-position').textContent=`${sequence.findIndex(i=>i.id===id)+1} / ${sequence.length}`;
  $('#previous-wallpaper').disabled=sequence.length<2;$('#next-wallpaper').disabled=sequence.length<2;
