@@ -29,6 +29,14 @@
 .photomode-cover>img{display:block;object-fit:contain;filter:none}
 .photomode-cover:after{z-index:1;inset:14px;width:26px;height:26px;opacity:.85}
 .photomode-cover:before{right:14px;bottom:14px;width:26px;height:26px;opacity:.85}
+.photomode-cover-link{display:block;cursor:pointer}
+.photomode-cover-link:focus-visible{outline-offset:-4px}
+.photomode-cover-overlay{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;padding:22px;background:#05060770;opacity:0;pointer-events:none;transition:opacity .25s}
+.photomode-cover-cta{display:flex;align-items:center;justify-content:center;gap:12px;padding:14px 18px;min-height:54px;border:1px solid var(--cyan);background:#050607ed;color:var(--white);box-shadow:5px 5px 0 #a78bfa80;font-size:clamp(.9375rem,1.1vw,1.125rem);font-weight:500;line-height:1.4;transform:translateY(8px);transition:transform .25s}
+.photomode-cover-icon{color:var(--cyan);font-size:1.6rem;line-height:1}
+.photomode-cover-link:hover .photomode-cover-overlay,.photomode-cover-link:focus-visible .photomode-cover-overlay{opacity:1}
+.photomode-cover-link:hover .photomode-cover-cta,.photomode-cover-link:focus-visible .photomode-cover-cta{transform:none}
+@media(hover:none){.photomode-cover-overlay{align-items:flex-end;background:linear-gradient(transparent 65%,#050607b3);opacity:1}.photomode-cover-cta{transform:none}}
 .photomode-abstract{background:repeating-linear-gradient(-35deg,transparent 0 28px,#a78bfa08 29px 30px),radial-gradient(ellipse at 75% 35%,#67e8f91c,transparent 65%),linear-gradient(140deg,#171228,#080a10 75%)}
 .photomode-card:nth-child(2) .photomode-abstract{background:repeating-linear-gradient(-35deg,transparent 0 28px,#67e8f908 29px 30px),radial-gradient(ellipse at 35% 80%,#a78bfa30,transparent 65%),linear-gradient(140deg,#101923,#0c0a13 75%)}
 .photomode-number{position:absolute;left:13%;top:-9%;font-family:'Barlow Condensed',sans-serif;font-size:clamp(160px,19vw,330px);font-weight:700;font-style:italic;line-height:1;color:transparent;-webkit-text-stroke:1.5px #a78bfa80;transform:rotate(-8deg);transition:transform .65s cubic-bezier(.2,.75,.2,1)}
