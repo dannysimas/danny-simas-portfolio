@@ -17,6 +17,9 @@ export function setupHeroStack({hero,floats,caption,onFrame}){
   });
   const desktop=[{x:57,y:12,w:33,h:78,r:6},{x:39,y:16,w:27,h:62,r:-12},{x:74,y:15,w:24,h:63,r:12},{x:45,y:38,w:27,h:58,r:-7},{x:68,y:39,w:27,h:55,r:9}];
   const phone=[{x:32,y:17,w:65,h:70,r:6},{x:4,y:20,w:53,h:55,r:-12},{x:54,y:18,w:49,h:55,r:12},{x:16,y:44,w:57,h:42,r:-7},{x:47,y:41,w:50,h:45,r:9}];
+  // Raise the phone composition on portrait monitors, keeping the artwork's lower edge.
+  const portrait=phone.map(slot=>({...slot,y:slot.y-8,h:slot.h+8}));
+  const portraitMonitor=matchMedia('(min-width: 701px) and (max-aspect-ratio: 4/5)');
   const layers=[5,1,2,3,4],loads=new Map();
   const clamp=n=>Math.min(1,Math.max(0,n)),mix=(a,b,t)=>a+(b-a)*t,ease=t=>t*t*(3-2*t);
   let front=0,transition=null,timer=null,eligible=false,generation=0;
@@ -51,7 +54,7 @@ export function setupHeroStack({hero,floats,caption,onFrame}){
     if(reduced&&transition){transition=null;stack.dataset.shuffling='false'}
     let amount=transition?clamp((performance.now()-transition.start)/1250):0;
     if(transition&&amount===1){front=transition.next;transition=null;amount=0;describe()}
-    const t=ease(amount),slots=mobile?phone:desktop;
+    const t=ease(amount),slots=mobile?phone:portraitMonitor.matches?portrait:desktop;
     function pose(slot){
       const s=slots[slot],lead=slot===0,sign=slot%2===1?-1:1;
       return {x:lead?mix(s.x,0,o):s.x,y:lead?mix(s.y,0,o):s.y,w:lead?mix(s.w,100,o):s.w,h:lead?mix(s.h,100,o):s.h,r:lead?mix(s.r,0,o):s.r+sign*p*8,dx:lead?px*12*(1-o):sign*p*innerWidth*.18+px*slot*7,dy:lead?py*9*(1-o):-p*(90+(slot-1)*45)+py*(slot+1)*5,opacity:lead?1:1-clamp(p*2),light:lead?1:.8,cut:lead?4*(1-o):0,focal:lead?mix(37,18,o):50};
