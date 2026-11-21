@@ -1,4 +1,5 @@
 import '../navigation.js';
+import '../graphic-details.js';
 import {startWallpaperSync,catalogSignature} from './live-sync.mjs';
 import source from './catalog.json';
 import content from '../content.js';

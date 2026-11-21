@@ -1,4 +1,5 @@
 import './navigation.js';
+import './graphic-details.js';
 import {setupHeroStack} from './hero-stack.js';
 import { socialIcons } from './social-icons.js';
 import { setupMarquee } from './marquee.js';

@@ -1,4 +1,5 @@
 import '../navigation.js';
+import '../graphic-details.js';
 import '../photomodes.js';
 import content from '../content.js';
 import {socialIcons} from '../social-icons.js';
