@@ -12,7 +12,11 @@ if(list){
     const preview=safeUrl(mode.preview);
     if(preview){visual.classList.add('photomode-cover');const img=element('img');img.src=preview.href;img.alt='';img.width=600;img.height=900;img.loading='lazy';img.decoding='async';visual.append(img)}
     else{visual.classList.add('photomode-abstract');visual.append(element('span','photomode-number',number),element('span','photomode-reticle'),element('span','photomode-visual-label','PM / '+number),element('span','photomode-visual-caption','DANNY SIMAS / PHOTOMODES'));}
-    if(download){const overlay=element('span','photomode-cover-overlay'),label=element('span','photomode-cover-cta','Download photomode');overlay.setAttribute('aria-hidden','true');label.append(element('span','photomode-cover-icon','\u2193'));overlay.append(label);visual.append(overlay)}
+    if(download){
+      const overlay=element('span','photomode-cover-overlay'),label=element('span','photomode-cover-cta'),surface=element('span','photomode-cover-surface'),heading=element('span','photomode-cover-title','DOWNLOAD');overlay.setAttribute('aria-hidden','true');
+      const icon=document.createElementNS('http://www.w3.org/2000/svg','svg'),arrow=document.createElementNS('http://www.w3.org/2000/svg','path');icon.setAttribute('viewBox','0 0 48 48');icon.setAttribute('aria-hidden','true');arrow.setAttribute('d','M24 8v30M10 24l14 14 14-14');icon.append(arrow);heading.append(icon);
+      surface.append(element('span','photomode-cover-eyebrow','FREE PHOTOMODE'),heading,element('span','photomode-cover-detail','READ THE README'));label.append(surface);overlay.append(label);visual.append(overlay);
+    }
     const body=element('div','photomode-card-body');body.append(element('p','eyebrow','CUSTOM PHOTOMODE'));
     const title=element('h3');title.id=article.id+'-title';title.setAttribute('aria-label',mode.game);
     (mode.lines||[mode.game]).forEach(line=>title.append(element('span','',line)));body.append(title);
