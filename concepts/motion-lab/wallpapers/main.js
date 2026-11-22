@@ -35,8 +35,8 @@ const grid=$('#wallpaper-grid'),viewer=$('#wallpaper-viewer'),menu=$('#site-menu
 function card(x,i){return `<article class="wallpaper-card" style="--i:${i%24}"><div class="wallpaper-cover"><button class="wallpaper-art" type="button" data-open="${escape(x.id)}" aria-label="${escape(t('Open {game} wallpaper',{game:x.game}))}"><img src="${escape(x.thumbnail)}" alt="${escape(t('{game} artwork by Danny Simas',{game:x.game}))}" ${x.width&&x.height?`width="${x.width}" height="${x.height}"`:''} loading="lazy" decoding="async"><span class="screen-badge">${screenLabel(x)}</span><span class="open-label">${t('Open wallpaper ↗')}</span></button><button type="button" class="favourite-toggle" data-favourite="${escape(x.id)}" aria-pressed="${favourites.has(x.id)}" aria-label="${escape(t(favourites.has(x.id)?'Remove {game} from favourites':'Save {game} to favourites',{game:x.game}))}">${heartIcon}</button></div><div class="wallpaper-info"><h2>${escape(x.game)}</h2><p class="file-meta">${escape(details(x))}</p><a class="card-download" data-download="${escape(x.id)}" href="${escape(x.download)}" download="${escape(x.filename)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(t('Download original {game} wallpaper',{game:x.game}))}">${t('Download original')} ${downloadIcon}</a></div></article>`}
 function render(reset=true){
  if(reset)visibleCount=24;
- const query=$('#wallpaper-search').value.trim().toLowerCase(),game=$('#game-filter').value,min=Number($('#resolution-filter').value)||0,sort=$('#sort-filter').value;
- filtered=items.filter(x=>(!favouritesOnly||favourites.has(x.id))&&(orientation==='all'||screen(x)===orientation)&&(game==='all'||x.game===game)&&Math.max(x.width,x.height)>=min&&(!query||`${x.title} ${x.game} ${x.collection} ${x.filename}`.toLowerCase().includes(query)));
+ const query=$('#wallpaper-search').value.trim().toLowerCase(),game=$('#game-filter').value,sort=$('#sort-filter').value;
+ filtered=items.filter(x=>(!favouritesOnly||favourites.has(x.id))&&(orientation==='all'||screen(x)===orientation)&&(game==='all'||x.game===game)&&(!query||`${x.title} ${x.game} ${x.collection} ${x.filename}`.toLowerCase().includes(query)));
  filtered.sort((a,b)=>{
   if(sort==='newest'||sort==='oldest'){
    const aDate=Date.parse(a.modified),bDate=Date.parse(b.modified),aDated=Number.isFinite(aDate),bDated=Number.isFinite(bDate);
@@ -54,9 +54,9 @@ function render(reset=true){
  $('#empty-state').hidden=filtered.length>0;$('#load-more').hidden=visibleCount>=filtered.length;
  $('.load-more-wrap').hidden=!filtered.length;$('#loaded-count').textContent=t('Showing {shown} of {total}',{shown:formatNumber(Math.min(visibleCount,filtered.length)),total:formatNumber(filtered.length)});
 }
-function reset(){favouritesOnly=false;orientation='all';$('#wallpaper-search').value='';$('#game-filter').value='all';$('#resolution-filter').value='all';$('#sort-filter').value='newest';$$('[data-orientation]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.orientation==='all')));render()}
+function reset(){favouritesOnly=false;orientation='all';$('#wallpaper-search').value='';$('#game-filter').value='all';$('#sort-filter').value='newest';$$('[data-orientation]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.orientation==='all')));render()}
 $$('[data-orientation]').forEach(button=>button.addEventListener('click',()=>{orientation=button.dataset.orientation;$$('[data-orientation]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));render()}));
-$('#wallpaper-search').addEventListener('input',()=>render());['game-filter','resolution-filter','sort-filter'].forEach(id=>$('#'+id).addEventListener('change',()=>render()));
+$('#wallpaper-search').addEventListener('input',()=>render());['game-filter','sort-filter'].forEach(id=>$('#'+id).addEventListener('change',()=>render()));
 $('#reset-filters').addEventListener('click',reset);$('#empty-reset').addEventListener('click',reset);
 $('#load-more').addEventListener('click',()=>{const previous=visibleCount;visibleCount+=24;render(false);grid.querySelectorAll('[data-open]')[previous]?.focus({preventScroll:true})});
 function updateFavourites(){

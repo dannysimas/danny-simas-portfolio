@@ -12,6 +12,6 @@ Comments are rendered as text, with limits of 60 characters for names and 800 fo
 
 The local `.env.local` is ignored by Git and contains only the existing public anonymous/publishable configuration. Never put a service-role or secret key in Vite variables. The deployment must retain the same existing public Vercel environment variables.
 
-Wallpaper favourites use `dannysimas-wallpaper-favourites-v1` in localStorage, with stable wallpaper IDs only. They remain on the device/browser and are shared between EN/PT-BR. No account or network request is involved. If storage is blocked or full, favourites still work for the current visit and the UI explains that they are temporary. The filter combines with game, orientation, search and resolution, and gallery refreshes preserve the saved IDs.
+Wallpaper favourites use `dannysimas-wallpaper-favourites-v1` in localStorage, with stable wallpaper IDs only. They remain on the device/browser and are shared between EN/PT-BR. No account or network request is involved. If storage is blocked or full, favourites still work for the current visit and the UI explains that they are temporary. The filter combines with game, orientation and search, and gallery refreshes preserve the saved IDs.
 
 Validation: `npm test`, `npm run build`, `npm run verify:build`. Integration tests exercise both languages, favourites in the gallery/viewer, safe comment rendering, reply mentions, failures and game-switch races. Actual Supabase reads can be checked using the existing public configuration without posting test messages.

@@ -14,7 +14,6 @@
   .wallpaper-page .library-search { max-width: clamp(360px, 22vw, 800px); padding-inline: .875em; font-size: var(--reading-control); }
   .wallpaper-page .library-search input { font-size: inherit; padding-block: .8em; }
   .wallpaper-page .library-filters { gap: var(--reading-space); margin-block: var(--reading-space) clamp(32px, 1.7vw, 64px); }
-  .wallpaper-page .library-filters > div { max-width: clamp(300px, 18vw, 650px); }
   .wallpaper-page .library-filters label, .wallpaper-page .result-summary { font-size: var(--reading-label); }
   .wallpaper-page .library-filters select, .wallpaper-page .library-filters > button { font-size: var(--reading-control); min-height: 2.9em; }
   .wallpaper-page .library-filters select { padding: .6em 2em .6em .75em; }
