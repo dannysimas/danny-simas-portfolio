@@ -10,10 +10,10 @@
 .comment-form{position:relative;padding:clamp(24px,2vw,72px);background:linear-gradient(140deg,#17122870,#080a1030);border-top:1px solid #a78bfa70}
 .comment-form h3,.discussion-feed h3{font:600 clamp(28px,2vw,68px)/1.15 'Barlow Condensed',sans-serif;margin:0 0 22px}
 .comment-form label{display:block;margin-bottom:.6em;color:var(--white);font-size:var(--reading-control,1rem)}
-.comment-form input,.comment-form textarea{display:block;box-sizing:border-box;width:100%;background:#07090e;border:1px solid #ffffff38;color:var(--white);padding:.85em;font:inherit;font-size:var(--reading-body,1rem);border-radius:0;min-height:48px}
+.comment-form input,.comment-form textarea,.comment-form select{display:block;box-sizing:border-box;width:100%;background:#07090e;border:1px solid #ffffff38;color:var(--white);padding:.85em;font:inherit;font-size:var(--reading-body,1rem);border-radius:0;min-height:48px}
 .comment-form textarea{resize:vertical;min-height:160px;line-height:1.6}
 .comment-field+.comment-field{margin-top:24px}
-.comment-form input:focus-visible,.comment-form textarea:focus-visible,.discussion-game-field select:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.comment-form input:focus-visible,.comment-form textarea:focus-visible,.comment-form select:focus-visible,.discussion-game-field select:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 .comment-length{font-size:var(--reading-label,.875rem);color:var(--muted);text-align:right;margin-top:8px}
 .comment-public-note{font-size:var(--reading-label,.875rem);color:var(--muted);line-height:1.6;margin:18px 0}
 .comment-submit{padding:.8em 1.4em;background:var(--cyan);color:#071217;font:500 var(--reading-control,1rem) 'Space Grotesk',sans-serif;min-height:48px}
@@ -25,6 +25,7 @@
 .discussion-feed>p,.comments-empty{font-size:var(--reading-body,1.125rem);color:var(--muted)}
 .discussion-feed>p:empty{display:none}
 .photomode-comment{padding:24px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.photomode-comment-game{display:inline-block;max-width:100%;box-sizing:border-box;margin-bottom:14px;padding:.35em .7em;border:1px solid #a78bfa50;color:var(--violet);font-size:var(--reading-label,.875rem);line-height:1.5}
 .photomode-comment>div{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px 20px;font-size:var(--reading-control,1rem)}
 .photomode-comment strong{font-weight:500;color:var(--cyan)}
 .photomode-comment time{font-size:var(--reading-label,.875rem);color:var(--muted)}

@@ -1,5 +1,5 @@
 const pageSize = 20;
-const fields = 'id,name,body,created_at';
+const fields = 'id,game_id,name,body,created_at';
 const validId = id => /^\d{1,20}$/.test(String(id));
 
 export function validateComment({name, body}) {
@@ -28,7 +28,9 @@ export function createCommentClient({url, key, games, fetchImpl = fetch}) {
   }
   function normalize(row) {
     if (!row || !validId(row.id) || typeof row.name !== 'string' || typeof row.body !== 'string' || !Number.isFinite(Date.parse(row.created_at))) throw new Error('invalid-response');
-    return {id: String(row.id), name: row.name, body: row.body, created_at: row.created_at};
+    const game = typeof row.game_id === 'string' && row.game_id.startsWith('photomode:') ? row.game_id.slice('photomode:'.length) : null;
+    if (!allowed.has(game)) throw new Error('invalid-response');
+    return {id: String(row.id), game, name: row.name, body: row.body, created_at: row.created_at};
   }
   async function request(params, options = {}) {
     if (!base) throw new Error('not-configured');
@@ -46,10 +48,12 @@ export function createCommentClient({url, key, games, fetchImpl = fetch}) {
   }
   return {
     configured: Boolean(base),
-    async list(game, {before, signal} = {}) {
-      const params = {game_id: `eq.${thread(game)}`, status: 'eq.approved', select: fields, order: 'id.desc', limit: String(pageSize + 1)};
+    async list(game = 'all', {before, signal} = {}) {
+      const gameFilter = game === 'all' ? `in.(${[...allowed].map(thread).join(',')})` : `eq.${thread(game)}`;
+      const params = {game_id: gameFilter, status: 'eq.approved', select: fields, order: 'id.desc', limit: String(pageSize + 1)};
       if (before != null) {if (!validId(before)) throw new Error('invalid-cursor');params.id = `lt.${before}`;}
       const rows = await request(params, {signal});
+      if (game !== 'all' && rows.some(row => row.game !== game)) throw new Error('invalid-response');
       return {comments: rows.slice(0, pageSize), next: rows.length > pageSize ? rows[pageSize - 1].id : null};
     },
     async post(game, values) {
@@ -57,7 +61,7 @@ export function createCommentClient({url, key, games, fetchImpl = fetch}) {
       if (values.website) throw new Error('invalid-comment');
       const rows = await request({select: fields}, {method: 'POST', headers: {Prefer: 'return=representation'},
         body: JSON.stringify({game_id, name, body, status: 'approved'})});
-      if (rows.length !== 1) throw new Error('invalid-response');
+      if (rows.length !== 1 || rows[0].game !== game) throw new Error('invalid-response');
       return rows[0];
     }
   };
