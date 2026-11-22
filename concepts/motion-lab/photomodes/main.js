@@ -1,4 +1,5 @@
 import '../navigation.js';
+import {t} from '../i18n.js';
 import '../graphic-details.js';
 import '../photomodes.js';
 import content from '../content.js';
@@ -7,7 +8,7 @@ const $=selector=>document.querySelector(selector),$$=selector=>[...document.que
 $$('.social-links').forEach(group=>{
   for(const [name,url] of content.socials){const link=document.createElement('a');link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.setAttribute('aria-label',name);link.title=name;link.innerHTML=socialIcons[name];group.append(link)}
 });
-$('#photomode-count').textContent=String($$('.photomode-card').length).padStart(2,'0')+' PHOTOMODES';
+$('#photomode-count').textContent=t('{count} PHOTOMODES',{count:String($('.photomode-card').length).padStart(2,'0')});
 const menu=$('#site-menu'),trigger=$('#menu-toggle');
 trigger.addEventListener('click',()=>{menu.showModal();document.body.classList.add('modal-open')});
 $('#close-menu').addEventListener('click',()=>menu.close());

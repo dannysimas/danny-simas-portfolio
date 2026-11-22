@@ -1,10 +1,11 @@
 ﻿// Full-screen navigation with artwork previews; existing open/close handlers are retained.
+import {t,createLanguageSwitch} from './i18n.js';
 const menu=document.querySelector('#site-menu');
 if(menu){
   const trigger=document.querySelector('#menu-toggle'),close=document.querySelector('#close-menu');
-  trigger.innerHTML='<span class="trigger-desktop">Explore</span><span class="trigger-compact">Menu</span><span class="menu-glyph" aria-hidden="true"><i></i><i></i></span>';
-  trigger.setAttribute('aria-label','Open navigation menu');trigger.setAttribute('aria-controls','site-menu');
-  close.innerHTML='Close <span class="close-glyph" aria-hidden="true"></span>';close.setAttribute('aria-label','Close menu');
+  trigger.innerHTML='<span class="trigger-desktop">'+t('Explore')+'</span><span class="trigger-compact">Menu</span><span class="menu-glyph" aria-hidden="true"><i></i><i></i></span>';
+  trigger.setAttribute('aria-label',t('Open navigation menu'));trigger.setAttribute('aria-controls','site-menu');
+  close.innerHTML=t('Close')+' <span class="close-glyph" aria-hidden="true"></span>';close.setAttribute('aria-label',t('Close menu'));
   const configs={
     work:{label:'Selected work',image:'/images/gallery/expedition-33/full/01.webp',caption:'Worlds in frame.',detail:'Cinematic artwork. Worlds worth a closer look.'},
     wallpapers:{label:'Wallpapers',image:'/images/gallery/resident-evil/thumbs/01.webp',caption:'Make it your world.',detail:'Find your next wallpaper. Take it with you.'},
@@ -16,8 +17,8 @@ if(menu){
     contact:{label:'Let\'s talk',image:'/images/gallery/pragmata/thumbs/01.webp',caption:'Make an impact.',detail:'Let\'s make something impossible to ignore.'}
   };
   const links=[...menu.querySelectorAll('nav a')];
-  const primary=document.createElement('nav');primary.className='menu-primary';primary.setAttribute('aria-label','Main navigation');
-  const secondary=document.createElement('nav');secondary.className='menu-secondary';secondary.setAttribute('aria-label','More to explore');
+  const primary=document.createElement('nav');primary.className='menu-primary';primary.setAttribute('aria-label',t('Main navigation'));
+  const secondary=document.createElement('nav');secondary.className='menu-secondary';secondary.setAttribute('aria-label',t('More to explore'));
   let index=0;
   for(const link of links){
     const url=new URL(link.href);const key=url.pathname.match(/\/(wallpapers|photomodes)\/?$/)?.[1]||url.hash.slice(1);
@@ -25,17 +26,17 @@ if(menu){
     if(!config){secondary.append(link);continue}
     link.dataset.preview=key;link.style.setProperty('--item',index);link.replaceChildren();
     const number=document.createElement('span');number.className='menu-index';number.textContent=String(++index).padStart(2,'0');number.setAttribute('aria-hidden','true');
-    const label=document.createElement('span');label.className='menu-text';label.textContent=config.label;link.append(number,label);primary.append(link);
+    const label=document.createElement('span');label.className='menu-text';label.textContent=t(config.label);link.append(number,label);primary.append(link);
   }
   const art=document.createElement('div');art.className='menu-art';art.setAttribute('aria-hidden','true');art.innerHTML='<img alt="" class="is-visible"><img alt=""><div class="menu-art-caption"><strong></strong><p></p></div>';
   const body=document.createElement('div');body.className='menu-body';body.append(primary);
   const bottom=document.createElement('div');bottom.className='menu-bottom';const bottomLeft=document.createElement('div');bottomLeft.className='menu-bottom-left';
   const socials=menu.querySelector('.social-links'),head=menu.querySelector('.menu-head');
-  socials.classList.add('social-icons');bottomLeft.append(secondary);bottom.append(bottomLeft,socials);menu.replaceChildren(art,head,body,bottom);
+  socials.classList.add('social-icons');bottomLeft.append(secondary,createLanguageSwitch());bottom.append(bottomLeft,socials);menu.replaceChildren(art,head,body,bottom);
   const images=[...art.querySelectorAll('img')],caption=art.querySelector('strong'),detail=art.querySelector('p');let front=0,version=0,selected='',preloaded=false;
   function preview(key){
     if(key===selected)return;selected=key;const config=configs[key],token=++version,next=1-front,img=images[next];
-    caption.textContent=config.caption;detail.textContent=config.detail;
+    caption.textContent=t(config.caption);detail.textContent=t(config.detail);
     primary.querySelectorAll('a').forEach(a=>a.classList.toggle('is-previewed',a.dataset.preview===key));
     img.onload=()=>{if(token!==version)return;images[front].classList.remove('is-visible');img.classList.add('is-visible');front=next};
     img.src=config.image;

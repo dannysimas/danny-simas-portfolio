@@ -1,8 +1,9 @@
 import photomodes from './photomodes-data.js';
+import {t} from './i18n.js';
 const list=document.querySelector('#photomode-list');
-function element(tag,className,text){const el=document.createElement(tag);if(className)el.className=className;if(text)el.textContent=text;return el}
+function element(tag,className,text){const el=document.createElement(tag);if(className)el.className=className;if(text)el.textContent=t(text);return el}
 function safeUrl(value){if(!value)return null;try{const url=new URL(value,location.href);return ['http:','https:'].includes(url.protocol)?url:null}catch{return null}}
-function configureDownload(link,url,mode){link.href=url.href;link.setAttribute('aria-label','Download '+mode.game+' photomode');if(url.origin===location.origin){link.download=mode.fileName||''}else{link.target='_blank';link.rel='noopener noreferrer'}}
+function configureDownload(link,url,mode){link.href=url.href;link.setAttribute('aria-label',t('Download {game} photomode',{game:mode.game}));if(url.origin===location.origin){link.download=mode.fileName||''}else{link.target='_blank';link.rel='noopener noreferrer'}}
 if(list){
   photomodes.forEach((mode,index)=>{
     const number=String(index+1).padStart(2,'0');
@@ -20,13 +21,13 @@ if(list){
     const body=element('div','photomode-card-body');body.append(element('p','eyebrow','CUSTOM PHOTOMODE'));
     const title=element('h3');title.id=article.id+'-title';title.setAttribute('aria-label',mode.game);
     (mode.lines||[mode.game]).forEach(line=>title.append(element('span','',line)));body.append(title);
-    const meta=[mode.platform,mode.version?('Version '+mode.version):null].filter(Boolean);
+    const meta=[mode.platform,mode.version?t('Version {version}',{version:mode.version}):null].filter(Boolean);
     if(meta.length)body.append(element('p','photomode-meta',meta.join(' / ')));
     if(download){
       const link=element('a','photomode-download','Download photomode');configureDownload(link,download,mode);
       const icon=element('span','','\u2193');icon.setAttribute('aria-hidden','true');link.append(icon);body.append(link);
     }else{
-      const pending=element('p','photomode-pending');const dot=element('span','');dot.setAttribute('aria-hidden','true');pending.append(dot,document.createTextNode('Download coming soon'));body.append(pending);
+      const pending=element('p','photomode-pending');const dot=element('span','');dot.setAttribute('aria-hidden','true');pending.append(dot,document.createTextNode(t('Download coming soon')));body.append(pending);
     }
     if(mode.requirements?.length||mode.installation?.length){
       const details=element('details','photomode-setup'),summary=element('summary','','Setup & compatibility'),content=element('div','photomode-setup-content');

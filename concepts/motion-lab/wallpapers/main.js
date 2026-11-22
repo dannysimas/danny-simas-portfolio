@@ -1,4 +1,5 @@
 import '../navigation.js';
+import {t,formatNumber,language} from '../i18n.js';
 import '../graphic-details.js';
 import {startWallpaperSync,catalogSignature,readWallpaperCache,writeWallpaperCache} from './live-sync.mjs';
 import source from './catalog.json';
@@ -10,23 +11,23 @@ const downloadIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v1
 const savedCatalog=readWallpaperCache();
 const items=(savedCatalog?.items||(Array.isArray(source)?source:source.items)).map(x=>({...x,width:Number(x.width)||0,height:Number(x.height)||0,bytes:Number(x.bytes)||0}));
 const itemMap=new Map(items.map(x=>[x.id,x]));
-const formatBytes=bytes=>bytes?(bytes/1048576<1?`${Math.round(bytes/1024)} KB`:`${(bytes/1048576).toFixed(1)} MB`):'';
+const formatBytes=bytes=>bytes?(bytes/1048576<1?`${Math.round(bytes/1024)} KB`:`${(bytes/1048576).toLocaleString(language === 'en' ? 'en-US' : language,{minimumFractionDigits:1,maximumFractionDigits:1})} MB`):'';
 const screen=x=>x.width&&x.height?(x.width>x.height?'landscape':x.height>x.width?'portrait':'square'):(x.orientation||'unknown');
-const screenLabel=x=>({landscape:'Desktop',portrait:'Phone',square:'Square'}[screen(x)]||'Original');
-const details=x=>[x.width&&x.height?`${x.width.toLocaleString()} \u00d7 ${x.height.toLocaleString()}`:null,x.format?.toUpperCase(),formatBytes(x.bytes)].filter(Boolean).join(' \u00b7 ');
+const screenLabel=x=>t({landscape:'Desktop',portrait:'Phone',square:'Square'}[screen(x)]||'Original');
+const details=x=>[x.width&&x.height?`${formatNumber(x.width)} \u00d7 ${formatNumber(x.height)}`:null,x.format?.toUpperCase(),formatBytes(x.bytes)].filter(Boolean).join(' \u00b7 ');
 function updateCatalogControls(){
  const games=[...new Set(items.map(item=>item.game).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
  const selected=$('#game-filter').value;
- $('#game-filter').innerHTML='<option value="all">All games</option>'+games.map(game=>'<option value="'+escape(game)+'">'+escape(game)+'</option>').join('');
+ $('#game-filter').innerHTML='<option value="all">'+t('All games')+'</option>'+games.map(game=>'<option value="'+escape(game)+'">'+escape(game)+'</option>').join('');
  $('#game-filter').value=games.includes(selected)?selected:'all';
- $('.vault-count').textContent=items.length.toLocaleString()+' originals / '+games.length+' game collections';
- $$('[data-orientation]').forEach(button=>button.querySelector('span').textContent=items.filter(item=>button.dataset.orientation==='all'||screen(item)===button.dataset.orientation).length.toLocaleString());
+ $('.vault-count').textContent=t('{count} originals / {games} game collections',{count:formatNumber(items.length),games:formatNumber(games.length)});
+ $$('[data-orientation]').forEach(button=>button.querySelector('span').textContent=formatNumber(items.filter(item=>button.dataset.orientation==='all'||screen(item)===button.dataset.orientation).length));
 }
 updateCatalogControls();
 $$('.social-links').forEach(el=>el.innerHTML=content.socials.map(([name,url])=>`<a href="${escape(url)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(name)}" title="${escape(name)}">${el.classList.contains('social-icons')?socialIcons[name]:escape(name)}</a>`).join(''));
 let orientation='all',visibleCount=24,filtered=[],activeItem=null,returnFocus=null,loadVersion=0;
 const grid=$('#wallpaper-grid'),viewer=$('#wallpaper-viewer'),menu=$('#site-menu'),fullImage=$('#wallpaper-image'),visual=$('.wallpaper-visual');
-function card(x,i){return `<article class="wallpaper-card" style="--i:${i%24}"><button class="wallpaper-art" type="button" data-open="${escape(x.id)}" aria-label="Open ${escape(x.game)} wallpaper"><img src="${escape(x.thumbnail)}" alt="${escape(x.game)} artwork by Danny Simas" ${x.width&&x.height?`width="${x.width}" height="${x.height}"`:''} loading="lazy" decoding="async"><span class="screen-badge">${screenLabel(x)}</span><span class="open-label">Open wallpaper \u2197</span></button><div class="wallpaper-info"><h2>${escape(x.game)}</h2><p class="file-meta">${escape(details(x))}</p><a class="card-download" data-download="${escape(x.id)}" href="${escape(x.download)}" download="${escape(x.filename)}" target="_blank" rel="noopener noreferrer" aria-label="Download original ${escape(x.game)} wallpaper">Download original ${downloadIcon}</a></div></article>`}
+function card(x,i){return `<article class="wallpaper-card" style="--i:${i%24}"><button class="wallpaper-art" type="button" data-open="${escape(x.id)}" aria-label="${escape(t('Open {game} wallpaper',{game:x.game}))}"><img src="${escape(x.thumbnail)}" alt="${escape(t('{game} artwork by Danny Simas',{game:x.game}))}" ${x.width&&x.height?`width="${x.width}" height="${x.height}"`:''} loading="lazy" decoding="async"><span class="screen-badge">${screenLabel(x)}</span><span class="open-label">${t('Open wallpaper ↗')}</span></button><div class="wallpaper-info"><h2>${escape(x.game)}</h2><p class="file-meta">${escape(details(x))}</p><a class="card-download" data-download="${escape(x.id)}" href="${escape(x.download)}" download="${escape(x.filename)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(t('Download original {game} wallpaper',{game:x.game}))}">${t('Download original')} ${downloadIcon}</a></div></article>`}
 function render(reset=true){
  if(reset)visibleCount=24;
  const query=$('#wallpaper-search').value.trim().toLowerCase(),game=$('#game-filter').value,min=Number($('#resolution-filter').value)||0,sort=$('#sort-filter').value;
@@ -41,9 +42,9 @@ function render(reset=true){
   return `${a.game} ${a.title}`.localeCompare(`${b.game} ${b.title}`,undefined,{numeric:true});
  });
  grid.dataset.orientation=orientation;grid.innerHTML=filtered.slice(0,visibleCount).map(card).join('');
- $('#result-count').textContent=`${filtered.length.toLocaleString()} wallpaper${filtered.length===1?'':'s'}${game==='all'?'':` / ${game}`}`;
+ $('#result-count').textContent=`${t(filtered.length===1?'{count} wallpaper':'{count} wallpapers',{count:formatNumber(filtered.length)})}${game==='all'?'':` / ${game}`}`;
  $('#empty-state').hidden=filtered.length>0;$('#load-more').hidden=visibleCount>=filtered.length;
- $('.load-more-wrap').hidden=!filtered.length;$('#loaded-count').textContent=`Showing ${Math.min(visibleCount,filtered.length).toLocaleString()} of ${filtered.length.toLocaleString()}`;
+ $('.load-more-wrap').hidden=!filtered.length;$('#loaded-count').textContent=t('Showing {shown} of {total}',{shown:formatNumber(Math.min(visibleCount,filtered.length)),total:formatNumber(filtered.length)});
 }
 function reset(){orientation='all';$('#wallpaper-search').value='';$('#game-filter').value='all';$('#resolution-filter').value='all';$('#sort-filter').value='newest';$$('[data-orientation]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.orientation==='all')));render()}
 $$('[data-orientation]').forEach(button=>button.addEventListener('click',()=>{orientation=button.dataset.orientation;$$('[data-orientation]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));render()}));
@@ -53,25 +54,25 @@ $('#load-more').addEventListener('click',()=>{const previous=visibleCount;visibl
 grid.addEventListener('click',event=>{const button=event.target.closest('[data-open]');if(button)openWallpaper(button.dataset.open,button)});
 function lock(){document.body.classList.toggle('modal-open',!!$('dialog[open]'))}
 function setUrl(id){const url=new URL(location.href);if(id)url.searchParams.set('wallpaper',id);else url.searchParams.delete('wallpaper');history.replaceState(null,'',url)}
-function zoom(next){visual.classList.toggle('zoomed',next);$('#zoom-wallpaper').setAttribute('aria-pressed',String(next));$('#zoom-wallpaper').textContent=next?'Fit to screen':'Zoom preview';visual.scrollTo(0,0)}
+function zoom(next){visual.classList.toggle('zoomed',next);$('#zoom-wallpaper').setAttribute('aria-pressed',String(next));$('#zoom-wallpaper').textContent=t(next?'Fit to screen':'Zoom preview');visual.scrollTo(0,0)}
 function openWallpaper(id,trigger){
  const x=itemMap.get(id);if(!x)return;
  if(!viewer.open){returnFocus=trigger||document.activeElement;viewer.showModal();lock()}
  activeItem=x;const version=++loadVersion;zoom(false);$('#zoom-wallpaper').disabled=true;
  $('#wallpaper-title').textContent=x.game;$('#wallpaper-details').textContent=details(x);$('#wallpaper-filename').textContent=x.filename;
- $('#download-wallpaper').href=x.download;$('#download-wallpaper').download=x.filename;$('#download-wallpaper').textContent=`Download original${x.bytes?` \u00b7 ${formatBytes(x.bytes)}`:''}`;
- $('#share-status').textContent='';fullImage.alt=`${x.game} artwork by Danny Simas`;fullImage.src=x.thumbnail;
- $('#image-loading').hidden=false;$('#image-loading').textContent='Loading preview\u2026';
+ $('#download-wallpaper').href=x.download;$('#download-wallpaper').download=x.filename;$('#download-wallpaper').textContent=`${t('Download original')}${x.bytes?` \u00b7 ${formatBytes(x.bytes)}`:''}`;
+ $('#share-status').textContent='';fullImage.alt=t('{game} artwork by Danny Simas',{game:x.game});fullImage.src=x.thumbnail;
+ $('#image-loading').hidden=false;$('#image-loading').textContent=t('Loading preview…');
  const sequence=filtered.some(i=>i.id===id)?filtered:items;$('#wallpaper-position').textContent=`${sequence.findIndex(i=>i.id===id)+1} / ${sequence.length}`;
  $('#previous-wallpaper').disabled=sequence.length<2;$('#next-wallpaper').disabled=sequence.length<2;
- const image=new Image();image.onload=()=>{if(version!==loadVersion||!viewer.open)return;fullImage.src=image.src;$('#image-loading').hidden=true;$('#zoom-wallpaper').disabled=false};image.onerror=()=>{if(version!==loadVersion||!viewer.open)return;$('#image-loading').textContent='Preview unavailable. You can still download the original.'};image.src=x.preview;
+ const image=new Image();image.onload=()=>{if(version!==loadVersion||!viewer.open)return;fullImage.src=image.src;$('#image-loading').hidden=true;$('#zoom-wallpaper').disabled=false};image.onerror=()=>{if(version!==loadVersion||!viewer.open)return;$('#image-loading').textContent=t('Preview unavailable. You can still download the original.')};image.src=x.preview;
  setUrl(id);viewer.scrollTo(0,0);
 }
 function step(amount){if(!activeItem)return;const sequence=filtered.some(x=>x.id===activeItem.id)?filtered:items;const index=sequence.findIndex(x=>x.id===activeItem.id);openWallpaper(sequence[(index+amount+sequence.length)%sequence.length].id)}
 $('#previous-wallpaper').addEventListener('click',()=>step(-1));$('#next-wallpaper').addEventListener('click',()=>step(1));$('#close-wallpaper').addEventListener('click',()=>viewer.close());$('#zoom-wallpaper').addEventListener('click',()=>zoom(!visual.classList.contains('zoomed')));
 viewer.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();step(1)}else if(e.key==='ArrowLeft'){e.preventDefault();step(-1)}});
 viewer.addEventListener('close',()=>{++loadVersion;activeItem=null;setUrl(null);lock();returnFocus?.focus({preventScroll:true})});
-$('#copy-wallpaper').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);$('#share-status').textContent='Link copied'}catch{$('#share-status').textContent=`Copy this link: ${location.href}`}});
+$('#copy-wallpaper').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);$('#share-status').textContent=t('Link copied')}catch{$('#share-status').textContent=t('Copy this link: {url}',{url:location.href})}});
 $('#menu-toggle').addEventListener('click',()=>{menu.showModal();lock()});$('#close-menu').addEventListener('click',()=>menu.close());menu.addEventListener('close',()=>{lock();$('#menu-toggle').focus({preventScroll:true})});$$('#site-menu nav a').forEach(a=>a.addEventListener('click',()=>menu.close()));
 $$('dialog').forEach(dialog=>dialog.addEventListener('click',e=>{if(e.target!==dialog)return;const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close()}));
 const preference=matchMedia('(prefers-reduced-motion: reduce)');

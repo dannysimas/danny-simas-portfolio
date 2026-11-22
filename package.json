@@ -9,11 +9,13 @@
   "dependencies": {
     "@vercel/functions": "^3.11.3",
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "vite": "latest"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "linkedom": "^0.18.15"
+  },
   "type": "module",
   "engines": {
     "node": "24.x"

@@ -1,5 +1,6 @@
 import './hero-card-details.css';
 import './hero-responsive.css';
+import {t} from './i18n.js';
 
 // Rotate actual artwork cards through the existing collage positions.
 export function setupHeroStack({hero,floats,caption,onFrame}){
@@ -25,7 +26,7 @@ export function setupHeroStack({hero,floats,caption,onFrame}){
   let front=0,transition=null,timer=null,eligible=false,generation=0;
   function describe(){
     stack.dataset.front=titles[front];caption.querySelector('.eyebrow').textContent=titles[front].toUpperCase();
-    images.forEach((img,i)=>{img.alt=i===front?titles[i]+' artwork by Danny Simas':''});
+    images.forEach((img,i)=>{img.alt=i===front?t('{game} artwork by Danny Simas',{game:titles[i]}):''});
     cards.forEach((card,i)=>card.classList.toggle('is-front',i===front));
   }
   function prepare(index){
