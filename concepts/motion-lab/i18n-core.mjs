@@ -3,11 +3,20 @@ import portuguese from './locales/pt-BR.js';
 export const languageKey = 'dannysimas-language';
 export const normalizeLanguage = value => /^pt(?:-br)?$/i.test(value || '') ? 'pt-BR' : value === 'en' ? 'en' : null;
 
-export function resolveLanguage(url, storage) {
+export function resolveLanguage(url, storage, browserLanguages = []) {
   const explicit = normalizeLanguage(new URL(url).searchParams.get('lang'));
   if (explicit) return explicit;
-  try { return normalizeLanguage(storage?.getItem(languageKey)) || 'en'; }
-  catch { return 'en'; }
+  try {
+    const saved = normalizeLanguage(storage?.getItem(languageKey));
+    if (saved) return saved;
+  } catch { /* Browser preferences still work when storage is disabled. */ }
+  // Match the visitor's preferred supported language, in browser preference order.
+  // All Portuguese regional variants use the site's Brazilian Portuguese edition.
+  for (const locale of browserLanguages) {
+    if (/^pt(?:-|$)/i.test(locale)) return 'pt-BR';
+    if (/^en(?:-|$)/i.test(locale)) return 'en';
+  }
+  return 'en';
 }
 
 export function languageUrl(url, language) {

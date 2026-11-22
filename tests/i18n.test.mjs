@@ -6,7 +6,7 @@ import {parseHTML} from 'linkedom';
 import portuguese from '../concepts/motion-lab/locales/pt-BR.js';
 import content from '../concepts/motion-lab/content.js';
 import photomodes from '../concepts/motion-lab/photomodes-data.js';
-import {languageKey, languageUrl, resolveLanguage, translate, translateDocument, localizeContent} from '../concepts/motion-lab/i18n-core.mjs';
+import {languageKey, languageUrl, normalizeLanguage, resolveLanguage, translate, translateDocument, localizeContent} from '../concepts/motion-lab/i18n-core.mjs';
 
 const root = new URL('../concepts/motion-lab/', import.meta.url);
 const read = file => fs.readFileSync(new URL(file, root), 'utf8');
@@ -32,6 +32,23 @@ test('every translation preserves its interpolation values', () => {
   assert.equal(translate('Download {game} photomode', {game: 'Kingdom Hearts 3'}, 'pt-BR'), 'Baixar modo foto de Kingdom Hearts 3');
   assert.equal(translate('Copy this link: {url}', {url: 'https://example.com/{game}'}, 'pt-BR'), 'Copie este link: https://example.com/{game}');
   assert.equal(translate('constructor', {}, 'pt-BR'), 'constructor');
+});
+
+test('browser preference order selects Portuguese regional variants and preserves explicit choices', () => {
+  const url = 'https://dannysimas.com/';
+  for (const locale of ['pt', 'pt-BR', 'pt-PT', 'pt-AO', 'PT-br']) {
+    assert.equal(resolveLanguage(url, undefined, [locale, 'en-US']), 'pt-BR');
+  }
+  assert.equal(resolveLanguage(url, undefined, ['en-GB', 'pt-BR']), 'en');
+  assert.equal(resolveLanguage(url, undefined, ['fr-FR', 'pt-PT', 'en']), 'pt-BR');
+  assert.equal(resolveLanguage(url, undefined, ['fr-FR', 'de-DE']), 'en');
+  assert.equal(resolveLanguage(url, undefined, []), 'en');
+  assert.equal(resolveLanguage(url, {getItem() {throw Error('blocked');}}, ['pt-BR']), 'pt-BR');
+  assert.equal(resolveLanguage(url, {getItem: () => 'en'}, ['pt-BR']), 'en');
+  assert.equal(resolveLanguage(url, {getItem: () => 'pt-BR'}, ['en-US']), 'pt-BR');
+  assert.equal(resolveLanguage(url + '?lang=en', {getItem: () => 'pt-BR'}, ['pt-BR']), 'en');
+  assert.equal(resolveLanguage(url + '?lang=pt-BR', {getItem: () => 'en'}, ['en-US']), 'pt-BR');
+  assert.equal(resolveLanguage(url + '?lang=fr', {getItem: () => 'invalid'}, ['pt-BR']), 'pt-BR');
 });
 
 for (const page of pages) test(`${page}: all authored static text has Portuguese coverage; links and control values survive`, () => {
@@ -79,9 +96,9 @@ test('portfolio data is fully translated while names, art and destinations remai
 
 // DOM integration checks, without a browser or network: execute the real rendering
 // and interaction code. Only layout/animation, network and unsupported DOM APIs are stubbed.
-function pageContext(page, lang) {
+function pageContext(page, lang, {languages = ['en-US'], browserLanguage = 'en-US', savedLanguage, storageBlocked = false} = {}) {
   const {document, window} = parseHTML(read(page));
-  const location = new URL(`https://dannysimas.com/${page.replace('index.html', '')}?lang=${lang}`);
+  const location = new URL(`https://dannysimas.com/${page.replace('index.html', '')}${lang ? '?lang=' + lang : ''}`);
   for (const link of document.querySelectorAll('a[href]')) link.href = new URL(link.getAttribute('href'), location).href;
   for (const select of document.querySelectorAll('select')) {
     Object.defineProperty(select, 'value', {
@@ -96,10 +113,13 @@ function pageContext(page, lang) {
     dialog.close = () => {dialog.open = false;dialog.dispatchEvent(new window.Event('close'));};
   }
   document.fonts = {ready: {then() {}}};
-  const saved = new Map();
-  const localStorage = {getItem: key => saved.get(key), setItem: (key, value) => saved.set(key, value)};
+  const saved = new Map(savedLanguage ? [[languageKey, savedLanguage]] : []);
+  const localStorage = {
+    getItem: key => {if (storageBlocked) throw Error('blocked');return saved.get(key);},
+    setItem: (key, value) => {if (storageBlocked) throw Error('blocked');saved.set(key, value);}
+  };
   const context = vm.createContext({document, location, URL, console, localStorage,
-    languageKey, languageUrl, resolveLanguage, translate, translateDocument, localizeContent,
+    languageKey, languageUrl, normalizeLanguage, resolveLanguage, translate, translateDocument, localizeContent,
     sourceContent: content, content, photomodes, socialIcons: {},
     innerWidth: 390, innerHeight: 844, scrollY: 0, performance,
     addEventListener() {}, requestAnimationFrame() {}, scrollTo() {}, scrollBy() {},
@@ -109,7 +129,7 @@ function pageContext(page, lang) {
     Image: class {}, setupHeroStack: () => ({render: () => false}), setupMarquee() {},
     readWallpaperCache: () => null, writeWallpaperCache() {}, catalogSignature: x => JSON.stringify(x),
     startWallpaperSync: options => {context.syncOptions = options;return {flush() {}};},
-    navigator: {clipboard: {writeText: async () => {}}},
+    navigator: {languages, language: browserLanguage, clipboard: {writeText: async () => {}}},
     history: {replaceState: (_, __, url) => {context.location = new URL(url);}},
     source: JSON.parse(read('wallpapers/catalog.json')),
     AbortSignal, FormData: class {}, fetch: async () => ({ok: true})
@@ -122,6 +142,40 @@ function pageContext(page, lang) {
   run('i18n.js');
   return {context, document, window, run, saved};
 }
+
+for (const page of pages) test(`${page}: browser detection translates first visits without saving an automatic choice`, () => {
+  const {document, window, saved} = pageContext(page, undefined, {languages: ['pt-PT', 'en-US']});
+  assert.equal(document.documentElement.lang, 'pt-BR');
+  assert.equal(saved.has(languageKey), false);
+  assert.equal(document.querySelector('.language-switch [aria-current]').textContent, 'PT-BR');
+  assert.ok([...document.querySelectorAll('a[href]')].filter(link => {
+    const url = new URL(link.href, 'https://dannysimas.com');
+    return url.origin === 'https://dannysimas.com' && !link.closest('.language-switch');
+  }).every(link => !new URL(link.href, 'https://dannysimas.com').searchParams.has('lang')));
+  // Selecting even the detected language is now a deliberate, remembered choice.
+  const selected = document.querySelector('.language-switch [aria-current]');
+  const click = new window.Event('click', {cancelable: true});
+  selected.dispatchEvent(click);
+  assert.equal(saved.get(languageKey), 'pt-BR');
+  assert.equal(click.defaultPrevented, false);
+  assert.equal(new URL(selected.href).searchParams.get('lang'), 'pt-BR');
+  const returning = pageContext(page, undefined, {languages: ['pt-BR'], savedLanguage: 'en'});
+  assert.equal(returning.document.documentElement.lang, 'en');
+  const english = pageContext(page, undefined, {languages: ['en-US', 'pt-BR']});
+  assert.equal(english.document.documentElement.lang, 'en');
+});
+
+test('single-language browsers and disabled storage still support automatic language and manual links', () => {
+  const {document, window, saved} = pageContext('index.html', undefined, {languages: [], browserLanguage: 'pt-BR', storageBlocked: true});
+  assert.equal(document.documentElement.lang, 'pt-BR');
+  const english = document.querySelector('.language-switch a[lang="en"]');
+  english.dispatchEvent(new window.Event('click', {cancelable: true}));
+  assert.equal(new URL(english.href).searchParams.get('lang'), 'en');
+  assert.equal(saved.size, 0);
+  const next = pageContext('index.html', 'en', {languages: ['pt-BR'], storageBlocked: true});
+  assert.equal(next.document.documentElement.lang, 'en');
+  assert.equal(new URL(next.document.querySelector('a[href*="/wallpapers/"]').href).searchParams.get('lang'), 'en');
+});
 
 for (const lang of ['en', 'pt-BR']) {
   test(`${lang}: language links preserve the current preview and remember the choice`, () => {

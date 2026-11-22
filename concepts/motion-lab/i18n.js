@@ -1,14 +1,20 @@
-import {languageKey, languageUrl, resolveLanguage, translate, translateDocument} from './i18n-core.mjs';
+import {languageKey, languageUrl, normalizeLanguage, resolveLanguage, translate, translateDocument} from './i18n-core.mjs';
 
 let storage;
 try { storage = window.localStorage; } catch { /* Query links also work without storage. */ }
-export const language = resolveLanguage(location.href, storage);
+const browserLanguages = navigator.languages?.length ? navigator.languages : [navigator.language];
+export const language = resolveLanguage(location.href, storage, browserLanguages);
 export const t = (message, values) => translate(message, values, language);
 export const formatNumber = number => Number(number).toLocaleString(language === 'en' ? 'en-US' : language);
 
 document.documentElement.lang = language;
 translateDocument(document.documentElement, language);
-try { storage?.setItem(languageKey, language); } catch { /* Storage can be disabled. */ }
+// Remember explicit choices, not an automatically detected starting language.
+let preference = normalizeLanguage(new URL(location.href).searchParams.get('lang'));
+try {
+  if (preference) storage?.setItem(languageKey, preference);
+  else preference = normalizeLanguage(storage?.getItem(languageKey));
+} catch { /* Query links also carry the choice when storage is disabled. */ }
 
 export function createLanguageSwitch() {
   const group = document.createElement('div');
@@ -28,8 +34,8 @@ export function createLanguageSwitch() {
     link.addEventListener('click', event => {
       // A wallpaper preview may have added its ID to the URL since initialization.
       link.href = languageUrl(location.href, code);
-      if (code === language) { event.preventDefault(); return; }
       try { storage?.setItem(languageKey, code); } catch { /* URL remains the fallback. */ }
+      if (code === language && new URL(location.href).searchParams.get('lang') === code) event.preventDefault();
     });
     group.append(link);
   }
@@ -42,6 +48,6 @@ document.querySelector('.header-actions')?.prepend(createLanguageSwitch());
 for (const link of document.querySelectorAll('a[href]')) {
   const url = new URL(link.href, location.href);
   if (url.origin === location.origin && /^\/(?:wallpapers\/|photomodes\/)?$/.test(url.pathname) && !link.closest('.language-switch')) {
-    if (language === 'pt-BR' || new URL(location.href).searchParams.has('lang')) link.href = languageUrl(url, language);
+    if (preference) link.href = languageUrl(url, language);
   }
 }
