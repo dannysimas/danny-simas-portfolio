@@ -1,3 +1,16 @@
+/* Separate the name from the cyan lettering printed on the hoodie. */
+#about .portrait > div {
+  color: var(--white);
+  -webkit-text-stroke: .02em #050607;
+  paint-order: stroke fill;
+  text-shadow: 0 .025em .08em #050607e6;
+}
+
+#about .portrait > div > span {
+  color: var(--violet);
+  font-style: italic;
+}
+
 /* Keep the portrait and biography in proportion on large desktop displays. */
 @media (min-width: 1151px) {
   #about {
