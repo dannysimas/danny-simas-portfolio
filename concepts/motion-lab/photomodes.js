@@ -21,7 +21,7 @@ if(list){
     const body=element('div','photomode-card-body');body.append(element('p','eyebrow','CUSTOM PHOTOMODE'));
     const title=element('h3');title.id=article.id+'-title';title.setAttribute('aria-label',mode.game);
     (mode.lines||[mode.game]).forEach(line=>title.append(element('span','',line)));body.append(title);
-    const meta=[mode.platform,mode.version?t('Version {version}',{version:mode.version}):null].filter(Boolean);
+    const meta=[mode.platform?t(mode.platform):null,mode.version?t('Version {version}',{version:mode.version}):null].filter(Boolean);
     if(meta.length)body.append(element('p','photomode-meta',meta.join(' / ')));
     if(download){
       const link=element('a','photomode-download','Download photomode');configureDownload(link,download,mode);
@@ -32,10 +32,15 @@ if(list){
     if(mode.requirements?.length||mode.installation?.length){
       const details=element('details','photomode-setup'),summary=element('summary','','Setup & compatibility'),content=element('div','photomode-setup-content');
       const icon=element('span','','+');icon.setAttribute('aria-hidden','true');summary.append(icon);details.append(summary);
+      if(mode.compatibility){content.append(element('h4','','Compatibility'),element('p','',mode.compatibility))}
       if(mode.requirements?.length){content.append(element('h4','','Requirements'));const requirements=element('ul');mode.requirements.forEach(line=>requirements.append(element('li','',line)));content.append(requirements)}
+      for(const resource of mode.resourceLinks||[]){const url=safeUrl(resource.url);if(url){const link=element('a','photomode-resource',resource.label);link.href=url.href;link.target='_blank';link.rel='noopener noreferrer';content.append(link)}}
       if(mode.installation?.length){content.append(element('h4','','Installation'));const steps=element('ol');mode.installation.forEach(line=>steps.append(element('li','',line)));content.append(steps)}
+      if(mode.controls){content.append(element('h4','','Quick controls'),element('p','',mode.controls))}
+      content.append(element('p','photomode-readme-note','Details from the included README. Read the full file before installing.'));
       details.append(content);body.append(details);
     }
+    const discussion=element('a','photomode-discussion-link','Questions & comments');discussion.href='#photomode-discussion';discussion.dataset.discussionGame=mode.id;body.append(discussion);
     article.append(visual,body);list.append(article);
   });
 }

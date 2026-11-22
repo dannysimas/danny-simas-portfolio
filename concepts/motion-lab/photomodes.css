@@ -77,6 +77,11 @@
 .photomode-setup h4{font-size:1rem;color:var(--white);margin:16px 0 8px}
 .photomode-setup ul,.photomode-setup ol{margin:0;padding-left:22px}
 .photomode-setup li+li{margin-top:8px}
+.photomode-list{align-items:start}
+.photomode-setup-content{overflow-wrap:anywhere}
+.photomode-resource{display:block;margin-top:1em;color:var(--cyan);text-decoration:underline;text-underline-offset:4px}
+.photomode-readme-note{margin-top:1.5em;font-size:.9em;border-left:2px solid var(--violet);padding-left:1em}
+.photomode-discussion-link{display:inline-flex;align-items:center;min-height:44px;margin-top:.5em;color:var(--cyan);font-size:var(--reading-control,1rem);text-decoration:underline;text-underline-offset:5px}
 @media(max-width:1000px){.photomode-list{gap:24px}.photomode-visual-caption{font-size:.6875rem;letter-spacing:.025em;left:18px}.photomode-visual-label{font-size:.75rem}.photomode-card h3{font-size:3.9vw}}
 @media(max-width:700px){.photomode-list{grid-template-columns:1fr;gap:44px}.photomode-visual{aspect-ratio:1.65}.photomode-number{font-size:65vw;top:-16%}.photomode-card-body{padding-top:22px}.photomode-card h3{font-size:13vw;margin-bottom:24px}.photomode-visual-label,.photomode-visual-caption{font-size:.875rem}.photomode-visual-caption{left:23px}.photomode-pending{padding-bottom:0}}
 @media(prefers-reduced-motion:reduce){.photomode-card *{transition:none!important}}

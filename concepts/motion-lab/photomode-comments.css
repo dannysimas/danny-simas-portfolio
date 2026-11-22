@@ -1,0 +1,39 @@
+.photomode-discussion{padding:70px 7vw 100px;border-top:1px solid var(--line);background:radial-gradient(ellipse at 12% 28%,#67e8f906,transparent 65%);scroll-margin-top:130px}
+.discussion-heading{display:flex;align-items:end;justify-content:space-between;gap:32px;margin-bottom:40px}
+.discussion-heading h2{font:700 clamp(48px,5vw,180px)/.95 'Barlow Condensed',sans-serif;margin:18px 0}
+.discussion-heading h2 em{color:transparent;-webkit-text-stroke:1.5px var(--violet)}
+.discussion-heading>div>p:last-child{max-width:52ch;color:var(--muted);font-size:var(--reading-body,1.125rem)}
+.discussion-game-field{display:grid;gap:10px;min-width:0;width:min(100%,440px);font-size:var(--reading-control,1rem);flex-shrink:0}
+.discussion-game-field label{color:var(--cyan)}
+.discussion-game-field select{color:var(--white);background:#101219;border:1px solid var(--line);padding:.85em;width:100%;font:inherit;min-height:48px}
+.discussion-layout{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:6vw;align-items:start}
+.comment-form{position:relative;padding:clamp(24px,2vw,72px);background:linear-gradient(140deg,#17122870,#080a1030);border-top:1px solid #a78bfa70}
+.comment-form h3,.discussion-feed h3{font:600 clamp(28px,2vw,68px)/1.15 'Barlow Condensed',sans-serif;margin:0 0 22px}
+.comment-form label{display:block;margin-bottom:.6em;color:var(--white);font-size:var(--reading-control,1rem)}
+.comment-form input,.comment-form textarea{display:block;box-sizing:border-box;width:100%;background:#07090e;border:1px solid #ffffff38;color:var(--white);padding:.85em;font:inherit;font-size:var(--reading-body,1rem);border-radius:0;min-height:48px}
+.comment-form textarea{resize:vertical;min-height:160px;line-height:1.6}
+.comment-field+.comment-field{margin-top:24px}
+.comment-form input:focus-visible,.comment-form textarea:focus-visible,.discussion-game-field select:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.comment-length{font-size:var(--reading-label,.875rem);color:var(--muted);text-align:right;margin-top:8px}
+.comment-public-note{font-size:var(--reading-label,.875rem);color:var(--muted);line-height:1.6;margin:18px 0}
+.comment-submit{padding:.8em 1.4em;background:var(--cyan);color:#071217;font:500 var(--reading-control,1rem) 'Space Grotesk',sans-serif;min-height:48px}
+.comment-submit:hover{background:#a4f2fc}.comment-submit:disabled{opacity:.6;cursor:wait}
+.comment-status{font-size:var(--reading-control,1rem);color:var(--cyan);margin-top:16px;overflow-wrap:anywhere}
+.comment-status:empty{display:none}
+.comment-honeypot{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.discussion-feed{min-width:0}.discussion-feed>h3{padding-bottom:24px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.discussion-feed>p,.comments-empty{font-size:var(--reading-body,1.125rem);color:var(--muted)}
+.discussion-feed>p:empty{display:none}
+.photomode-comment{padding:24px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.photomode-comment>div{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px 20px;font-size:var(--reading-control,1rem)}
+.photomode-comment strong{font-weight:500;color:var(--cyan)}
+.photomode-comment time{font-size:var(--reading-label,.875rem);color:var(--muted)}
+.photomode-comment>p{font-size:var(--reading-body,1.125rem);color:var(--white);white-space:pre-wrap;line-height:1.75;margin:14px 0 8px}
+.photomode-comment>button{font-size:var(--reading-label,.875rem);min-height:44px;color:var(--muted);text-decoration:underline;text-underline-offset:4px}
+.photomode-comment>button:hover{color:var(--cyan)}
+.comments-action{min-height:48px;padding:.75em 1.25em;margin-top:24px;border:1px solid #a78bfa80;font-size:var(--reading-control,1rem)}
+.comments-action:hover{border-color:var(--cyan)}
+.discussion-note{font-size:var(--reading-label,.875rem);color:var(--muted);max-width:80ch;line-height:1.7;margin-top:32px}
+.photomode-discussion [hidden]{display:none!important}
+@media(min-width:1151px){.photomode-discussion{padding-block:clamp(70px,4vw,150px)}.discussion-heading{margin-bottom:clamp(40px,3vw,100px)}.discussion-game-field{width:clamp(360px,28vw,900px)}.photomode-comment{padding-block:var(--reading-space)}}
+@media(max-width:900px){.discussion-heading{display:block}.discussion-game-field{margin-top:28px;width:100%}.discussion-layout{grid-template-columns:1fr;gap:40px}.photomode-discussion{padding-block:50px 65px}.discussion-heading h2{font-size:clamp(48px,9vw,80px)}}

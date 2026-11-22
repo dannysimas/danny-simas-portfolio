@@ -6,6 +6,7 @@ import {parseHTML} from 'linkedom';
 import portuguese from '../concepts/motion-lab/locales/pt-BR.js';
 import content from '../concepts/motion-lab/content.js';
 import photomodes from '../concepts/motion-lab/photomodes-data.js';
+import {createFavourites, favouritesKey} from '../concepts/motion-lab/wallpapers/favourites.mjs';
 import {languageKey, languageUrl, normalizeLanguage, resolveLanguage, translate, translateDocument, localizeContent} from '../concepts/motion-lab/i18n-core.mjs';
 
 const root = new URL('../concepts/motion-lab/', import.meta.url);
@@ -119,7 +120,7 @@ function pageContext(page, lang, {languages = ['en-US'], browserLanguage = 'en-U
     setItem: (key, value) => {if (storageBlocked) throw Error('blocked');saved.set(key, value);}
   };
   const context = vm.createContext({document, location, URL, console, localStorage,
-    languageKey, languageUrl, normalizeLanguage, resolveLanguage, translate, translateDocument, localizeContent,
+    languageKey, languageUrl, normalizeLanguage, resolveLanguage, translate, translateDocument, localizeContent, createFavourites, favouritesKey,
     sourceContent: content, content, photomodes, socialIcons: {},
     innerWidth: 390, innerHeight: 844, scrollY: 0, performance,
     addEventListener() {}, requestAnimationFrame() {}, scrollTo() {}, scrollBy() {},
@@ -198,12 +199,39 @@ for (const lang of ['en', 'pt-BR']) {
     photomodes.forEach(mode => {
       const card = document.getElementById('photomode-' + mode.id);
       assert.equal(card.querySelector('h3').getAttribute('aria-label'), mode.game);
-      for (const link of card.querySelectorAll('a')) {
+      for (const link of card.querySelectorAll('.photomode-cover-link,.photomode-download')) {
         assert.equal(link.href, mode.downloadUrl);
         assert.equal(link.getAttribute('aria-label'), translate('Download {game} photomode', {game: mode.game}, lang));
       }
     });
     assert.match(document.querySelector('.photomode-cover-title').textContent, lang === 'pt-BR' ? /BAIXAR/ : /DOWNLOAD/);
+  });
+
+  test(`${lang}: favourites work on cards, in previews and with existing game filters`, () => {
+    const {document, window, run, saved} = pageContext('wallpapers/index.html', lang);
+    run('wallpapers/main.js');
+    const select = document.querySelector('#game-filter');
+    select.value = 'Resident Evil';select.dispatchEvent(new window.Event('change'));
+    const button = document.querySelector('[data-favourite]'), id = button.dataset.favourite;
+    button.dispatchEvent(new window.Event('click', {bubbles: true}));
+    assert.equal(button.getAttribute('aria-pressed'), 'true');
+    assert.equal(document.querySelector('#wallpaper-viewer').open, undefined);
+    assert.ok(JSON.parse(saved.get(favouritesKey)).ids.includes(id));
+    document.querySelector('#favourites-filter').dispatchEvent(new window.Event('click'));
+    assert.equal(document.querySelectorAll('.wallpaper-card').length, 1);
+    document.querySelector('[data-open]').dispatchEvent(new window.Event('click', {bubbles: true}));
+    const preview = document.querySelector('#favourite-wallpaper');
+    assert.equal(preview.getAttribute('aria-pressed'), 'true');
+    preview.dispatchEvent(new window.Event('click'));
+    assert.equal(preview.getAttribute('aria-pressed'), 'false');
+    assert.equal(document.querySelectorAll('.wallpaper-card').length, 0);
+    assert.equal(document.querySelector('#empty-state h2').textContent, translate('No favourites to show.', {}, lang));
+    assert.equal(select.value, 'Resident Evil');
+    assert.equal(document.querySelector('#wallpaper-viewer').open, true);
+    document.querySelector('#close-wallpaper').dispatchEvent(new window.Event('click'));
+    document.querySelector('#empty-reset').dispatchEvent(new window.Event('click'));
+    assert.equal(document.querySelector('#favourites-filter').getAttribute('aria-pressed'), 'false');
+    assert.ok(document.querySelectorAll('.wallpaper-card').length > 1);
   });
 
   test(`${lang}: wallpaper game filtering, preview, zoom, reset and live refresh stay functional`, () => {

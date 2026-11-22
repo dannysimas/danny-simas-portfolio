@@ -87,3 +87,7 @@ For galleries, change the folder objects:
 - Hero images: 1800 x 1000 WebP
 - Gallery vertical images: 1080 x 1920 WebP
 - Folder covers: 1600 x 900 WebP
+
+## Active favourites and photomode discussions
+
+See [community and favourites maintenance](docs/photomode-community.md) for the reused comment service, moderation and local favourites behavior. See [photomode compatibility sources](docs/photomode-compatibility.md) before replacing a shared download.

@@ -2,6 +2,7 @@ import '../navigation.js';
 import {t} from '../i18n.js';
 import '../graphic-details.js';
 import '../photomodes.js';
+import '../photomode-comments.js';
 import content from '../content.js';
 import {socialIcons} from '../social-icons.js';
 const $=selector=>document.querySelector(selector),$$=selector=>[...document.querySelectorAll(selector)];
