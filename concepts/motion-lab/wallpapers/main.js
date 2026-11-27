@@ -1,4 +1,5 @@
 import '../navigation.js';
+import '../analytics.js';
 import './favourites.css';
 import {createFavourites,favouritesKey} from './favourites.mjs';
 import {t,formatNumber,language} from '../i18n.js';

@@ -91,3 +91,9 @@ For galleries, change the folder objects:
 ## Active favourites and photomode discussions
 
 See [community and favourites maintenance](docs/photomode-community.md) for the reused comment service, moderation and local favourites behavior. See [photomode compatibility sources](docs/photomode-compatibility.md) before replacing a shared download.
+
+## Visitor analytics
+
+Vercel Web Analytics is loaded on all three active pages by `concepts/motion-lab/analytics.js`. It runs only in production builds served from `dannysimas.com` or `www.dannysimas.com`, excluding local previews and temporary deployment URLs. Only page views are collected; no custom events, comment content, or form values are sent.
+
+View visitors, page views, traffic sources, and popular pages in the Vercel project's Analytics dashboard. Web Analytics must also be enabled for `danny-simas-portfolio` in Vercel before deploying. Collection starts after installation; earlier visits cannot be backfilled. Google Analytics is not installed.

@@ -1,4 +1,5 @@
 import '../navigation.js';
+import '../analytics.js';
 import {t} from '../i18n.js';
 import '../graphic-details.js';
 import '../photomodes.js';

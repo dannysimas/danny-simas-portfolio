@@ -1,4 +1,5 @@
 import './navigation.js';
+import './analytics.js';
 import './graphic-details.js';
 import {setupHeroStack} from './hero-stack.js';
 import { socialIcons } from './social-icons.js';
