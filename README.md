@@ -96,4 +96,8 @@ See [community and favourites maintenance](docs/photomode-community.md) for the 
 
 Vercel Web Analytics is loaded on all three active pages by `concepts/motion-lab/analytics.js`. It runs only in production builds served from `dannysimas.com` or `www.dannysimas.com`, excluding local previews and temporary deployment URLs. Only page views are collected; no custom events, comment content, or form values are sent.
 
-View visitors, page views, traffic sources, and popular pages in the Vercel project's Analytics dashboard. Web Analytics must also be enabled for `danny-simas-portfolio` in Vercel before deploying. Collection starts after installation; earlier visits cannot be backfilled. Google Analytics is not installed.
+View visitors, page views, traffic sources, and popular pages in the Vercel project's Analytics dashboard. Web Analytics must also be enabled for `danny-simas-portfolio` in Vercel before deploying. Collection starts after installation; earlier visits cannot be backfilled.
+
+Google Analytics 4 is optional: set the public `VITE_GOOGLE_ANALYTICS_ID` (`G-...`) in the Vercel production environment and rebuild. Without a valid ID, its script and cookie-choice panel remain disabled. The same production hostname guard applies to both integrations.
+
+Google's script loads only after a visitor allows analytics cookies, or when that visitor has a saved allow choice. The EN/PT-BR panel and footer's Analytics preferences button let visitors decline or change their choice. Declining after acceptance disables the Google tag and clears this integration's `ds_ga` cookies. Advertising consent stays denied, Google signals and ad personalization are disabled, and no custom comment/form payloads are sent. The site adds no custom GA events; enhanced measurement is managed in the Google property. Vercel's cookie-free analytics continues independently. Verify the live Google connection in GA4 Realtime after accepting analytics on the public site.

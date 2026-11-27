@@ -1,4 +1,12 @@
 export default {
+  "A little insight. A better website.": "Entender melhor. Criar um site melhor.",
+  "Allow Google Analytics cookies to help me understand visits and improve the website? You can change your choice anytime in Analytics preferences.": "Permitir cookies do Google Analytics para me ajudar a entender as visitas e melhorar o site? Você pode mudar sua escolha a qualquer momento em Preferências de análise.",
+  "About these analytics": "Sobre estas análises",
+  "Google Analytics measures visits, pages viewed, devices, and traffic sources. Advertising personalization is off. Vercel also provides cookie-free visitor statistics independently of this choice.": "O Google Analytics mede visitas, páginas acessadas, dispositivos e origens do tráfego. A personalização de anúncios está desativada. A Vercel também fornece estatísticas de visitantes sem cookies, independentemente desta escolha.",
+  "How Google uses this information": "Como o Google usa estas informações",
+  "Decline": "Recusar",
+  "Allow analytics": "Permitir análise",
+  "Analytics preferences": "Preferências de análise",
   "Language": "Idioma",
   "Skip to artwork": "Pular para as artes",
   "Skip to wallpapers": "Pular para os wallpapers",
